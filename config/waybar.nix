@@ -241,7 +241,7 @@ with lib;
           margin: 4px 0px;
           margin-left: 7px;
           padding: 0px 18px;
-          background: #${config.stylix.base16Scheme.base04};
+          background: #${config.stylix.base16Scheme.base0F};
           color: #${config.stylix.base16Scheme.base00};
           border-radius: 24px 10px 24px 10px;
         }
