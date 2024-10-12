@@ -42,7 +42,7 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Enables AMDVLK (AMD's official Vulkan driver)
-  hardware.amdgpu.amdvlk.enable = false;
+  # hardware.amdgpu.amdvlk.enable = false;
 
 
   hardware.amdgpu.opencl.enable = true;
@@ -52,5 +52,5 @@
   # the drivers available before the operating system starts, ensuring
   # that the hardware is properly initialized and can be used for display
   # and other GPU-related tasks during the early boot process.
-  hardware.amdgpu.initrd.enable = true;
+  # hardware.amdgpu.initrd.enable = true;
 }
