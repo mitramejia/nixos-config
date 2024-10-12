@@ -598,16 +598,16 @@ in {
     defaultNetwork.settings.dns_enabled = true;
   };
 
-  boot.kernelParams =	[
-   "video=DP-1:3840x2160@60"
-   "video=DP-2:3840x2160@60"
+  boot.kernelParams = [
+    "video=DP-1:3840x2160@60"
+    "video=DP-2:3840x2160@60"
   ];
 
   # OpenGL
   hardware.graphics = {
     enable = true;
-    driSupport = true;
-    extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+    enable32Bit = true;
+    extraPackages = with pkgs; [rocmPackages.clr.icd];
   };
 
   # This configu=ration ensures that AMD video drivers are included
