@@ -97,10 +97,8 @@ in
              windowrule = float, nm-connection-editor|blueman-manager
              windowrule = float, swayimg|vlc|Viewnior|pavucontrol
              windowrule = float, nwg-look|qt5ct|mpv
-             windowrule = float, zoom
-             windowrule = center, jetbrains-webstorm
-             windowrule = center, jetbrains-datagrip
-
+             windowrule = center, title:^()$,class:^(jetbrains-webstorm)$
+             windowrule = center, title:^()$,class:^(datagrip-webstorm)$
 
              windowrulev2 = stayfocused, title:^()$,class:^(steam)$
              windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
