@@ -98,8 +98,8 @@ in
              windowrule = float, swayimg|vlc|Viewnior|pavucontrol
              windowrule = float, nwg-look|qt5ct|mpv
              windowrule = float, zoom
-             # windowrule = tile, jetbrains-webstorm
-             # windowrule = tile, jetbrains-datagrip
+             windowrule = center, jetbrains-webstorm
+             windowrule = center, jetbrains-datagrip
 
 
              windowrulev2 = stayfocused, title:^()$,class:^(steam)$
