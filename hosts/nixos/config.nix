@@ -606,9 +606,16 @@ in {
   # OpenGL
   hardware.graphics = {
     enable = true;
-    extraPackages = [pkgs.amdvlk];
-    extraPackages32 = [pkgs.driversi686Linux.amdvlk];
+    driSupport = true;
+    extraPackages = with pkgs; [ rocmPackages.clr.icd ];
   };
+
+  # This configu=ration ensures that AMD video drivers are included
+  # in the initial ramdisk (initrd). This is crucial because it makes
+  # the drivers available before the operating system starts, ensuring
+  # that the hardware is properly initialized and can be used for display
+  # and other GPU-related tasks during the early boot process.
+  hardware.amdgpu.initrd.enable = true;
 
   console.keyMap = "${keyboardLayout}";
 
