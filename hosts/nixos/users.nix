@@ -49,6 +49,7 @@ in {
         pkgs.nodePackages.eas-cli
         pkgs.watchman
         pkgs.zoom-us
+        pkgs.firefox
         pkgs.chromium
         pkgs.chromedriver
         pkgs.amdgpu_top

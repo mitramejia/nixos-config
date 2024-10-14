@@ -103,7 +103,7 @@ in
              windowrulev2 = stayfocused, title:^()$,class:^(steam)$
              windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
 
-            windowrulev2 = workspace 1, class:^(brave-browser)$
+            windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
             windowrulev2 = workspace 3, class:^(jetbrains-datagrip)$
             windowrulev2 = workspace 3, class:^(Genymotion)$
@@ -118,7 +118,7 @@ in
              workspace = 8, monitor:DP-2, default:true
 
              exec-once = [workspace 8 silent] kitty
-             exec-once = [workspace 1 silent] brave
+             exec-once = [workspace 1 silent] ${browser}
              exec-once = [workspace 2 silent] webstorm
              exec-once = [workspace 3 silent] genymotion
              exec-once = [workspace 4 silent] slack
