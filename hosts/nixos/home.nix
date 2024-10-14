@@ -276,6 +276,8 @@ in {
         la = "eza -lah --icons --grid --group-directories-first";
         ".." = "cd ..";
         gp = "git push origin";
+        gash = "git stash";
+        gasha = "git stash apply";
         gplo = "git pull origin";
         open-pr = "gh pr create";
         p = "pnpm";
