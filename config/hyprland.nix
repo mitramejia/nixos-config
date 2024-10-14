@@ -97,9 +97,6 @@ in
              windowrule = float, nm-connection-editor|blueman-manager
              windowrule = float, swayimg|vlc|Viewnior|pavucontrol
              windowrule = float, nwg-look|qt5ct|mpv
-             windowrule = center, title:^()$,class:^(jetbrains-webstorm)$
-             windowrule = center, title:^()$,class:^(datagrip-webstorm)$
-
              windowrulev2 = stayfocused, title:^()$,class:^(steam)$
              windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
 
@@ -141,10 +138,10 @@ in
                bezier = winIn, 0.1, 1.1, 0.1, 1.1
                bezier = winOut, 0.3, -0.3, 0, 1
                bezier = liner, 1, 1, 1, 1
-               animation = windows, 1, 3, wind, slide
-               animation = windowsIn, 1, 3, winIn, slide
-               animation = windowsOut, 1, 3, winOut, slide
-               animation = windowsMove, 1, 3, wind, slide
+               animation = windows, 1, 0.3, default
+               animation = windowsIn, 1, 0.3, default
+               animation = windowsOut, 1, 0.3, default
+               animation = windowsMove, 1, 0.3, default
                animation = border, 1, 1, liner
                animation = fade, 1, 3, default
                animation = workspaces, 1, 3, wind
