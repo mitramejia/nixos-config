@@ -150,10 +150,6 @@ nmap g7 <action>(GotoBookmark7)
 nmap g8 <action>(GotoBookmark8)
 nmap g9 <action>(GotoBookmark9)
 
-" Press `f` to activate AceJump
-map <leader>F <Action>(AceAction)
-" Press `F` to activate Target Mode
-map <leader>Ft <Action>(AceTargetAction)
 " Press `g` to activate Line Mode
 map <leader>Fl <Action>(AceLineAction)
 
