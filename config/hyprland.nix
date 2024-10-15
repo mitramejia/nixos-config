@@ -99,6 +99,7 @@ in
              windowrule = float, nwg-look|qt5ct|mpv
              windowrulev2 = stayfocused, title:^()$,class:^(steam)$
              windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
+            windowrulev2 = noinitialfocus,class:^(jetbrains-webstorm)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
