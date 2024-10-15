@@ -87,7 +87,7 @@ in {
     mouse = true;
     baseIndex = 1;
     disableConfirmationPrompt = true;
-    prefix = "C-b";
+    prefix = "C-Space";
     extraConfig = ''
       set -g pane-base-index 1
       set-window-option -g pane-base-index 1
