@@ -137,6 +137,14 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
+  programs.hyprland = {
+    enable = true;
+    # set the flake package
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # make sure to also set the portal package, so that they are in sync
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
+
   programs = {
     _1password.enable = true;
     _1password-gui.enable = true;
@@ -444,21 +452,10 @@ in {
   # Extra Portal Configuration
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal
-    ];
     config = {
       common.default = ["gtk"];
       hyprland.default = ["gtk" "hyprland"];
     };
-    configPackages = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal
-    ];
   };
 
   # Services to start
