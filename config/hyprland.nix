@@ -32,6 +32,7 @@ in
         concatStrings [
           ''
              env = NIXOS_OZONE_WL, 1
+             env = MOZ_ENABLE_WAYLAND, 1
              env = NIXPKGS_ALLOW_UNFREE, 1
              env = XDG_CURRENT_DESKTOP, Hyprland
              env = XDG_SESSION_TYPE, wayland
@@ -48,6 +49,7 @@ in
 
 
              exec-once = dbus-update-activation-environment --systemd --all
+             exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = waybar
              exec-once = hyprpaper
