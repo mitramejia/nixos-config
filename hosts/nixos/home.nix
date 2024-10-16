@@ -75,6 +75,15 @@ in {
     };
   };
 
+    programs.obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+      ];
+    };
+
   programs.jq.enable = true;
 
   programs.tmux = {
@@ -250,6 +259,7 @@ in {
         theme = ""; # disable theme to allow nix/home-manager starship to control prompt
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
+          ANDROID_HOME=~/Android/Sdk
         '';
       };
       profileExtra = ''
