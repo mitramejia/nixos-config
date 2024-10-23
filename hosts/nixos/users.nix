@@ -21,40 +21,40 @@ in {
       shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
       packages = with pkgs; [
-        pkgs.bitwarden-desktop
-        pkgs.vscode
-        pkgs.bitwarden-cli
-        pkgs.slack
-        pkgs.lmstudio
-        pkgs.obsidian
-        pkgs.libreoffice
-        pkgs.vlc
-        pkgs.monitor
-        pkgs.rofi-power-menu
-        pkgs.tmux
-        pkgs.scmpuff
-        pkgs.alejandra
-        pkgs.jetbrains.webstorm
-        pkgs.jetbrains.datagrip
-        pkgs.android-studio
-        pkgs.android-studio-tools
-        pkgs.genymotion
-        pkgs.virtualbox
-        pkgs.httpie
-        pkgs.httpie-desktop
+        bitwarden-desktop
+        vscode
+        bitwarden-cli
+        slack
+        lmstudio
+        obsidian
+        libreoffice
+        vlc
+        monitor
+        spotify
+        rofi-power-menu
+        tmux
+        scmpuff
+        alejandra
+        jetbrains.webstorm
+        jetbrains.datagrip
+        genymotion
+        virtualbox
+        httpie
+        httpie-desktop
         # Arro Frontend development
-        pkgs.nodejs_20
-        pkgs.pnpm
-        pkgs.maestro
-        pkgs.nodePackages.eas-cli
-        pkgs.watchman
-        pkgs.zoom-us
-        pkgs.firefox
-        pkgs.chromium
-        pkgs.chromedriver
-        pkgs.amdgpu_top
-        pkgs.zapzap
-        pkgs.youtube-music
+        nodejs_20
+        pnpm
+        maestro
+        nodePackages.eas-cli
+        watchman
+        zoom-us
+        firefox
+        chromium
+        chromedriver
+        amdgpu_top
+        zapzap
+        youtube-music
+        grimblast
       ];
     };
     # "newuser" = {

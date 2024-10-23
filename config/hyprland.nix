@@ -178,7 +178,8 @@ in
              bind = ${modifier}SHIFT,N,exec,swaync-client -rs
              bind = ${modifier},W,exec,${browser}
              bind = ${modifier}SHIFT,E,exec,emopicker9000
-             bind = ${modifier},S,exec,screenshootin
+             # Take screenshot
+             bind = ${modifier},S,exec,grimblast save area
              bind = ${modifier},D,exec,discord
              bind = ${modifier},O,exec,obs
              bind = ${modifier},E,exec,hyprpicker -a
