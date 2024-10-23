@@ -18,6 +18,7 @@ in {
     ../../modules/intel-drivers.nix
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
+     inputs.p81.nixosModules.perimeter81
   ];
 
   boot = {
@@ -460,6 +461,7 @@ in {
 
   # Services to start
   services = {
+    perimeter81.enable = true;
     xserver = {
       enable = false;
       xkb = {
@@ -621,7 +623,7 @@ in {
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall = {
-    enable = true;
+    enable = false;
     allowedTCPPorts = [80 8081 8082 8083 3000 5000 8000];
   };
 
