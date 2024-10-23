@@ -259,7 +259,7 @@ in {
         theme = ""; # disable theme to allow nix/home-manager starship to control prompt
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
-          ANDROID_HOME=~/Android/Sdk
+          export ANDROID_HOME=~/Android/Sdk
         '';
       };
       profileExtra = ''

@@ -46,6 +46,7 @@ in
              env = MOZ_ENABLE_WAYLAND, 1
              env = GDK_SCALE, 1.25
              env = HYPRCURSOR_SIZE,14
+             env = ANDROID_HOME, ~/Android/Sdk
 
 
              exec-once = dbus-update-activation-environment --systemd --all
