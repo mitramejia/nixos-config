@@ -107,11 +107,11 @@ in
             windowrulev2 = workspace 3, class:^(Genymotion)$
             windowrulev2 = workspace 4, class:^(slack)$
             windowrulev2 = workspace 4, class:^(zapzap)$
-            windowrulev2 = workspace 5, class:^(Cider)$
-            windowrulev2 = workspace 5, class:^(spotify)$
-            windowrulev2 = workspace 5, class:^(nuclear)$
-            windowrulev2 = workspace 6, class:^(obsidian)$
+            windowrulev2 = workspace 6, class:^(Cider)$
+            windowrulev2 = workspace 5, class:^(obsidian)$
+            windowrulev2 = workspace 6, class:^(Cider)$
 
+            windowrulev2 = workspace 5, class:^(obsidian)$
              workspace = 1, monitor:DP-1, default:true
              workspace = 8, monitor:DP-2, default:true
 
@@ -122,7 +122,7 @@ in
              exec-once = [workspace 4 silent] slack
              exec-once = [workspace 4 silent] zapzap
              exec-once = [workspace 5 silent] obsidian
-             exec-once = [workspace 6 silent] youtube-music
+             exec-once = [workspace 6 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
 
              gestures {
                workspace_swipe = true
