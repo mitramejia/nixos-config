@@ -260,6 +260,7 @@ in {
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
           export ANDROID_HOME=~/Android/Sdk
+          export JIRA_API_TOKEN=ATATT3xFfGF0vN45Q2UVkqgug3ZcOYuUUQGYjfxT9y1sPQRWCCNGyY6byBeEyTM2R5WH0oNcFKU46Wqs03dm-EkMsMb71KiNdNdrOwjaDl_rVu5LExyMC3-cz0PbwrHkTYu9zMy0bxqeGVn3__mvD7IRgPKpoh_yYoSjXuhPsybzbnUKvdj09ho=5BF2709E
         '';
       };
       profileExtra = ''
