@@ -45,8 +45,6 @@ in
              env = SDL_VIDEODRIVER, x11
              env = GDK_SCALE, 1.25
              env = HYPRCURSOR_SIZE,14
-             env = ANDROID_HOME, ~/Android/Sdk
-
 
              exec-once = dbus-update-activation-environment --systemd --all
              exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
