@@ -297,7 +297,7 @@ in
   fonts = {
     packages = with pkgs; [
       noto-fonts-emoji
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       font-awesome
       symbola
       material-icons
@@ -405,7 +405,7 @@ in
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
   hardware.pulseaudio.enable = false;
-  
+
   # Security / Polkit
   security.rtkit.enable = true;
   security.polkit.enable = true;

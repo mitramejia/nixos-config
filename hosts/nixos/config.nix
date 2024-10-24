@@ -18,7 +18,7 @@ in {
     ../../modules/intel-drivers.nix
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
-     inputs.p81.nixosModules.perimeter81
+    inputs.p81.nixosModules.perimeter81
   ];
 
   boot = {
@@ -360,6 +360,8 @@ in {
       plugins = with pkgs.xfce; [
         thunar-archive-plugin
         thunar-volman
+        thunar-media-tags-plugin
+        tumbler
       ];
     };
   };
@@ -437,7 +439,7 @@ in {
   fonts = {
     packages = with pkgs; [
       noto-fonts-emoji
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       font-awesome
       # Commenting Symbola out to fix install this will need to be fixed or an alternative found.
       # symbola
