@@ -35,6 +35,7 @@ in {
         tmux
         scmpuff
         alejandra
+        jira-cli-go
         jetbrains.webstorm
         jetbrains.datagrip
         genymotion
