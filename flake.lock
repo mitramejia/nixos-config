@@ -496,15 +496,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1728784485,
+        "lastModified": 1719817430,
         "narHash": "sha256-aqs6BBdpReCXPITDaJEER0GgeFV6BrZ2w2hI4i72vE4=",
-        "owner": "devusb",
+        "owner": "ksonj",
         "repo": "p81.nix",
-        "rev": "60997f631b91fb9d32003084f346ed074ee3e0e4",
+        "rev": "453857217aa9a6a6334a32f760ba79c9a8a1de29",
         "type": "github"
       },
       "original": {
-        "owner": "devusb",
+        "owner": "ksonj",
         "repo": "p81.nix",
         "type": "github"
       }
