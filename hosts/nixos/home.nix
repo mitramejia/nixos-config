@@ -253,9 +253,10 @@ in {
       enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
+      autosuggestion.enable = true;
       oh-my-zsh = {
         enable = true;
-        plugins = ["node" "git" "aws" "z" "tmux" "vi-mode" "aliases"];
+        plugins = ["node" "git" "aws" "z" "docker-aliases" "expand" "tmux" "last-working-dir-tmux" "vi-mode" "aliases"];
         theme = ""; # disable theme to allow nix/home-manager starship to control prompt
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
