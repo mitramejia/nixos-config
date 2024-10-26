@@ -355,6 +355,9 @@ in {
       localNetworkGameTransfers.openFirewall = true;
       dedicatedServer.openFirewall = true;
     };
+
+    gamemode.enable = true;
+
     thunar = {
       enable = true;
       plugins = with pkgs.xfce; [
