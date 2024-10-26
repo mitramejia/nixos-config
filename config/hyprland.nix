@@ -66,6 +66,9 @@ in
                force_zero_scaling = true
              }
 
+             misc {
+               focus_on_activate = false
+             }
 
              general {
                gaps_in = 6
