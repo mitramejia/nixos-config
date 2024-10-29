@@ -101,27 +101,30 @@ in
             windowrulev2 = stayfocused, title:^()$,class:^(steam)$
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
             windowrulev2 = noinitialfocus,class:^(jetbrains-webstorm)$,floating:1
+            windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
-            windowrulev2 = workspace 3, class:^(Genymotion)$
+            windowrulev2 = workspace 2, class:^(webstorm)$
+            windowrulev2 = workspace 3, class:^(datagrip)$
             windowrulev2 = workspace 4, class:^(slack)$
             windowrulev2 = workspace 4, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(Cider)$
             windowrulev2 = workspace 5, class:^(obsidian)$
             windowrulev2 = workspace 6, class:^(Cider)$
+            windowrulev2 = workspace 7, class:^(Genymotion)$
 
-            windowrulev2 = workspace 5, class:^(obsidian)$
              workspace = 1, monitor:DP-1, default:true
              workspace = 8, monitor:DP-2, default:true
 
              exec-once = [workspace 8 silent] kitty
              exec-once = [workspace 1 silent] ${browser}
              exec-once = [workspace 2 silent] webstorm
-             exec-once = [workspace 3 silent] genymotion
+             exec-once = [workspace 3 silent] datagrip
              exec-once = [workspace 4 silent] slack
              exec-once = [workspace 4 silent] zapzap
              exec-once = [workspace 5 silent] obsidian
              exec-once = [workspace 6 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
+             exec-once = [workspace 7 silent] genymotion
 
              gestures {
                workspace_swipe = true
