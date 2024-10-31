@@ -104,8 +104,8 @@ in
             windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
-            windowrulev2 = workspace 2, class:^(webstorm)$
-            windowrulev2 = workspace 3, class:^(datagrip)$
+            windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
+            windowrulev2 = workspace 3, class:^(jetbrains-datagrip)$
             windowrulev2 = workspace 4, class:^(slack)$
             windowrulev2 = workspace 4, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(Cider)$
