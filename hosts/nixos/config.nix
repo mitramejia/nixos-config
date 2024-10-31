@@ -48,7 +48,7 @@ in {
       mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
       magicOrExtension = ''\x7fELF....AI\x02'';
     };
-    plymouth.enable = true;
+    plymouth.enable = false;
   };
 
   # Styling Options
@@ -103,8 +103,6 @@ in {
     };
   };
 
-  # Extra Module Options
-  drivers.amdgpu.enable = true;
   drivers.nvidia.enable = false;
   drivers.nvidia-prime = {
     enable = false;
@@ -602,12 +600,6 @@ in {
     defaultNetwork.settings.dns_enabled = true;
   };
 
-  boot.kernelParams = [
-    "video=DP-1:3840x2160@60"
-    "video=DP-2:3840x2160@60"
-  ];
-
-  # OpenGL
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
