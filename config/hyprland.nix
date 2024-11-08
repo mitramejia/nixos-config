@@ -113,64 +113,64 @@ in
             windowrulev2 = workspace 6, class:^(Cider)$
             windowrulev2 = workspace 7, class:^(Genymotion)$
 
-             workspace = 1, monitor:DP-1, default:true
-             workspace = 8, monitor:DP-2, default:true
+            workspace = 1, monitor:DP-1, default:true
+            workspace = 8, monitor:DP-2
 
-             exec-once = [workspace 8 silent] kitty
-             exec-once = [workspace 1 silent] ${browser}
-             exec-once = [workspace 2 silent] webstorm
-             exec-once = [workspace 3 silent] datagrip
-             exec-once = [workspace 4 silent] slack
-             exec-once = [workspace 4 silent] zapzap
-             exec-once = [workspace 5 silent] obsidian
-             exec-once = [workspace 6 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
-             exec-once = [workspace 7 silent] genymotion
+            exec-once = [workspace 8 silent] kitty
+            exec-once = [workspace 1 silent] ${browser}
+            exec-once = [workspace 2 silent] webstorm
+            exec-once = [workspace 3 silent] datagrip
+            exec-once = [workspace 4 silent] slack
+            exec-once = [workspace 4 silent] zapzap
+            exec-once = [workspace 5 silent] obsidian
+            exec-once = [workspace 6 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
+            exec-once = [workspace 7 silent] genymotion
 
-             gestures {
-               workspace_swipe = true
-               workspace_swipe_fingers = 3
-             }
-             misc {
-               initial_workspace_tracking = 0
-               mouse_move_enables_dpms = true
-               key_press_enables_dpms = false
-             }
-             animations {
-               enabled = yes
-               bezier = wind, 0.05, 0.9, 0.1, 1.05
-               bezier = winIn, 0.1, 1.1, 0.1, 1.1
-               bezier = winOut, 0.3, -0.3, 0, 1
-               bezier = liner, 1, 1, 1, 1
-               animation = windows, 1, 0.3, default
-               animation = windowsIn, 1, 0.3, default
-               animation = windowsOut, 1, 0.3, default
-               animation = windowsMove, 1, 0.3, default
-               animation = border, 1, 1, liner
-               animation = fade, 1, 3, default
-               animation = workspaces, 1, 3, wind
-             }
-             decoration {
-               rounding = 10
-               drop_shadow = true
-               shadow_range = 4
-               shadow_render_power = 3
-               col.shadow = rgba(1a1a1aee)
-               blur {
-                   enabled = true
-                   size = 5
-                   passes = 3
-                   new_optimizations = on
-                   ignore_opacity = off
-               }
-             }
-             plugin {
-               hyprtrails {
-               }
-             }
-             dwindle {
-               pseudotile = true
-               preserve_split = true
-             }
+            gestures {
+              workspace_swipe = true
+              workspace_swipe_fingers = 3
+            }
+            misc {
+              initial_workspace_tracking = 0
+              mouse_move_enables_dpms = true
+              key_press_enables_dpms = false
+            }
+            animations {
+              enabled = yes
+              bezier = wind, 0.05, 0.9, 0.1, 1.05
+              bezier = winIn, 0.1, 1.1, 0.1, 1.1
+              bezier = winOut, 0.3, -0.3, 0, 1
+              bezier = liner, 1, 1, 1, 1
+              animation = windows, 1, 0.3, default
+              animation = windowsIn, 1, 0.3, default
+              animation = windowsOut, 1, 0.3, default
+              animation = windowsMove, 1, 0.3, default
+              animation = border, 1, 1, liner
+              animation = fade, 1, 3, default
+              animation = workspaces, 1, 3, wind
+            }
+            decoration {
+              rounding = 10
+              drop_shadow = true
+              shadow_range = 4
+              shadow_render_power = 3
+              col.shadow = rgba(1a1a1aee)
+              blur {
+                  enabled = true
+                  size = 5
+                  passes = 3
+                  new_optimizations = on
+                  ignore_opacity = off
+              }
+            }
+            plugin {
+              hyprtrails {
+              }
+            }
+            dwindle {
+              pseudotile = true
+              preserve_split = true
+            }
 
 
              bind = ${modifier},Return,exec,${terminal}
