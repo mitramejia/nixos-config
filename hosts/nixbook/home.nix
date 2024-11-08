@@ -3,11 +3,9 @@
   username,
   host,
   ...
-}:
-let
+}: let
   inherit (import ./variables.nix) gitUsername gitEmail;
-in
-{
+in {
   # Home Manager Settings
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
@@ -68,8 +66,8 @@ in
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
-      autoconnect = [ "qemu:///system" ];
-      uris = [ "qemu:///system" ];
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
     };
   };
 
@@ -95,20 +93,19 @@ in
     platformTheme.name = "gtk3";
   };
 
-
   # Scripts
   home.packages = [
-    (import ../../scripts/emopicker9000.nix { inherit pkgs; })
-    (import ../../scripts/task-waybar.nix { inherit pkgs; })
-    (import ../../scripts/squirtle.nix { inherit pkgs; })
-    (import ../../scripts/nvidia-offload.nix { inherit pkgs; })
+    (import ../../scripts/emopicker9000.nix {inherit pkgs;})
+    (import ../../scripts/task-waybar.nix {inherit pkgs;})
+    (import ../../scripts/squirtle.nix {inherit pkgs;})
+    (import ../../scripts/nvidia-offload.nix {inherit pkgs;})
     (import ../../scripts/wallsetter.nix {
       inherit pkgs;
       inherit username;
     })
-    (import ../../scripts/web-search.nix { inherit pkgs; })
-    (import ../../scripts/rofi-launcher.nix { inherit pkgs; })
-    (import ../../scripts/screenshootin.nix { inherit pkgs; })
+    (import ../../scripts/web-search.nix {inherit pkgs;})
+    (import ../../scripts/rofi-launcher.nix {inherit pkgs;})
+    (import ../../scripts/screenshootin.nix {inherit pkgs;})
     (import ../../scripts/list-hypr-bindings.nix {
       inherit pkgs;
       inherit host;
@@ -122,7 +119,7 @@ in
           after_sleep_cmd = "hyprctl dispatch dpms on";
           ignore_dbus_inhibit = false;
           lock_cmd = "hyprlock";
-          };
+        };
         listener = [
           {
             timeout = 900;
@@ -162,10 +159,10 @@ in
         inactive_tab_font_style bold
       '';
     };
-     starship = {
-            enable = true;
-            package = pkgs.starship;
-     };
+    starship = {
+      enable = true;
+      package = pkgs.starship;
+    };
     bash = {
       enable = true;
       enableCompletion = true;
