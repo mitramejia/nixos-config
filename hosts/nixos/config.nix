@@ -266,7 +266,6 @@ in {
       xz
       zlib
     ];
-    firefox.enable = false;
     starship = {
       enable = true;
       settings = {
