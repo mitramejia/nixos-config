@@ -104,8 +104,6 @@ in
             windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
-            windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
-            windowrulev2 = workspace 3, class:^(jetbrains-datagrip)$
             windowrulev2 = workspace 4, class:^(slack)$
             windowrulev2 = workspace 4, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(Cider)$
@@ -114,11 +112,16 @@ in
             windowrulev2 = workspace 7, class:^(Genymotion)$
 
             workspace = 1, monitor:DP-1, default:true
-            workspace = 8, monitor:DP-2
+            workspace = 2, monitor:DP-1, default:true
+            workspace = 3, monitor:DP-1, default:true
+            workspace = 4, monitor:DP-1, default:true
+            workspace = 5, monitor:DP-1, default:true
+            workspace = 6, monitor:DP-1, default:true
+            workspace = 7, monitor:DP-1, default:true
+            workspace = 8, monitor:DP-2, default: true
 
             exec-once = [workspace 8 silent] kitty
             exec-once = [workspace 1 silent] ${browser}
-            exec-once = [workspace 2 silent] webstorm
             exec-once = [workspace 3 silent] datagrip
             exec-once = [workspace 4 silent] slack
             exec-once = [workspace 4 silent] zapzap
