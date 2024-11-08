@@ -5,11 +5,9 @@
   username,
   options,
   ...
-}:
-let
+}: let
   inherit (import ./variables.nix) keyboardLayout;
-in
-{
+in {
   imports = [
     ./hardware.nix
     ./users.nix
@@ -25,8 +23,8 @@ in
     # Kernel
     kernelPackages = pkgs.linuxPackages_zen;
     # This is for OBS Virtual Cam Support
-    kernelModules = [ "v4l2loopback" ];
-    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    kernelModules = ["v4l2loopback"];
+    extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
     # Needed For Some Steam Games
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
@@ -80,7 +78,7 @@ in
     cursor.size = 24;
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
         name = "JetBrainsMono Nerd Font Mono";
       };
       sansSerif = {
@@ -115,7 +113,7 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = host;
-  networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
+  networking.timeServers = options.networking.timeServers.default ++ ["pool.ntp.org"];
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -136,7 +134,80 @@ in
   };
 
   programs = {
-    firefox.enable = false;
+    firefox = {
+      enable = true;
+      profiles = {
+        default = {
+          id = 0;
+          name = "default";
+          isDefault = true;
+          settings = {
+            "signon.rememberSignons" = false;
+            "widget.use-xdg-desktop-portal.file-picker" = 1;
+            "browser.aboutConfig.showWarning" = false;
+            "browser.compactmode.show" = false;
+            "browser.cache.disk.enable" = false; # Be kind to hard drive
+
+            "mousewheel.default.delta_multiplier_x" = 20;
+            "mousewheel.default.delta_multiplier_y" = 20;
+            "mousewheel.default.delta_multiplier_z" = 20;
+
+            # Firefox 75+ remembers the last workspace it was opened on as part of its session management.
+            # This is annoying, because I can have a blank workspace, click Firefox from the launcher, and
+            # then have Firefox open on some other workspace.
+            "widget.disable-workspace-management" = true;
+            default = {
+              id = 0;
+              name = "default";
+              isDefault = true;
+              search = {
+                engines = {
+                  "Nix Packages" = {
+                    urls = [
+                      {
+                        template = "https://search.nixos.org/packages";
+                        params = [
+                          {
+                            name = "type";
+                            value = "packages";
+                          }
+                          {
+                            name = "query";
+                            value = "{searchTerms}";
+                          }
+                        ];
+                      }
+                    ];
+                    icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                    definedAliases = ["@np"];
+                  };
+                  "NixOS Wiki" = {
+                    urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
+                    iconUpdateURL = "https://nixos.wiki/favicon.png";
+                    updateInterval = 24 * 60 * 60 * 1000; # every day
+                    definedAliases = ["@nw"];
+                  };
+                  "Bing".metaData.hidden = true;
+                  "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+                };
+              };
+              extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+                firefox-color
+                vimium
+                react-devtools
+                reduxdevtools
+                onepassword-password-manager
+              ];
+            };
+          };
+          search = {
+            force = true;
+            default = "DuckDuckGo";
+            order = ["DuckDuckGo" "Google"];
+          };
+        };
+      };
+    };
     starship = {
       enable = true;
       settings = {
@@ -290,7 +361,6 @@ in
     gimp
     pavucontrol
     tree
-    spotify
     neovide
     greetd.tuigreet
   ];
@@ -387,15 +457,15 @@ in
     nfs.server.enable = false;
   };
   systemd.services.flatpak-repo = {
-    path = [ pkgs.flatpak ];
+    path = [pkgs.flatpak];
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
   hardware.sane = {
     enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
-    disabledDefaultBackends = [ "escl" ];
+    extraBackends = [pkgs.sane-airscan];
+    disabledDefaultBackends = ["escl"];
   };
 
   # Extra Logitech Support
@@ -443,8 +513,8 @@ in
         "nix-command"
         "flakes"
       ];
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
     gc = {
       automatic = true;
