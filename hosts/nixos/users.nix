@@ -21,16 +21,13 @@ in {
       shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
       packages = with pkgs; [
-        bitwarden-desktop
         vscode
-        bitwarden-cli
         slack
         lmstudio
         obsidian
         libreoffice
         vlc
         monitor
-        spotify
         rofi-power-menu
         tmux
         scmpuff
@@ -49,7 +46,6 @@ in {
         nodePackages.eas-cli
         watchman
         zoom-us
-        firefox
         chromium
         chromedriver
         amdgpu_top
