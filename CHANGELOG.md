@@ -39,7 +39,6 @@ This release has a big theming change as well as including the move back to rofi
 - Removed unnecessary Hyprland input in flake as home manager doesn't use it.
 - Turned off nfs by default
 - Hyprland plugins are now disabled in the config by default.
-- Fastfetch is now replacing neofetch.
 - Btop is back baby!
 - Switching to Brave as the default to protect user privacy.
 - Replaced lsd with eza for a better looking experience.
