@@ -2,6 +2,7 @@
   pkgs,
   username,
   host,
+  inputs,
   ...
 }: let
   inherit (import ./variables.nix) gitUsername gitEmail;
@@ -260,13 +261,12 @@ in {
                   };
                 };
               };
-              #              extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-              #                firefox-color
-              #                vimium
-              #                react-devtools
-              #                reduxdevtools
-              #                onepassword-password-manager
-              #              ];
+              extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+                firefox-color
+                vimium
+                react-devtools
+                reduxdevtools
+              ];
             };
           };
         };
