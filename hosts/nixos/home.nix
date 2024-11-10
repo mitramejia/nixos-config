@@ -14,7 +14,6 @@ in {
   # Import Program Configurations
   imports = [
     ../../config/emoji.nix
-    ../../config/fastfetch
     ../../config/hyprland.nix
     ../../config/neovim.nix
     ../../config/rofi/rofi.nix
@@ -23,7 +22,6 @@ in {
     ../../config/swaync.nix
     ../../config/waybar.nix
     ../../config/wlogout.nix
-    ../../config/fastfetch
   ];
 
   # Place Files Inside Home Directory
@@ -72,15 +70,6 @@ in {
       git_protocol = "ssh";
       editor = "vim";
     };
-  };
-
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-    ];
   };
 
   programs.jq.enable = true;

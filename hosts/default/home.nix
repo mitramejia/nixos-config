@@ -14,7 +14,6 @@ in {
   # Import Program Configurations
   imports = [
     ../../config/emoji.nix
-    ../../config/fastfetch
     ../../config/hyprland.nix
     ../../config/neovim.nix
     ../../config/rofi/rofi.nix
@@ -23,7 +22,6 @@ in {
     ../../config/swaync.nix
     ../../config/waybar.nix
     ../../config/wlogout.nix
-    ../../config/fastfetch
   ];
 
   # Place Files Inside Home Directory
@@ -173,7 +171,6 @@ in {
         #fi
       '';
       initExtra = ''
-        fastfetch
         if [ -f $HOME/.bashrc-personal ]; then
           source $HOME/.bashrc-personal
         fi

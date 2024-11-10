@@ -471,7 +471,7 @@ in {
         variant = "";
       };
     };
-    displayManager.autoLogin.enable = false;
+    displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "mitra";
     greetd = {
       enable = true;
