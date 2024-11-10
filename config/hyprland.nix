@@ -102,13 +102,13 @@ in
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
             windowrulev2 = noinitialfocus,class:^(jetbrains-webstorm)$,floating:1
             windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
+            windowrulev2 = noinitialfocus,class:^(jetbrains-studio)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 5, class:^(slack)$
             windowrulev2 = workspace 5, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(obsidian)$
             windowrulev2 = workspace 7, class:^(Cider)$
-            windowrulev2 = workspace 8, class:^(android-studio)$
 
             workspace = 1, monitor:DP-1, default:true
             workspace = 2, monitor:DP-1, default:true
