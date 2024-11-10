@@ -1,18 +1,25 @@
 {
-  # Git Configuration ( For Pulling Software Repos )
+  # Git Configuration (For Pulling Software Repositories)
+  # Set your Git username and email for repository operations.
+  # More info: https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
   gitUsername = "mitramejia";
   gitEmail = "mitra@arrofinance.com";
 
   # Hyprland Settings
-  extraMonitorSettings = "monitor=,preffered,auto,1.333,transform,3";
+  # Configure monitor settings like resolution, orientation, etc.
+  # Documentation: https://github.com/larkery/Hyprland
+  extraMonitorSettings = "monitor=,preferred,auto,1.333,transform,3";
 
   # Waybar Settings
-  clock24h = false;
+  # Customize the Waybar appearance and settings, which is a highly customizable status bar for Wayland.
+  # Documentation: https://github.com/Alexays/Waybar
+  clock24h = false; # Set to true for 24-hour format, false for 12-hour format
+  theme = "Catppuccin-Mocha"; # Theme for Waybar
+  wallpaper_img = "/home/mitra/Pictures/Wallpapers/yosemite.png"; # Path to the wallpaper image
 
-  theme = "Catppuccin-Mocha";
-  wallpaper_img = "/home/mitra/Pictures/Wallpapers/yosemite.png";
   # Program Options
-  browser = "firefox"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "kitty"; # Set Default System Terminal
-  keyboardLayout = "us";
+  # Set default applications for the system.
+  browser = "firefox"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
+  terminal = "kitty"; # Default terminal emulator
+  keyboardLayout = "us"; # Keyboard layout configuration
 }

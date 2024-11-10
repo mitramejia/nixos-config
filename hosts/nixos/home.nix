@@ -63,6 +63,11 @@ in {
     userName = "${gitUsername}";
     userEmail = "${gitEmail}";
     difftastic = {enable = true;};
+    extraConfig = {
+      push = {
+        autoSetupRemote = true;
+      };
+    };
   };
 
   programs.gh = {
