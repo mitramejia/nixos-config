@@ -104,12 +104,11 @@ in
             windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
-            windowrulev2 = workspace 4, class:^(slack)$
-            windowrulev2 = workspace 4, class:^(zapzap)$
-            windowrulev2 = workspace 6, class:^(Cider)$
-            windowrulev2 = workspace 5, class:^(obsidian)$
-            windowrulev2 = workspace 6, class:^(Cider)$
-            windowrulev2 = workspace 7, class:^(Genymotion)$
+            windowrulev2 = workspace 5, class:^(slack)$
+            windowrulev2 = workspace 5, class:^(zapzap)$
+            windowrulev2 = workspace 6, class:^(obsidian)$
+            windowrulev2 = workspace 7, class:^(Cider)$
+            windowrulev2 = workspace 8, class:^(android-studio)$
 
             workspace = 1, monitor:DP-1, default:true
             workspace = 2, monitor:DP-1, default:true
@@ -118,16 +117,19 @@ in
             workspace = 5, monitor:DP-1, default:true
             workspace = 6, monitor:DP-1, default:true
             workspace = 7, monitor:DP-1, default:true
-            workspace = 8, monitor:DP-2, default: true
+            workspace = 8, monitor:DP-1, default:true
+            workspace = 9, monitor:DP-2, default: true
 
-            exec-once = [workspace 8 silent] kitty
             exec-once = [workspace 1 silent] ${browser}
-            exec-once = [workspace 3 silent] datagrip
-            exec-once = [workspace 4 silent] slack
-            exec-once = [workspace 4 silent] zapzap
-            exec-once = [workspace 5 silent] obsidian
-            exec-once = [workspace 6 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
-            exec-once = [workspace 7 silent] genymotion
+            exec-once = [workspace 2 silent] webstorm
+            exec-once = [workspace 3 silent] webstorm
+            exec-once = [workspace 4 silent] datagrip
+            exec-once = [workspace 5 silent] slack
+            exec-once = [workspace 5 silent] zapzap
+            exec-once = [workspace 6 silent] obsidian
+            exec-once = [workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
+            exec-once = [workspace 8 silent] android-studio
+            exec-once = [workspace 9 silent] kitty
 
             gestures {
               workspace_swipe = true
@@ -148,7 +150,7 @@ in
               animation = windowsIn, 1, 0.3, default
               animation = windowsOut, 1, 0.3, default
               animation = windowsMove, 1, 0.3, default
-              animation = border, 1, 1, liner
+              animation = border, 2, 2, liner
               animation = fade, 1, 3, default
               animation = workspaces, 1, 3, wind
             }
