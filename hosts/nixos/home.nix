@@ -23,6 +23,7 @@ in {
     ../../config/swaync.nix
     ../../config/waybar.nix
     ../../config/wlogout.nix
+    ../../config/firefox.nix
   ];
 
   # Place Files Inside Home Directory
@@ -49,7 +50,7 @@ in {
     fill_shape=false
   '';
 
-  # Add IdeaVim configuration
+  # Add IdeaVim configuration for JetBrains IDE's
   home.file.".ideavimrc".source = ../../config/ideavim/.ideavimrc;
 
   programs.fzf = {
@@ -57,6 +58,7 @@ in {
     defaultOptions = ["--color 16"];
     enableZshIntegration = true;
   };
+
   # Install & Configure Git
   programs.git = {
     enable = true;
@@ -210,74 +212,9 @@ in {
     };
   };
 
+  programs.home-manager.enable = true;
+
   programs = {
-    firefox = {
-      enable = true;
-      profiles = {
-        default = {
-          id = 0;
-          name = "default";
-          isDefault = true;
-          settings = {
-            "signon.rememberSignons" = false;
-            "widget.use-xdg-desktop-portal.file-picker" = 1;
-            "browser.aboutConfig.showWarning" = false;
-            "browser.compactmode.show" = false;
-            "browser.cache.disk.enable" = false; # Be kind to hard drive
-
-            "mousewheel.default.delta_multiplier_x" = 20;
-            "mousewheel.default.delta_multiplier_y" = 20;
-            "mousewheel.default.delta_multiplier_z" = 20;
-
-            # Firefox 75+ remembers the last workspace it was opened on as part of its session management.
-            # This is annoying, because I can have a blank workspace, click Firefox from the launcher, and
-            # then have Firefox open on some other workspace.
-            "widget.disable-workspace-management" = true;
-            default = {
-              id = 0;
-              name = "default";
-              isDefault = true;
-              search = {
-                engines = {
-                  "Nix Packages" = {
-                    urls = [
-                      {
-                        template = "https://search.nixos.org/packages";
-                        params = [
-                          {
-                            name = "type";
-                            value = "packages";
-                          }
-                          {
-                            name = "query";
-                            value = "{searchTerms}";
-                          }
-                        ];
-                      }
-                    ];
-                    icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                    definedAliases = ["@np"];
-                  };
-                  "NixOS Wiki" = {
-                    urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
-                    iconUpdateURL = "https://nixos.wiki/favicon.png";
-                    updateInterval = 24 * 60 * 60 * 1000; # every day
-                    definedAliases = ["@nw"];
-                  };
-                };
-              };
-              extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-                firefox-color
-                vimium
-                react-devtools
-                reduxdevtools
-              ];
-            };
-          };
-        };
-      };
-    };
-
     btop = {
       enable = true;
       settings = {
@@ -357,7 +294,6 @@ in {
       };
     };
 
-    home-manager.enable = true;
 
     hyprlock = {
       enable = true;
