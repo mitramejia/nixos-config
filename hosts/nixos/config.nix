@@ -12,11 +12,6 @@ in {
   imports = [
     ./hardware.nix
     ./users.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
-    ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
     inputs.p81.nixosModules.perimeter81
   ];
@@ -381,7 +376,6 @@ in {
     cmatrix
     lolcat
     htop
-    brave
     libvirt
     lxqt.lxqt-policykit
     lm_sensors
@@ -508,7 +502,6 @@ in {
       nssmdns4 = true;
       openFirewall = true;
     };
-    ipp-usb.enable = true;
     syncthing = {
       enable = false;
       user = "${username}";

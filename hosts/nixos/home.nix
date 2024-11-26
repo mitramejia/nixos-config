@@ -294,7 +294,6 @@ in {
       };
     };
 
-
     hyprlock = {
       enable = true;
       settings = {
