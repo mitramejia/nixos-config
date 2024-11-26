@@ -102,13 +102,13 @@ in
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
             windowrulev2 = noinitialfocus,class:^(jetbrains-webstorm)$,floating:1
             windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
+            windowrulev2 = noinitialfocus,class:^(jetbrains-studio)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 5, class:^(slack)$
             windowrulev2 = workspace 5, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(obsidian)$
             windowrulev2 = workspace 7, class:^(Cider)$
-            windowrulev2 = workspace 8, class:^(jetbrains-studio)$
 
             workspace = 1, monitor:DP-1, default:true
             workspace = 2, monitor:DP-1, default:true
@@ -121,7 +121,6 @@ in
             workspace = 9, monitor:DP-2, default: true
 
             exec-once = [workspace 1 silent] ${browser}
-            exec-once = [workspace 1 silent] 1password
             exec-once = [workspace 2 silent] webstorm
             exec-once = [workspace 3 silent] webstorm
             exec-once = [workspace 4 silent] datagrip
@@ -189,6 +188,7 @@ in
              # Take screenshot
              bind = ${modifier},S,exec,grimblast save area
              bind = ${modifier},D,exec,discord
+             bind = ${modifier},O,exec,obs
              bind = ${modifier},E,exec,hyprpicker -a
              bind = ${modifier},G,exec,gimp
              bind = ${modifier}SHIFT,G,exec,godot4
