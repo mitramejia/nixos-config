@@ -11,10 +11,6 @@ in {
   imports = [
     ./hardware.nix
     ./users.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
   ];
@@ -73,8 +69,6 @@ in {
     # };
     polarity = "dark";
     opacity.terminal = 0.8;
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
     cursor.size = 24;
     fonts = {
       monospace = {
@@ -99,14 +93,7 @@ in {
   };
 
   # Extra Module Options
-  drivers.amdgpu.enable = true;
-  drivers.nvidia.enable = false;
-  drivers.nvidia-prime = {
-    enable = false;
-    intelBusID = "";
-    nvidiaBusID = "";
-  };
-  drivers.intel.enable = false;
+  #  drivers.amdgpu.enable = true;
   vm.guest-services.enable = false;
   local.hardware-clock.enable = false;
 
@@ -280,7 +267,6 @@ in {
     swww
     grim
     slurp
-    file-roller
     swaynotificationcenter
     imv
     mpv
@@ -456,11 +442,6 @@ in {
     enable = true;
     dockerCompat = true;
     defaultNetwork.settings.dns_enabled = true;
-  };
-
-  # OpenGL
-  hardware.graphics = {
-    enable = true;
   };
 
   console.keyMap = "${keyboardLayout}";

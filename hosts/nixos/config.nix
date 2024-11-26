@@ -4,6 +4,7 @@
   host,
   username,
   options,
+  unstable,
   inputs,
   ...
 }: let
@@ -12,10 +13,7 @@ in {
   imports = [
     ./hardware.nix
     ./users.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
+    # ../../modules/amd-drivers.nix
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
     inputs.p81.nixosModules.perimeter81
@@ -78,9 +76,6 @@ in {
 
     polarity = "dark";
     opacity.terminal = 1.0;
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 30;
     fonts = {
       monospace = {
         package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
@@ -103,13 +98,6 @@ in {
     };
   };
 
-  drivers.nvidia.enable = false;
-  drivers.nvidia-prime = {
-    enable = false;
-    intelBusID = "";
-    nvidiaBusID = "";
-  };
-  drivers.intel.enable = false;
   vm.guest-services.enable = false;
   local.hardware-clock.enable = false;
 
@@ -136,136 +124,10 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  programs.hyprland = {
-    enable = true;
-    # set the flake package
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    # make sure to also set the portal package, so that they are in sync
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  };
-
   programs = {
-    _1password.enable = true;
-    _1password-gui.enable = true;
-
     adb.enable = true;
 
     nix-ld.enable = true;
-    nix-ld.libraries = with pkgs; [
-      SDL
-      SDL2
-      SDL2_image
-      SDL2_mixer
-      SDL2_ttf
-      SDL_image
-      SDL_mixer
-      SDL_ttf
-      alsa-lib
-      at-spi2-atk
-      at-spi2-core
-      atk
-      bzip2
-      cairo
-      cups
-      curlWithGnuTls
-      dbus
-      dbus-glib
-      desktop-file-utils
-      e2fsprogs
-      expat
-      flac
-      fontconfig
-      freeglut
-      freetype
-      fribidi
-      fuse
-      fuse3
-      gdk-pixbuf
-      glew110
-      glib
-      gmp
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-ugly
-      gst_all_1.gstreamer
-      gtk2
-      harfbuzz
-      icu
-      keyutils.lib
-      libGL
-      libGLU
-      libappindicator-gtk2
-      libcaca
-      libcanberra
-      libcap
-      libclang.lib
-      libdbusmenu
-      libdrm
-      libgcrypt
-      libgpg-error
-      libidn
-      libjack2
-      libjpeg
-      libmikmod
-      libogg
-      libpng12
-      libpulseaudio
-      librsvg
-      libsamplerate
-      libthai
-      libtheora
-      libtiff
-      libudev0-shim
-      libusb1
-      libuuid
-      libvdpau
-      libvorbis
-      libvpx
-      libxcrypt-legacy
-      libxkbcommon
-      libxml2
-      mesa
-      nspr
-      nss
-      openssl
-      p11-kit
-      pango
-      pixman
-      python3
-      speex
-      stdenv.cc.cc
-      tbb
-      udev
-      vulkan-loader
-      wayland
-      xorg.libICE
-      xorg.libSM
-      xorg.libX11
-      xorg.libXScrnSaver
-      xorg.libXcomposite
-      xorg.libXcursor
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXft
-      xorg.libXi
-      xorg.libXinerama
-      xorg.libXmu
-      xorg.libXrandr
-      xorg.libXrender
-      xorg.libXt
-      xorg.libXtst
-      xorg.libXxf86vm
-      xorg.libpciaccess
-      xorg.libxcb
-      xorg.xcbutil
-      xorg.xcbutilimage
-      xorg.xcbutilkeysyms
-      xorg.xcbutilrenderutil
-      xorg.xcbutilwm
-      xorg.xkeyboardconfig
-      xz
-      zlib
-    ];
     starship = {
       enable = true;
       settings = {
@@ -373,6 +235,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    unstable._1password-gui
     vim
     wget
     killall
@@ -381,7 +244,6 @@ in {
     cmatrix
     lolcat
     htop
-    brave
     libvirt
     lxqt.lxqt-policykit
     lm_sensors
@@ -402,8 +264,6 @@ in {
     bat
     pkg-config
     meson
-    hyprpicker
-    ninja
     brightnessctl
     virt-viewer
     swappy
@@ -414,13 +274,10 @@ in {
     playerctl
     nh
     nixfmt-rfc-style
-    discord
     libvirt
     swww
-    hyprpaper
     grim
     slurp
-    file-roller
     swaynotificationcenter
     imv
     mpv
@@ -429,11 +286,6 @@ in {
     tree
     neovide
     greetd.tuigreet
-    gearlever
-    jetbrains.webstorm
-    jetbrains.datagrip
-    android-studio
-    android-studio-tools
   ];
 
   fonts = {
@@ -453,28 +305,21 @@ in {
   };
 
   # Extra Portal Configuration
-  xdg.portal = {
-    enable = true;
-    config = {
-      common.default = ["gtk"];
-      hyprland.default = ["gtk" "hyprland"];
-    };
-  };
-
-  # Services to start
   services = {
     perimeter81.enable = true;
     xserver = {
-      enable = false;
+      enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
       xkb = {
         layout = "${keyboardLayout}";
         variant = "";
       };
     };
-    displayManager.autoLogin.enable = true;
+    displayManager.autoLogin.enable = false;
     displayManager.autoLogin.user = "mitra";
     greetd = {
-      enable = true;
+      enable = false;
       vt = 3;
       settings = {
         default_session = {
@@ -496,19 +341,11 @@ in {
     gvfs.enable = true;
     openssh.enable = true;
     flatpak.enable = true;
-    printing = {
-      enable = true;
-      drivers = [
-        # pkgs.hplipWithPlugin
-      ];
-    };
-    gnome.gnome-keyring.enable = true;
     avahi = {
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
     };
-    ipp-usb.enable = true;
     syncthing = {
       enable = false;
       user = "${username}";
@@ -523,6 +360,9 @@ in {
     };
     rpcbind.enable = false;
     nfs.server.enable = false;
+  };
+  services.resolved = {
+    enable = true;
   };
   systemd.services.flatpak-repo = {
     path = [pkgs.flatpak];
@@ -547,31 +387,6 @@ in {
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
-
-  # Security / Polkit
-  security.rtkit.enable = true;
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (
-        subject.isInGroup("users")
-          && (
-            action.id == "org.freedesktop.login1.reboot" ||
-            action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
-            action.id == "org.freedesktop.login1.power-off" ||
-            action.id == "org.freedesktop.login1.power-off-multiple-sessions"
-          )
-        )
-      {
-        return polkit.Result.YES;
-      }
-    })
-  '';
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
-  };
 
   # Optimization settings and garbage collection automation
   nix = {
@@ -599,10 +414,10 @@ in {
     defaultNetwork.settings.dns_enabled = true;
   };
 
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [rocmPackages.clr.icd];
+    driSupport = true;
+    driSupport32Bit = true;
   };
 
   # This configu=ration ensures that AMD video drivers are included

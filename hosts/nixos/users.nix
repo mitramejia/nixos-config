@@ -1,6 +1,7 @@
 {
   pkgs,
   username,
+  unstable,
   ...
 }: let
   inherit (import ./variables.nix) gitUsername;
@@ -28,29 +29,24 @@ in {
         libreoffice
         vlc
         monitor
-        rofi-power-menu
         tmux
         scmpuff
         alejandra
-        jira-cli-go
-        jetbrains.webstorm
-        jetbrains.datagrip
-        genymotion
+        insomnia
+        android-studio
+        android-studio-tools
+        unstable.jetbrains.webstorm
+        unstable.jetbrains.datagrip
         virtualbox
-        httpie
-        httpie-desktop
-        # Arro Frontend development
         nodejs_20
         pnpm
         maestro
         nodePackages.eas-cli
         watchman
-        zoom-us
         chromium
         chromedriver
         amdgpu_top
         zapzap
-        youtube-music
         grimblast
       ];
     };
