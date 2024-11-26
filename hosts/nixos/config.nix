@@ -97,15 +97,7 @@ in {
       };
     };
   };
-
-  drivers.nvidia.enable = false;
-  drivers.nvidia-prime = {
-    enable = false;
-    intelBusID = "";
-    nvidiaBusID = "";
-  };
-  drivers.intel.enable = false;
-  vm.guest-services.enable = false;
+  vm.guest-services.enable = true;
   local.hardware-clock.enable = false;
 
   # Enable networking
@@ -465,7 +457,7 @@ in {
         variant = "";
       };
     };
-    displayManager.autoLogin.enable = true;
+    displayManager.autoLogin.enable = false;
     displayManager.autoLogin.user = "mitra";
     greetd = {
       enable = true;
@@ -496,7 +488,6 @@ in {
         # pkgs.hplipWithPlugin
       ];
     };
-    gnome.gnome-keyring.enable = true;
     avahi = {
       enable = true;
       nssmdns4 = true;
@@ -530,8 +521,8 @@ in {
   };
 
   # Extra Logitech Support
-  hardware.logitech.wireless.enable = false;
-  hardware.logitech.wireless.enableGraphical = false;
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
 
   # Bluetooth Support
   hardware.bluetooth.enable = true;
@@ -586,11 +577,6 @@ in {
 
   # Virtualization / Containers
   virtualisation.libvirtd.enable = true;
-  virtualisation.podman = {
-    enable = false;
-    dockerCompat = true;
-    defaultNetwork.settings.dns_enabled = true;
-  };
 
   hardware.graphics = {
     enable = true;
@@ -623,4 +609,5 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
 }
