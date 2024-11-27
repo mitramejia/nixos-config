@@ -32,19 +32,16 @@ in {
         tmux
         scmpuff
         alejandra
-        jira-cli-go
         jetbrains.webstorm
         jetbrains.datagrip
+        android-studio
+        android-studio-tools
+        thunderbird
         genymotion
         virtualbox
         httpie
         httpie-desktop
         # Arro Frontend development
-        nodejs_20
-        pnpm
-        maestro
-        nodePackages.eas-cli
-        watchman
         zoom-us
         chromium
         chromedriver
