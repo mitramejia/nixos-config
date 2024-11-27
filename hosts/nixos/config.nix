@@ -400,7 +400,6 @@ in {
     playerctl
     nh
     nixfmt-rfc-style
-    discord
     libvirt
     swww
     hyprpaper
@@ -410,16 +409,11 @@ in {
     swaynotificationcenter
     imv
     mpv
-    gimp
-    pavucontrol
     tree
     neovide
     greetd.tuigreet
     gearlever
-    jetbrains.webstorm
-    jetbrains.datagrip
-    android-studio
-    android-studio-tools
+    pavucontrol
   ];
 
   fonts = {
@@ -609,5 +603,4 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
