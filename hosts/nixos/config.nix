@@ -94,7 +94,6 @@ in {
       };
     };
   };
-  vm.guest-services.enable = true;
   local.hardware-clock.enable = false;
 
   # Enable networking
