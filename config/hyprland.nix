@@ -30,31 +30,13 @@ in
       in
         concatStrings [
           ''
-             env = NIXOS_OZONE_WL, 1
-             env = MOZ_ENABLE_WAYLAND, 1
-             env = NIXPKGS_ALLOW_UNFREE, 1
-             env = XDG_CURRENT_DESKTOP, Hyprland
-             env = XDG_SESSION_TYPE, wayland
-             env = XDG_SESSION_DESKTOP, Hyprland
-             env = GDK_BACKEND, wayland, x11
-             env = CLUTTER_BACKEND, wayland
-             env = QT_QPA_PLATFORM=wayland;xcb
-             env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
-             env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
-             env = SDL_VIDEODRIVER, x11
-             env = GDK_SCALE, 1.25
-             env = HYPRCURSOR_SIZE,14
-
              exec-once = dbus-update-activation-environment --systemd --all
              exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-             exec-once = waybar
-             exec-once = hyprpaper
-             exec-once = swaync
+             exec-once = waybar & hyprpaper & swaync
 
-             exec-once = nm-applet --indicator
+             exec-once = nm-applet --indicator &
              exec-once = lxqt-policykit-agent
-
 
              monitor=DP-1,preferred,auto,1.25
              monitor=DP-2,preferred,auto,1.25,transform,3
@@ -88,7 +70,7 @@ in
                  disable_while_typing = true
                  scroll_factor = 0.8
                }
-               sensitivity = 1 # -1.0 - 1.0, 0 means no modification.
+               sensitivity = 0.9 # -1.0 - 1.0, 0 means no modification.
                accel_profile = flat
              }
 
@@ -122,13 +104,11 @@ in
 
             exec-once = [workspace 1 silent] ${browser}
             exec-once = [workspace 2 silent] webstorm
-            exec-once = [workspace 3 silent] webstorm
             exec-once = [workspace 4 silent] datagrip
             exec-once = [workspace 5 silent] slack
             exec-once = [workspace 5 silent] zapzap
             exec-once = [workspace 6 silent] obsidian
             exec-once = [workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
-            exec-once = [workspace 8 silent] android-studio
             exec-once = [workspace 9 silent] kitty
 
             gestures {
