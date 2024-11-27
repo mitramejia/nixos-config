@@ -73,9 +73,6 @@ in {
 
     polarity = "dark";
     opacity.terminal = 1.0;
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 30;
     fonts = {
       monospace = {
         package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
