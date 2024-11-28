@@ -409,6 +409,7 @@ in {
     mpv
     tree
     neovide
+    neofetch
     greetd.tuigreet
     gearlever
     pavucontrol
