@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   host,
   username,
@@ -18,6 +19,11 @@ in {
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_latest;
+
+    # This is for Virtual Cam Support, without this webcams may not work on zoom and google meet
+    kernelModules = ["v4l2loopback"];
+    extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
+
     # Needed For Some Steam Games
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
