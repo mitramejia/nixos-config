@@ -35,7 +35,7 @@ in
              exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = waybar & hyprpaper & swaync
 
-             exec-once = nm-applet --indicator &
+             exec-once = nm-applet --indicator
              exec-once = lxqt-policykit-agent
 
              monitor=DP-1,preferred,auto,1.25
