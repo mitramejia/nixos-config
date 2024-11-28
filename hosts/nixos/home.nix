@@ -279,7 +279,7 @@ in {
         fu = "nh os switch --hostname ${host} --update /home/${username}/zaneyos";
         zu = "sh <(curl -L https://gitlab.com/Zaney/zaneyos/-/raw/main/install-zaneyos.sh)";
         ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
-        v = "nvim";
+        v = "lvim";
         cat = "bat";
         ls = "eza --icons";
         ll = "eza -lh --icons --grid --group-directories-first";
@@ -291,6 +291,7 @@ in {
         gplo = "git pull origin";
         open-pr = "gh pr create";
         p = "pnpm";
+        vim =	"lvim";
       };
     };
 

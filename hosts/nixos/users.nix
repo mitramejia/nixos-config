@@ -49,6 +49,7 @@ in {
         zapzap
         youtube-music
         grimblast
+        lunarvim
       ];
     };
     # "newuser" = {
