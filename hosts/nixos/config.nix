@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   host,
   username,
@@ -19,9 +18,6 @@ in {
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_latest;
-    # This is for OBS Virtual Cam Support
-    kernelModules = ["v4l2loopback"];
-    extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
     # Needed For Some Steam Games
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
@@ -472,22 +468,10 @@ in {
     gvfs.enable = true;
     openssh.enable = true;
     flatpak.enable = true;
-    printing = {
-      enable = true;
-      drivers = [
-        # pkgs.hplipWithPlugin
-      ];
-    };
     avahi = {
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
-    };
-    syncthing = {
-      enable = false;
-      user = "${username}";
-      dataDir = "/home/${username}";
-      configDir = "/home/${username}/.config/syncthing";
     };
     pipewire = {
       enable = true;
@@ -503,11 +487,6 @@ in {
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
-  };
-  hardware.sane = {
-    enable = true;
-    extraBackends = [pkgs.sane-airscan];
-    disabledDefaultBackends = ["escl"];
   };
 
   # Extra Logitech Support
@@ -598,5 +577,5 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
