@@ -121,7 +121,7 @@ vmap fp <action>(FindInPath)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 " Press `F` to activate Target Mode
-nmap F <Action>(AceTargetAction)
+nmap F <Action>(AceLineAction)
 
 " Bookmarks
 map <leader>ba <action>(ToggleBookmarkWithMnemonic)
@@ -149,9 +149,6 @@ nmap g6 <action>(GotoBookmark6)
 nmap g7 <action>(GotoBookmark7)
 nmap g8 <action>(GotoBookmark8)
 nmap g9 <action>(GotoBookmark9)
-
-" Press `g` to activate Line Mode
-map <leader>Fl <Action>(AceLineAction)
 
 " Close active tab
 map <leader>q <action>(CloseContent)
