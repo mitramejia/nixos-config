@@ -135,6 +135,9 @@ in
               animation = workspaces, 1, 3, wind
             }
             decoration {
+            	shadow {
+            		enabled = true
+            	}
               rounding = 10
               blur {
                   enabled = true
@@ -157,7 +160,6 @@ in
              bind = ${modifier},Return,exec,${terminal}
              bind = ${modifier},SPACE,exec,rofi-launcher
              bind = ${modifier}SHIFT,W,exec,web-search
-             bind = ${modifier}ALT,W,exec,wallsetter
              bind = ${modifier}SHIFT,N,exec,swaync-client -rs
              bind = ${modifier},W,exec,${browser}
              bind = ${modifier}SHIFT,E,exec,emopicker9000
