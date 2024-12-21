@@ -33,8 +33,6 @@ in {
     source = ../../config/wlogout;
     recursive = true;
   };
-  home.file.".face.icon".source = ../../config/face.jpg;
-  home.file.".config/face.jpg".source = ../../config/face.jpg;
   home.file.".config/swappy/config".text = ''
     [Default]
     save_dir=/home/${username}/Pictures/Screenshots
@@ -96,12 +94,7 @@ in {
   home.packages = [
     (import ../../scripts/emopicker9000.nix {inherit pkgs;})
     (import ../../scripts/task-waybar.nix {inherit pkgs;})
-    (import ../../scripts/squirtle.nix {inherit pkgs;})
     (import ../../scripts/nvidia-offload.nix {inherit pkgs;})
-    (import ../../scripts/wallsetter.nix {
-      inherit pkgs;
-      inherit username;
-    })
     (import ../../scripts/web-search.nix {inherit pkgs;})
     (import ../../scripts/rofi-launcher.nix {inherit pkgs;})
     (import ../../scripts/screenshootin.nix {inherit pkgs;})
