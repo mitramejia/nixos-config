@@ -50,6 +50,7 @@ in {
         youtube-music
         grimblast
         lunarvim
+        just
       ];
     };
     # "newuser" = {
