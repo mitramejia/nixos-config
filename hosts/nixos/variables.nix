@@ -8,7 +8,11 @@
   # Hyprland Settings
   # Configure monitor settings like resolution, orientation, etc.
   # Documentation: https://github.com/larkery/Hyprland
-  extraMonitorSettings = "monitor=,preferred,auto,1.333,transform,3";
+  # To see monitor ID's i.e DP-1, run in terminal:  hyprctl monitors all
+  extraMonitorSettings = ''
+    monitor=DP-1,preferred,auto,1.333
+    monitor=DP-2,preferred,auto,1.333,transform,3
+  '';
 
   # Waybar Settings
   # Customize the Waybar appearance and settings, which is a highly customizable status bar for Wayland.

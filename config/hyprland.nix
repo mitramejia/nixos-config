@@ -38,9 +38,6 @@ in
              exec-once = nm-applet --indicator
              exec-once = lxqt-policykit-agent
 
-             monitor=DP-1,preferred,auto,1.25
-             monitor=DP-2,preferred,auto,1.25,transform,3
-
              ${extraMonitorSettings}
 
              xwayland {
@@ -70,7 +67,7 @@ in
                  disable_while_typing = true
                  scroll_factor = 0.8
                }
-               sensitivity = 0.9 # -1.0 - 1.0, 0 means no modification.
+               sensitivity = 0.8 # -1.0 - 1.0, 0 means no modification.
                accel_profile = flat
              }
 
@@ -155,7 +152,6 @@ in
               pseudotile = true
               preserve_split = true
             }
-
 
              bind = ${modifier},Return,exec,${terminal}
              bind = ${modifier},SPACE,exec,rofi-launcher
