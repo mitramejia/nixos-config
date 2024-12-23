@@ -3,6 +3,7 @@
   username,
   host,
   inputs,
+  ags,
   ...
 }: let
   inherit (import ./variables.nix) gitUsername gitEmail;
@@ -20,10 +21,8 @@ in {
     ../../config/rofi/rofi.nix
     ../../config/rofi/config-emoji.nix
     ../../config/rofi/config-long.nix
-    ../../config/swaync.nix
-    ../../config/waybar.nix
-    ../../config/wlogout.nix
     ../../config/firefox.nix
+    ags.homeManagerModules.default
   ];
 
   # Place Files Inside Home Directory
@@ -180,6 +179,7 @@ in {
       inherit pkgs;
       inherit host;
     })
+    ags.packages.${pkgs.system}.default
   ];
 
   services = {
@@ -293,7 +293,7 @@ in {
         };
         background = [
           {
-            path = "/home/${username}/Pictures/Wallpapers/yosemite.png";
+            path = "/home/${username}/Pictures/Wallpapers/iwmite.png";
             blur_passes = 3;
             blur_size = 8;
           }

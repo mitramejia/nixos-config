@@ -268,7 +268,6 @@ in {
     nixfmt-rfc-style
     discord
     libvirt
-    swww
     grim
     slurp
     file-roller

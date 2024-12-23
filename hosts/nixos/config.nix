@@ -404,7 +404,6 @@ in {
     grim
     slurp
     file-roller
-    swaynotificationcenter
     imv
     mpv
     tree
@@ -527,11 +526,6 @@ in {
       }
     })
   '';
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
-  };
 
   # Optimization settings and garbage collection automation
   nix = {

@@ -51,6 +51,29 @@ in {
         grimblast
         lunarvim
         just
+
+        # hyprpanel
+        wireplumber
+        libgtop
+        bluez
+        networkmanager
+        dart-sass
+        wl-clipboard
+        upower
+        gvfs
+
+        hyprpanel
+        ## To record screen through the dashboard record shortcut
+        gpu-screen-recorder
+
+        ## To enable the eyedropper color picker with the default snapshot shortcut in the dashboard
+        hyprpicker
+
+        ## To enable hyprland's very own blue light filter
+        hyprsunset
+
+        ## To enable hyprland's very own idle inhibitor
+        hypridle
       ];
     };
     # "newuser" = {

@@ -33,12 +33,13 @@ in
              exec-once = dbus-update-activation-environment --systemd --all
              exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-             exec-once = waybar & hyprpaper & swaync
 
              exec-once = nm-applet --indicator
              exec-once = lxqt-policykit-agent
 
              ${extraMonitorSettings}
+
+             exec-once = hyprpanel & hyprpaper
 
              xwayland {
                force_zero_scaling = true
@@ -75,7 +76,7 @@ in
             windowrule = center,^(wofi)$
             windowrule = center,^(steam)$
             windowrule = float, nm-connection-editor|blueman-manager
-            windowrule = float, swayimg|vlc|Viewnior|pavucontrol
+            windowrule = float, vlc|Viewnior|pavucontrol
             windowrule = float, nwg-look|qt5ct|mpv
             windowrulev2 = stayfocused, title:^()$,class:^(steam)$
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
@@ -116,7 +117,10 @@ in
               initial_workspace_tracking = 0
               mouse_move_enables_dpms = true
               key_press_enables_dpms = false
+              force_default_wallpaper = 0
+              disable_hyprland_logo = true
             }
+
             animations {
               enabled = yes
               bezier = wind, 0.05, 0.9, 0.1, 1.05
