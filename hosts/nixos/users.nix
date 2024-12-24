@@ -17,6 +17,7 @@ in {
         "scanner"
         "lp"
         "adbusersr"
+        "docker"
       ];
       shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
@@ -34,6 +35,8 @@ in {
         alejandra
         jetbrains.webstorm
         jetbrains.datagrip
+        act
+        actionlint
         android-studio
         android-studio-tools
         thunderbird

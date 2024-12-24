@@ -47,7 +47,7 @@ in {
     };
     plymouth.enable = false;
   };
-
+  virtualisation.docker.enable = true;
   # Styling Options
   stylix = {
     enable = true;
