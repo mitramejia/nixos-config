@@ -19,7 +19,7 @@
   # Documentation: https://github.com/Alexays/Waybar
   clock24h = false; # Set to true for 24-hour format, false for 12-hour format
   theme = "Catppuccin-Mocha"; # Theme for Waybar
-  wallpaper_img = "/home/mitra/Pictures/Wallpapers/yosemite.png"; # Path to the wallpaper image
+  wallpaper_img = "/home/mitra/Pictures/Wallpapers/pexels.jpg"; # Path to the wallpaper image
 
   # Program Options
   # Set default applications for the system.
