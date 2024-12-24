@@ -40,7 +40,7 @@
           spacing = mkLiteral "0px";
           border = mkLiteral "2px";
           border-color = "@border-color";
-          border-radius = mkLiteral "20px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "@bg";
         };
         "mainbox" = {
@@ -55,24 +55,23 @@
         };
         "inputbar" = {
           enabled = true;
-          padding = mkLiteral "10px 10px 200px 10px";
+          padding = mkLiteral "10px 10px 100px 10px";
           margin = mkLiteral "10px";
           background-color = mkLiteral "transparent";
-          border-radius = "25px";
+          border-radius = "8px";
           orientation = mkLiteral "horizontal";
           children = map mkLiteral [
             "entry"
             "dummy"
             "mode-switcher"
           ];
-          background-image = mkLiteral ''url("~/Pictures/Wallpapers/beautifulmountainscape.jpg", width)'';
         };
         "entry" = {
           enabled = true;
           expand = false;
           width = mkLiteral "20%";
           padding = mkLiteral "10px";
-          border-radius = mkLiteral "12px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "@selected";
           text-color = mkLiteral "@text-selected";
           cursor = mkLiteral "text";
@@ -116,7 +115,7 @@
         "button" = {
           width = mkLiteral "5%";
           padding = mkLiteral "12px";
-          border-radius = mkLiteral "12px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "@text-selected";
           text-color = mkLiteral "@text-color";
           cursor = mkLiteral "pointer";
@@ -136,7 +135,7 @@
           enabled = true;
           spacing = mkLiteral "10px";
           padding = mkLiteral "10px";
-          border-radius = mkLiteral "12px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "transparent";
           cursor = mkLiteral "pointer";
         };
@@ -196,7 +195,7 @@
         };
         "textbox" = {
           padding = mkLiteral "12px";
-          border-radius = mkLiteral "10px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "@bg-alt";
           text-color = mkLiteral "@bg";
           vertical-align = mkLiteral "0.5";
@@ -204,7 +203,7 @@
         };
         "error-message" = {
           padding = mkLiteral "12px";
-          border-radius = mkLiteral "20px";
+          border-radius = mkLiteral "8px";
           background-color = mkLiteral "@bg-alt";
           text-color = mkLiteral "@bg";
         };
