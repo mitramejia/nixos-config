@@ -34,12 +34,14 @@ in
              exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
              exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
+
              exec-once = nm-applet --indicator
              exec-once = lxqt-policykit-agent
 
+             exec-once = hyprpanel & hyprpaper
+
              ${extraMonitorSettings}
 
-             exec-once = hyprpanel & hyprpaper
 
              xwayland {
                force_zero_scaling = true
@@ -85,6 +87,8 @@ in
             windowrulev2 = noinitialfocus,class:^(jetbrains-studio)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
+            windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
+            windowrulev2 = workspace 3, class:^(jetbrains-webstorm)$
             windowrulev2 = workspace 5, class:^(slack)$
             windowrulev2 = workspace 5, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(obsidian)$
@@ -101,8 +105,7 @@ in
             workspace = 9, monitor:DP-2, default: true
 
             exec-once = [workspace 1 silent] ${browser}
-            exec-once = [workspace 2 silent] webstorm
-            exec-once = [workspace 4 silent] datagrip
+            exec-once = [workspace 2] webstorm
             exec-once = [workspace 5 silent] slack
             exec-once = [workspace 5 silent] zapzap
             exec-once = [workspace 6 silent] obsidian
