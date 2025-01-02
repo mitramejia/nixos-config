@@ -22,6 +22,7 @@ in {
       shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
       packages = with pkgs; [
+        pnpm
         vscode
         slack
         lmstudio
