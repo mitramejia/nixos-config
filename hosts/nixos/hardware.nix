@@ -30,6 +30,21 @@
 
   swapDevices = [];
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [rocmPackages.clr.icd];
+  };
+
+  # This configu=ration ensures that AMD video drivers are included
+  # in the initial ramdisk (initrd). This is crucial because it makes
+  # the drivers available before the operating system starts, ensuring
+  # that the hardware is properly initialized and can be used for display
+  # and other GPU-related tasks during the early boot process.
+  hardware.amdgpu.initrd.enable = true;
+
+  services.xserver.videoDrivers = ["amdgpu"];
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

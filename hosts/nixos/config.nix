@@ -12,7 +12,6 @@ in {
   imports = [
     ./hardware.nix
     ./users.nix
-    ../../modules/local-hardware-clock.nix
     inputs.p81.nixosModules.perimeter81
   ];
 
@@ -45,13 +44,13 @@ in {
       mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
       magicOrExtension = ''\x7fELF....AI\x02'';
     };
-    plymouth.enable = false;
+    plymouth.enable = true;
   };
   virtualisation.docker.enable = true;
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/beautifulmountainscape.jpg;
+    image = ../../config/wallpapers/pexels.jpg;
     # Catppuccin Mochae Base 16
     # https://github.com/catppuccin/base16/blob/main/base16/mocha.yaml
     base16Scheme = {
@@ -96,7 +95,6 @@ in {
       };
     };
   };
-  local.hardware-clock.enable = false;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -380,7 +378,6 @@ in {
     pciutils
     ffmpeg
     socat
-    cowsay
     ripgrep
     lshw
     bat
@@ -407,7 +404,6 @@ in {
     imv
     mpv
     tree
-    neovide
     neofetch
     greetd.tuigreet
     gearlever
@@ -548,19 +544,6 @@ in {
   # Virtualization / Containers
   virtualisation.libvirtd.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [rocmPackages.clr.icd];
-  };
-
-  # This configu=ration ensures that AMD video drivers are included
-  # in the initial ramdisk (initrd). This is crucial because it makes
-  # the drivers available before the operating system starts, ensuring
-  # that the hardware is properly initialized and can be used for display
-  # and other GPU-related tasks during the early boot process.
-  hardware.amdgpu.initrd.enable = true;
-
   console.keyMap = "${keyboardLayout}";
 
   # Open ports in the firewall.
@@ -569,7 +552,7 @@ in {
   # Or disable the firewall altogether.
   networking.firewall = {
     enable = false;
-    allowedTCPPorts = [80 8081 8082 8083 3000 5000 8000];
+    allowedTCPPorts = [80 8081 8082 8080 8083 3000 5000 8000];
   };
 
   # This value determines the NixOS release from which the default

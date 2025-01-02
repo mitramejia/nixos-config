@@ -7,6 +7,7 @@
   ...
 }: let
   inherit (import ./variables.nix) gitUsername gitEmail;
+  inherit (import ./shell-aliases) shellAliases;
 in {
   # Home Manager Settings
   home.username = "${username}";
@@ -28,10 +29,6 @@ in {
   # Place Files Inside Home Directory
   home.file."Pictures/Wallpapers" = {
     source = ../../config/wallpapers;
-    recursive = true;
-  };
-  home.file.".config/wlogout/icons" = {
-    source = ../../config/wlogout;
     recursive = true;
   };
   home.file.".config/swappy/config".text = ''
@@ -170,14 +167,9 @@ in {
   # Scripts
   home.packages = [
     (import ../../scripts/emopicker9000.nix {inherit pkgs;})
-    (import ../../scripts/task-waybar.nix {inherit pkgs;})
     (import ../../scripts/web-search.nix {inherit pkgs;})
     (import ../../scripts/rofi-launcher.nix {inherit pkgs;})
     (import ../../scripts/screenshootin.nix {inherit pkgs;})
-    (import ../../scripts/list-hypr-bindings.nix {
-      inherit pkgs;
-      inherit host;
-    })
     ags.packages.${pkgs.system}.default
   ];
 
@@ -259,25 +251,9 @@ in {
           eval "$(scmpuff init -s)"
         fi
       '';
-      shellAliases = {
-        sv = "sudo nvim";
-        fr = "nh os switch --hostname ${host} /home/${username}/zaneyos";
-        fu = "nh os switch --hostname ${host} --update /home/${username}/zaneyos";
-        zu = "sh <(curl -L https://gitlab.com/Zaney/zaneyos/-/raw/main/install-zaneyos.sh)";
-        ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
-        v = "lvim";
-        cat = "bat";
-        ls = "eza --icons";
-        ll = "eza -lh --icons --grid --group-directories-first";
-        la = "eza -lah --icons --grid --group-directories-first";
-        ".." = "cd ..";
-        gp = "git push origin";
-        gash = "git stash";
-        gasha = "git stash apply";
-        gplo = "git pull origin";
-        open-pr = "gh pr create";
-        p = "pnpm";
-        vim = "lvim";
+      shellAliases = import ./shell-aliases.nix {
+        username = username;
+        host = host;
       };
     };
   };
