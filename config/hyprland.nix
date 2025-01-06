@@ -64,7 +64,7 @@ in
                kb_options = grp:alt_shift_toggle
                kb_options = caps:super
                follow_mouse = 1
-
+               scroll_factor = 3
                touchpad {
                  natural_scroll = true
                  disable_while_typing = true
@@ -87,8 +87,6 @@ in
             windowrulev2 = noinitialfocus,class:^(jetbrains-studio)$,floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
-            windowrulev2 = workspace 2, class:^(jetbrains-webstorm)$
-            windowrulev2 = workspace 3, class:^(jetbrains-webstorm)$
             windowrulev2 = workspace 5, class:^(slack)$
             windowrulev2 = workspace 5, class:^(zapzap)$
             windowrulev2 = workspace 6, class:^(obsidian)$
@@ -105,12 +103,12 @@ in
             workspace = 9, monitor:DP-2, default: true
 
             exec-once = [workspace 1 silent] ${browser}
-            exec-once = [workspace 2] webstorm
             exec-once = [workspace 5 silent] slack
             exec-once = [workspace 5 silent] zapzap
             exec-once = [workspace 6 silent] obsidian
             exec-once = [workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
             exec-once = [workspace 9 silent] kitty
+            exec-once = [workspace 2] webstorm
 
             gestures {
               workspace_swipe = true
