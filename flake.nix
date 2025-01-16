@@ -1,6 +1,4 @@
 {
-  description = "ZaneyOS";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     hyprland.url = "github:hyprwm/Hyprland";
