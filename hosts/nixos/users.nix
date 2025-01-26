@@ -35,6 +35,7 @@ in {
         scmpuff
         alejandra
         jetbrains.webstorm
+        jetbrains-toolbox
         jetbrains.datagrip
         act
         actionlint
