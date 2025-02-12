@@ -106,7 +106,6 @@ in
             exec-once = [workspace 5 silent] slack
             exec-once = [workspace 5 silent] zapzap
             exec-once = [workspace 6 silent] obsidian
-            exec-once = [workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage
             exec-once = [workspace 9 silent] kitty
             exec-once = [workspace 2] webstorm
 
@@ -172,7 +171,6 @@ in
              bind = ${modifier},G,exec,gimp
              bind = ${modifier}SHIFT,G,exec,godot4
              bind = ${modifier},T,exec,thunar
-             bind = ${modifier},M,exec,cider
              bind = ${modifier},Q,killactive
              bind = ${modifier},P,pseudo,
              bind = ${modifier}SHIFT,I,togglesplit,
