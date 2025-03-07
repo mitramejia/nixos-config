@@ -63,7 +63,8 @@ in
                kb_layout = ${keyboardLayout}
                kb_options = grp:alt_shift_toggle
                kb_options = caps:super
-               follow_mouse = 1
+               follow_mouse = 2
+               float_switch_override_focus = 2
                scroll_factor = 3
                touchpad {
                  natural_scroll = true
@@ -82,9 +83,10 @@ in
             windowrule = float, nwg-look|qt5ct|mpv
             windowrulev2 = stayfocused, title:^()$,class:^(steam)$
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
-            windowrulev2 = noinitialfocus,class:^(jetbrains-webstorm)$,floating:1
-            windowrulev2 = noinitialfocus,class:^(jetbrains-datagrip)$,floating:1
-            windowrulev2 = noinitialfocus,class:^(jetbrains-studio)$,floating:1
+            windowrulev2 = noinitialfocus,class:^jetbrains-(?!toolbox),floating:1
+            # center the pops excepting context menu
+            windowrulev2 = move 30% 30%,class:^jetbrains-(?!toolbox),title:^(?!win.*),floating:1
+            windowrulev2 = size 40% 40%,class:^jetbrains-(?!toolbox),title:^(?!win.*),floating:1
 
             windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 5, class:^(slack)$
