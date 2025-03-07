@@ -480,13 +480,6 @@ in {
     rpcbind.enable = false;
     nfs.server.enable = false;
   };
-  systemd.services.fix-generic-usb-bluetooth-dongle = {
-    wantedBy = ["post-resume.target"];
-    after = ["post-resume.target"];
-    script = builtins.readFile ./hack.usb.reset;
-    scriptArgs = "0bda:0852";
-    serviceConfig.Type = "oneshot";
-  };
   systemd.services.flatpak-repo = {
     path = [pkgs.flatpak];
     script = ''
@@ -501,7 +494,6 @@ in {
   # Bluetooth Support
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-  hardware.enableAllFirmware = true;
   services.blueman.enable = true;
 
   # Enable sound with pipewire.
