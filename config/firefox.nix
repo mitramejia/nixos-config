@@ -99,17 +99,6 @@
                 };
               };
             };
-
-            /*
-            List of Firefox extensions to be installed.
-            Documentation: https://github.com/nix-community/nur-combined/blob/master/repos/rycee/pkgs/firefox-addons/default.nix
-            */
-            extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-              firefox-color
-              vimium
-              react-devtools
-              reduxdevtools
-            ];
           };
         };
       };
