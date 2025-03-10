@@ -46,6 +46,7 @@ in {
         httpie-desktop # HTTPie GUI
         lmstudio # Possibly a software IDE
         just # Task runner for project scripts
+        trimage
 
         # General applications for productivity and media
         obsidian # Note-taking app
