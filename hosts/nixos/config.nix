@@ -25,6 +25,7 @@ in {
     };
     # Bootloader.
     loader.systemd-boot.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
     loader.efi.canTouchEfiVariables = true;
     # Make /tmp a tmpfs
     tmp = {
@@ -352,6 +353,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    memtest86-efi
     vim
     wget
     killall
