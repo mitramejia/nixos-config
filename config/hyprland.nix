@@ -91,6 +91,7 @@ in
             windowrulev2 = workspace 1, class:^(${browser})$
             windowrulev2 = workspace 5, class:^(slack)$
             windowrulev2 = workspace 5, class:^(zapzap)$
+            windowrulev2 = workspace 5, class:^(discord)$
             windowrulev2 = workspace 6, class:^(obsidian)$
             windowrulev2 = workspace 7, class:^(Cider)$
 
@@ -106,8 +107,9 @@ in
 
             exec-once = [workspace 1 silent] ${browser}
             exec-once = [workspace 5 silent] slack
-            exec-once = [workspace 5 silent] zapzap
+            exec-once = [workspace 5 silent] discord
             exec-once = [workspace 6 silent] obsidian
+            exec-once = [workspace 7 silent] flatpak run sh.cider.genten
             exec-once = [workspace 9 silent] kitty
             exec-once = [workspace 2] webstorm
 
@@ -165,6 +167,7 @@ in
              bind = ${modifier}SHIFT,N,exec,swaync-client -rs
              bind = ${modifier},W,exec,${browser}
              bind = ${modifier}SHIFT,E,exec,emopicker9000
+             bind = ${modifier},M,exec,flatpak run sh.cider.genten
              # Take screenshot
              bind = ${modifier},S,exec,grimblast save area
              bind = ${modifier},D,exec,discord

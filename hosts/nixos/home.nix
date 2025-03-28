@@ -167,7 +167,7 @@ in {
       extraConfig = ''
         tab_bar_style fade
         tab_fade 1
-        font_size 12.0
+        font_size 11.5
         active_tab_font_style   bold
         inactive_tab_font_style bold
       '';
