@@ -30,7 +30,6 @@ in {
         thunderbird # Email client
         zoom-us # Video conferencing application
         discord # Chat
-        spotify # Music
 
         # Development tools for coding, configuration, and virtualization
         alejandra # Nix formatter
@@ -46,6 +45,7 @@ in {
         httpie-desktop # HTTPie GUI
         lmstudio # Possibly a software IDE
         just # Task runner for project scripts
+        docker-compose
         trimage
 
         # General applications for productivity and media
@@ -67,7 +67,6 @@ in {
 
         # Tools specifically for Arro Frontend development
         amdgpu_top # A monitoring tool for AMD GPUs
-        youtube-music # YouTube Music desktop application
         grimblast # Screenshot tool for Wayland-based compositions
         lunarvim # A Neovim-based text editor for developers
 
