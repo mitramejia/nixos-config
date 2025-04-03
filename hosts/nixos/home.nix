@@ -2,12 +2,10 @@
   pkgs,
   username,
   host,
-  inputs,
   ags,
   ...
 }: let
   inherit (import ./variables.nix) gitUsername gitEmail;
-  inherit (import ./shell-aliases) shellAliases;
 in {
   # Home Manager Settings
   home.username = "${username}";
