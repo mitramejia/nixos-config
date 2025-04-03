@@ -192,8 +192,10 @@ in
              bind = ${modifier}SHIFT,j,movewindow,d
              bind = ${modifier},left,movefocus,l
              bind = ${modifier},right,movefocus,r
-             bind = ${modifier},up,movefocus,u
-             bind = ${modifier},down,movefocus,d
+             # Volume up through wireplumber
+             bind = ${modifier},up,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+             # Volume down through wireplumber
+             bind = ${modifier},down,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-
              bind = ${modifier},TAB,cyclenext
              bind = ${modifier},h,movefocus,l
              bind = ${modifier},l,movefocus,r
