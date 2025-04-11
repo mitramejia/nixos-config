@@ -59,7 +59,6 @@ in {
         vscode # Visual Studio Code
         jetbrains.webstorm # JetBrains WebStorm IDE
         jetbrains-toolbox # JetBrains Toolbox for managing IDE installations
-        jetbrains.datagrip # JetBrains DataGrip IDE for databases
         android-studio # Android development IDE
         android-studio-tools # Android Studio tools for development
         chromium
