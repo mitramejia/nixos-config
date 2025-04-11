@@ -19,7 +19,7 @@
     };
 
     p81 = {
-      url = "github:ksonj/p81.nix";
+      url = "github:devusb/p81.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
