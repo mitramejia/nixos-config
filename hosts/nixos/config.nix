@@ -426,10 +426,9 @@ in {
   # Extra Portal Configuration
   xdg.portal = {
     enable = true;
-    config = {
-      common.default = ["gtk"];
-      hyprland.default = ["gtk" "hyprland"];
-    };
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    configPackages = [pkgs.hyprland];
   };
 
   # Services to start
