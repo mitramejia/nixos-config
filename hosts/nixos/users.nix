@@ -57,10 +57,7 @@ in {
 
         # Code editors and IDEs
         vscode # Visual Studio Code
-        jetbrains.webstorm # JetBrains WebStorm IDE
         jetbrains-toolbox # JetBrains Toolbox for managing IDE installations
-        android-studio # Android development IDE
-        android-studio-tools # Android Studio tools for development
         chromium
         chromedriver
 
@@ -78,6 +75,7 @@ in {
         wl-clipboard # Clipboard utility for Wayland
         upower # Power management support
         gvfs # Virtual filesystem layer
+        obs-studio
 
         hyprpanel # Panel for Hyprland compositor
         ## Utilities to enhance the Hyprland experience
