@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     hyprland.url = "github:hyprwm/Hyprland";
     stylix.url = "github:danth/stylix/ed91a20c84a80a525780dcb5ea3387dddf6cd2de";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
@@ -20,7 +21,7 @@
 
     p81 = {
       url = "github:devusb/p81.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -55,7 +56,6 @@
               inherit username;
               inherit inputs;
               inherit host;
-
               inherit ags;
             };
 
