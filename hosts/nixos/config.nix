@@ -117,10 +117,6 @@ in {
 
   programs.hyprland = {
     enable = true;
-    # set the flake package
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    # make sure to also set the portal package, so that they are in sync
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   programs = {
@@ -352,59 +348,59 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    memtest86-efi
-    vim
-    wget
-    killall
-    eza
-    git
-    cmatrix
-    lolcat
-    htop
-    libvirt
-    lxqt.lxqt-policykit
-    lm_sensors
-    unzip
-    unrar
-    libnotify
-    v4l-utils
-    ydotool
-    duf
-    ncdu
-    wl-clipboard
-    pciutils
-    ffmpeg
-    socat
-    ripgrep
-    lshw
-    bat
-    pkg-config
-    meson
-    hyprpicker
-    ninja
-    brightnessctl
-    virt-viewer
-    swappy
-    appimage-run
-    networkmanagerapplet
-    yad
-    inxi
-    playerctl
-    nh
-    nixfmt-rfc-style
-    libvirt
-    swww
-    hyprpaper
-    grim
-    slurp
-    file-roller
-    imv
-    mpv
-    tree
-    neofetch
-    greetd.tuigreet
-    gearlever
-    pavucontrol
+    memtest86-efi # Memory testing utility
+    vim # Text editor
+    wget # File download utility
+    killall # Process termination utility
+    eza # Modern replacement for ls
+    git # Version control system
+    cmatrix # Terminal matrix effect
+    lolcat # Rainbow text colorizer
+    libvirt # Virtualization API
+    lxqt.lxqt-policykit # PolicyKit authentication agent
+    lm_sensors # Hardware monitoring utilities
+    unzip # ZIP file extraction
+    unrar # RAR file extraction
+    libnotify # Desktop notifications library
+    v4l-utils # Video4Linux utilities
+    ydotool # X11 automation tool
+    duf # Disk usage utility
+    ncdu # NCurses disk usage analyzer
+    wl-clipboard # Wayland clipboard utilities
+    pciutils # PCI utilities
+    ffmpeg # Multimedia framework
+    socat # Multipurpose relay tool
+    ripgrep # Fast grep alternative
+    lshw # Hardware lister
+    pkg-config # Development tool
+    meson # Build system
+    hyprpicker # Color picker for Hyprland
+    ninja # Build system
+    brightnessctl # Brightness control
+    virt-viewer # Virtual machine viewer
+    swappy # Screenshot editor
+    appimage-run # AppImage runner
+    networkmanagerapplet # Network manager GUI
+    yad # Dialog display utility
+    inxi # System information tool
+    playerctl # Media player controller
+    nh # Nix command helper
+    nixfmt-rfc-style # Nix code formatter
+    libvirt # Virtualization API
+    swww # Wayland wallpaper daemon
+    hyprpaper # Hyprland wallpaper utility
+    grim # Screenshot utility
+    slurp # Region selector
+    file-roller # Archive manager
+    imv # Image viewer
+    mpv # Media player
+    tree # Directory listing tool
+    neofetch # System info display
+    greetd.tuigreet # TUI greeter
+    gearlever # Distrobox manager
+    pavucontrol # PulseAudio volume control
+    lm_sensors # Used For Getting Hardware Temps
+    nwg-displays #configure monitor configs via GUI
   ];
 
   fonts = {
