@@ -47,7 +47,7 @@ in {
         "[workspace 5 silent] slack"
         "[workspace 5 silent] discord"
         "[workspace 6 silent] obsidian"
-        "[workspace 7 silent] flatpak run sh.cider.genten"
+        "[workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage"
         "[workspace 9 silent] kitty"
         "[workspace 2] bash webstorm"
       ];
@@ -261,10 +261,12 @@ in {
       windowrulev2 = [
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
-        "center,class:^jetbrains-(?!toolbox),floating:1"
-        "move 30% 30%,class:^jetbrains-(?!toolbox),title:^(?!win.*),floating:1"
-        "size 40% 40%,class:^jetbrains-(?!toolbox),title:^(?!win.*),floating:1"
-        # center the pops excepting context menu"
+        # fix tooltips (always have a title of `win.<id>`)
+        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        # fix tab dragging (always have a single space character as their title)
+        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
+        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
         "workspace 1, class:^(${browser})$"
         "workspace 5, class:^(slack)$"
         "workspace 5, class:^(zapzap)$"
