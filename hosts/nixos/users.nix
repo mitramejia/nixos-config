@@ -58,6 +58,8 @@ in {
         # Code editors and IDEs
         vscode # Visual Studio Code
         jetbrains-toolbox # JetBrains Toolbox for managing IDE installations
+        android-studio # Android development IDE
+        android-studio-tools # Android Studio tools for development
         chromium
         chromedriver
 
