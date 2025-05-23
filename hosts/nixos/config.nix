@@ -346,6 +346,8 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    bash
+    ollama-rocm # Run AI models locally
     memtest86-efi # Memory testing utility
     vim # Text editor
     wget # File download utility
