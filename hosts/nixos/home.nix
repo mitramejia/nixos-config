@@ -211,7 +211,7 @@ in {
       autosuggestion.enable = true;
       oh-my-zsh = {
         enable = true;
-        plugins = ["node" "git" "aws" "z" "tmux" "vi-mode" "aliases"];
+        plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "tmux" "yarn" "nvm" "jenv"];
         theme = ""; # disable theme to allow nix/home-manager starship to control prompt
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
