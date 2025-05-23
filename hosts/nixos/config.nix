@@ -415,11 +415,6 @@ in {
     ];
   };
 
-  environment.variables = {
-    ZANEYOS_VERSION = "2.2";
-    ZANEYOS = "true";
-  };
-
   # Extra Portal Configuration
   xdg.portal = {
     enable = true;
