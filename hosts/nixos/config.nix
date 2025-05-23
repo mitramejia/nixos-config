@@ -3,7 +3,6 @@
   host,
   username,
   options,
-  inputs,
   ...
 }: let
   inherit (import ./variables.nix) keyboardLayout;
@@ -11,7 +10,6 @@ in {
   imports = [
     ./hardware.nix
     ./users.nix
-    inputs.p81.nixosModules.perimeter81
   ];
 
   boot = {
@@ -401,6 +399,7 @@ in {
     pavucontrol # PulseAudio volume control
     lm_sensors # Used For Getting Hardware Temps
     nwg-displays #configure monitor configs via GUI
+    xdg-desktop-portal-gtk
   ];
 
   fonts = {
@@ -429,7 +428,6 @@ in {
 
   # Services to start
   services = {
-    perimeter81.enable = true;
     xserver = {
       enable = false;
       xkb = {

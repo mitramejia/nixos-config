@@ -18,11 +18,6 @@
       url = "github:VonHeikemen/fine-cmdline.nvim";
       flake = false;
     };
-
-    p81 = {
-      url = "github:devusb/p81.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs = {
