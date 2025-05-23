@@ -317,7 +317,6 @@ in {
       enableSSHSupport = true;
     };
     virt-manager.enable = true;
-    java.enable = true;
     steam = {
       enable = true;
       gamescopeSession.enable = true;

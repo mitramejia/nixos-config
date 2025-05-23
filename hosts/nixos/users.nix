@@ -27,6 +27,7 @@ in {
       packages = with pkgs; [
         pnpm # JavaScript package manager (alternative to npm/yarn)
         ruby
+        jdk17
 
         # Internet-related packages
         zapzap # Possibly a messaging app
