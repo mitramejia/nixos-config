@@ -476,6 +476,7 @@ in {
     rpcbind.enable = false;
     nfs.server.enable = false;
   };
+  services.twingate.enable = true;
   systemd.services.flatpak-repo = {
     path = [pkgs.flatpak];
     script = ''
