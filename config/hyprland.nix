@@ -76,7 +76,7 @@ in {
       };
 
       misc = {
-        focus_on_activate = false;
+        focus_on_activate = true;
         layers_hog_keyboard_focus = true;
         force_default_wallpaper = 0;
         initial_workspace_tracking = 0;
