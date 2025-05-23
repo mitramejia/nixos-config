@@ -419,7 +419,11 @@ in {
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+    xdgOpenUsePortal = true;
     configPackages = [pkgs.hyprland];
   };
 
@@ -467,6 +471,7 @@ in {
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
     };
     rpcbind.enable = false;
     nfs.server.enable = false;
