@@ -1,3 +1,4 @@
+# Module for configuring user accounts and their associated packages
 {
   pkgs,
   username,
@@ -6,23 +7,26 @@
   inherit (import ./variables.nix) gitUsername;
 in {
   users.users = {
+    # Primary user configuration with development environment
     "${username}" = {
-      homeMode = "755";
-      isNormalUser = true;
-      description = "${gitUsername}";
+      homeMode = "755"; # Set home directory permissions
+      isNormalUser = true; # Configure as regular user account
+      description = "${gitUsername}"; # Set user description from git config
       extraGroups = [
         "networkmanager"
         "wheel"
         "libvirtd"
         "scanner"
         "lp"
-        "adbusersr"
+        "adbusers"
         "docker"
       ];
       shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
+      # User-specific package installations
       packages = with pkgs; [
         pnpm # JavaScript package manager (alternative to npm/yarn)
+        ruby
 
         # Internet-related packages
         zapzap # Possibly a messaging app
@@ -67,6 +71,8 @@ in {
         amdgpu_top # A monitoring tool for AMD GPUs
         grimblast # Screenshot tool for Wayland-based compositions
         lunarvim # A Neovim-based text editor for developers
+        twingate
+        doppler
 
         # Hyprland and system packages for Wayland-based environments
         wireplumber # Audio session manager for PipeWire
@@ -87,6 +93,7 @@ in {
         hypridle # Idle inhibitor for Hyprland
       ];
     };
+    # Template for additional user accounts
     # "newuser" = {
     #   homeMode = "755";
     #   isNormalUser = true;
