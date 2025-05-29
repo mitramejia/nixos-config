@@ -104,7 +104,7 @@ in {
           "grp:alt_caps_toggle"
           "caps:super"
         ];
-        follow_mouse = 2;
+        follow_mouse = 1;
         float_switch_override_focus = 2;
         scroll_factor = 3;
         touchpad = {
