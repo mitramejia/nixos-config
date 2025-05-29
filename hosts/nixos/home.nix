@@ -21,6 +21,7 @@ in {
     ../../config/rofi/config-emoji.nix
     ../../config/rofi/config-long.nix
     ../../config/firefox.nix
+    ../../config/chromium.nix
     ags.homeManagerModules.default
   ];
 

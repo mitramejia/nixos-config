@@ -65,7 +65,6 @@ in {
         jetbrains-toolbox # JetBrains Toolbox for managing IDE installations
         android-studio # Android development IDE
         android-studio-tools # Android Studio tools for development
-        chromium
         chromedriver
 
         # Tools specifically for Arro Frontend development
