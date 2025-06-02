@@ -23,7 +23,7 @@
 
   # Program Options
   # Set default applications for the system.
-  browser = "firefox"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
+  browser = "brave"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
   terminal = "kitty"; # Default terminal emulator
   keyboardLayout = "us"; # Keyboard layout configuration
 }
