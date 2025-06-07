@@ -3,7 +3,7 @@
   # Set your Git username and email for repository operations.
   # More info: https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
   gitUsername = "mitramejia";
-  gitEmail = "mitra@arrofinance.com";
+  gitEmail = "mitra.mejia@gmail.com";
 
   # Hyprland Settings
   # Configure monitor settings like resolution, orientation, etc.
