@@ -217,6 +217,7 @@ in {
         extraConfig = ''
           ZSH_TMUX_AUTOSTART=true
           export ANDROID_HOME=~/Android/Sdk
+          export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"
         '';
       };
       initExtra = ''
