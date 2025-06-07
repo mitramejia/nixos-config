@@ -4,6 +4,7 @@
   username,
   ...
 }: let
+  # Import the Git username from variables file
   inherit (import ./variables.nix) gitUsername;
 in {
   users.users = {
@@ -13,87 +14,89 @@ in {
       isNormalUser = true; # Configure as regular user account
       description = "${gitUsername}"; # Set user description from git config
       extraGroups = [
-        "networkmanager"
-        "wheel"
-        "libvirtd"
-        "scanner"
-        "lp"
-        "adbusers"
-        "docker"
+        "networkmanager" # Network management permissions
+        "wheel" # Sudo/administrative rights
+        "libvirtd" # Virtualization permissions (KVM/QEMU)
+        "scanner" # Access to scanner devices
+        "lp" # Access to printers
+        "adbusers" # Android Debug Bridge group
+        "docker" # Docker group for container management
       ];
-      shell = pkgs.zsh;
-      ignoreShellProgramCheck = true;
+      shell = pkgs.zsh; # Set Zsh as the default shell
+      ignoreShellProgramCheck = true; # Skip shell program validation
+
       # User-specific package installations
       packages = with pkgs; [
+        # Programming language and toolchain managers
         pnpm # JavaScript package manager (alternative to npm/yarn)
-        ruby
-        jdk17
+        cargo # Rust package manager
+        rustc # Rust compiler
+        ruby # Ruby language
+        jdk17 # Java Development Kit
 
-        # Internet-related packages
-        zapzap # Possibly a messaging app
+        # Internet and communication applications
+        zapzap # Messaging app (possibly WhatsApp client)
         slack # Team collaboration and messaging app
         thunderbird # Email client
         zoom-us # Video conferencing application
-        discord # Chat
+        discord # Chat for communities
 
-        # Development tools for coding, configuration, and virtualization
+        # Development tools for code, system, and infrastructure
         alejandra # Nix formatter
         lazydocker # Terminal UI for managing Docker
         rofi-power-menu # Power menu extension for Rofi
         tmux # Terminal multiplexer
-        scmpuff # Git SCM command helper
+        scmpuff # Git command helper tool
         act # Run GitHub Actions locally
-        actionlint # Static checker for GitHub Actions workflow files
-        genymotion # Android emulator
+        actionlint # Linter for GitHub Actions workflow files
         virtualbox # Virtual machine manager
-        httpie # Modern command-line HTTP client
-        httpie-desktop # HTTPie GUI
-        lmstudio # Possibly a software IDE
-        just # Task runner for project scripts
-        docker-compose
-        trimage
+        just # Task/command runner for project scripts
+        docker-compose # Define and run multi-container applications
+        trimage # Image compression utility
 
-        # General applications for productivity and media
+        # Productivity, media, and general GUI applications
         obsidian # Note-taking app
         gimp # Image editing software
         libreoffice # Office suite
         vlc # Media player
-        monitor # Monitoring tool (likely a placeholder for an actual tool)
+        monitor # System monitoring tool (placeholder name)
 
         # Code editors and IDEs
-        vscode # Visual Studio Code
-        jetbrains-toolbox # JetBrains Toolbox for managing IDE installations
+        vscode # Visual Studio Code editor
+        jetbrains-toolbox # JetBrains Toolbox for IDE management
         android-studio # Android development IDE
-        android-studio-tools # Android Studio tools for development
-        chromedriver
+        android-studio-tools # Android Studio extra tools
+        chromedriver # ChromeDriver for browser automation
+        lmstudio
 
-        # Tools specifically for Arro Frontend development
-        amdgpu_top # A monitoring tool for AMD GPUs
-        grimblast # Screenshot tool for Wayland-based compositions
-        lunarvim # A Neovim-based text editor for developers
-        twingate
-        doppler
+        # Frontend-focused development tools
+        amdgpu_top # AMD GPU monitoring tool
+        grimblast # Screenshot utility for Wayland compositors
+        lunarvim # Neovim-based IDE
+        twingate # Remote network access tool
+        doppler # Secrets management for application configs
 
-        # Hyprland and system packages for Wayland-based environments
-        wireplumber # Audio session manager for PipeWire
-        libgtop # Library for system monitoring
-        bluez # Bluetooth stack
-        networkmanager # Network configuration and management
-        dart-sass # Sass compiler for stylesheets
+        # Hyprland and core system packages for Wayland environments
+        wireplumber # PipeWire audio session manager
+        libgtop # System monitoring library
+        bluez # Bluetooth protocol stack
+        networkmanager # Networking configuration/management
+        dart-sass # Sass CSS compiler
         wl-clipboard # Clipboard utility for Wayland
-        upower # Power management support
+        upower # Power management utilities
         gvfs # Virtual filesystem layer
-        obs-studio
+        obs-studio # Screen recording and streaming software
 
-        hyprpanel # Panel for Hyprland compositor
+        hyprpanel # Panel for Hyprland window manager
         ## Utilities to enhance the Hyprland experience
-        gpu-screen-recorder # Tool for recording screens on the GPU
-        hyprpicker # Eyedropper color picker for screenshots
-        hyprsunset # Blue light filter for reducing eye strain
-        hypridle # Idle inhibitor for Hyprland
+        gpu-screen-recorder # GPU-accelerated screen recorder
+        hyprpicker # Color picker for Hyprland
+        hyprsunset # Blue light filter for display
+        hypridle # Idle detection for Hyprland
       ];
     };
-    # Template for additional user accounts
+
+    # Template for additional user accounts (example, commented out)
     # "newuser" = {
     #   homeMode = "755";
     #   isNormalUser = true;
