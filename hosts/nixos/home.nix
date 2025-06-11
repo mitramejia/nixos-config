@@ -233,7 +233,7 @@ in {
           export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"
         '';
       };
-      initExtra = ''
+      initContent = ''
         if command -v scmpuff 2>&1 >/dev/null
         then
           eval "$(scmpuff init -s)"
