@@ -383,7 +383,6 @@ in {
     yad # Dialog display utility
     inxi # System information tool
     playerctl # Media player controller
-    nh # Nix command helper
     nixfmt-rfc-style # Nix code formatter
     libvirt # Virtualization API
     swww # Wayland wallpaper daemon
@@ -398,7 +397,6 @@ in {
     greetd.tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
-    lm_sensors # Used For Getting Hardware Temps
     nwg-displays #configure monitor configs via GUI
     xdg-desktop-portal-gtk
   ];
