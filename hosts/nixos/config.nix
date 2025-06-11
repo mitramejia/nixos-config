@@ -22,7 +22,6 @@ in {
     };
     # Bootloader.
     loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = true;
     loader.efi.canTouchEfiVariables = true;
     # Make /tmp a tmpfs
     tmp = {
@@ -347,7 +346,6 @@ in {
   environment.systemPackages = with pkgs; [
     bash
     ollama-rocm # Run AI models locally
-    memtest86-efi # Memory testing utility
     vim # Text editor
     wget # File download utility
     killall # Process termination utility
@@ -398,7 +396,6 @@ in {
     greetd.tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
-    lm_sensors # Used For Getting Hardware Temps
     nwg-displays #configure monitor configs via GUI
     xdg-desktop-portal-gtk
   ];
