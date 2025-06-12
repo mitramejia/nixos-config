@@ -397,7 +397,6 @@ in {
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
     nwg-displays #configure monitor configs via GUI
-    xdg-desktop-portal-gtk
   ];
 
   fonts = {
@@ -418,6 +417,8 @@ in {
     extraPortals = with pkgs; [
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
+      xdg-desktop-portal-kde
+      xdg-desktop-portal-hyprland
     ];
     xdgOpenUsePortal = true;
     configPackages = [pkgs.hyprland];

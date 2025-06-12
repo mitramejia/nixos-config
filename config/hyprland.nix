@@ -49,7 +49,7 @@ in {
         "[workspace 6 silent] obsidian"
         "[workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage"
         "[workspace 9 silent] kitty"
-        "[workspace 2] bash webstorm"
+        "[workspace 2 silent] bash webstorm"
       ];
 
       env = [
@@ -316,7 +316,7 @@ in {
         workspace = 6, monitor:DP-1, default:true
         workspace = 7, monitor:DP-1, default:true
         workspace = 8, monitor:DP-1, default:true
-        workspace = 9, monitor:DP-2, default: true
+        workspace = 9, monitor:DP-2, default:true
 
      ";
   };
