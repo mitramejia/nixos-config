@@ -418,7 +418,7 @@
   "theme.bar.floating": false,
   "theme.bar.layer": "top",
   "bar.workspaces.showAllActive": true,
-  "bar.workspaces.monitorSpecific": false,
+  "bar.workspaces.monitorSpecific": true,
   "bar.workspaces.hideUnoccupied": false,
   "notifications.showActionsOnHover": true,
   "bar.network.label": false,

@@ -6,6 +6,7 @@
   inputs = {
     # Main NixOS package sources (stable and unstable channels)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Unstable Nixpkgs when newer versions of packages are needed
     # Visual theming via Stylix module
     stylix.url = "github:danth/stylix/release-25.05";
