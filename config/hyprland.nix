@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   host,
   config,
@@ -37,8 +36,9 @@ in {
 
     settings = {
       exec-once = [
-        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-        "dbus-update-activation-environment --systemd --all"
+        "wl-paste --type text --watch cliphist store # Stores only text data"
+        "wl-paste --type image --watch cliphist store # Stores only image data"
+        "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "nm-applet --indicator"
         "lxqt-policykit-agent"
@@ -150,6 +150,18 @@ in {
         enable_hyprcursor = false;
         warp_on_change_workspace = 2;
         no_warps = true;
+      };
+
+      render = {
+        explicit_sync = 1; # Change to 1 to disable
+        explicit_sync_kms = 1;
+        direct_scanout = 0;
+      };
+
+      master = {
+        new_status = "master";
+        new_on_top = 1;
+        mfact = 0.5;
       };
 
       gestures = {
@@ -267,22 +279,66 @@ in {
         # fix tab dragging (always have a single space character as their title)
         "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
         "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
+        "tag +file-manager, class:^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$"
+        "tag +terminal, class:^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$"
+        "tag +browser, class:^(Brave-browser(-beta|-dev|-unstable)?)$"
+        "tag +browser, class:^(brave)$"
+        "tag +browser, class:^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$"
+        "tag +browser, class:^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$"
+        "tag +browser, class:^([Tt]horium-browser|[Cc]achy-browser)$"
+        "tag +projects, class:^(.*jetbrains.*)$"
+        "tag +projects, class:^(codium|codium-url-handler|VSCodium)$"
+        "tag +projects, class:^(VSCode|code-url-handler)$"
+        "tag +im, class:^([Dd]iscord|[Ww]ebCord|[Vv]esktop)$"
+        "tag +im, class:^([Ww]hatsapp-for-linux)$"
+        "tag +im, class:^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$"
+        "tag +games, class:^(gamescope)$"
+        "tag +games, class:^(steam_app_\d+)$"
+        "tag +gamestore, class:^([Ss]team)$"
+        "tag +gamestore, title:^([Ll]utris)$"
+        "tag +settings, class:^(gnome-disks|wihotspot(-gui)?)$"
+        "tag +settings, class:^([Rr]ofi)$"
+        "tag +settings, class:^(file-roller|org.gnome.FileRoller)$"
+        "tag +settings, class:^(nm-applet|nm-connection-editor|blueman-manager)$"
+        "tag +settings, class:^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$"
+        "tag +settings, class:^(nwg-look|qt5ct|qt6ct|[Yy]ad)$"
+        "tag +settings, class:(xdg-desktop-portal-gtk)"
+        "tag +settings, class:(.blueman-manager-wrapped)"
+        "tag +settings, class:(nwg-displays)"
+        "move 72% 7%,title:^(Picture-in-Picture)$"
+        "center, class:^([Ff]erdium)$"
+        "float, class:^([Ww]aypaper)$"
+        "center, class:^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$"
+        "center, class:([Tt]hunar), title:negative:(.*[Tt]hunar.*)"
+        "center, title:^(Authentication Required)$"
+        "idleinhibit fullscreen, class:^(*)$"
+        "idleinhibit fullscreen, title:^(*)$"
+        "idleinhibit fullscreen, fullscreen:1"
+        "float, tag:settings*"
+        "float, class:^([Ff]erdium)$"
+        "float, title:^(Picture-in-Picture)$"
+        "float, class:^(mpv|com.github.rafostar.Clapper)$"
+        "float, title:^(Authentication Required)$"
+        "float, class:(codium|codium-url-handler|VSCodium), title:negative:(.*codium.*|.*VSCodium.*)"
+        "float, class:^([Ss]team)$, title:negative:^([Ss]team)$"
+        "float, class:([Tt]hunar), title:negative:(.*[Tt]hunar.*)"
+        "float, initialTitle:(Add Folder to Workspace)"
+        "float, initialTitle:(Open Files)"
+        "float, initialTitle:(wants to save)"
+        "size 70% 60%, initialTitle:(Open Files)"
+        "size 70% 60%, initialTitle:(Add Folder to Workspace)"
+        "size 70% 70%, tag:settings*"
+        "size 60% 70%, class:^([Ff]erdium)$"
+        "pin, title:^(Picture-in-Picture)$"
+        "keepaspectratio, title:^(Picture-in-Picture)$"
+        "noblur, tag:games*"
+        "fullscreen, tag:games*"
         "workspace 1, class:^(${browser})$"
         "workspace 5, class:^(slack)$"
         "workspace 5, class:^(zapzap)$"
         "workspace 5, class:^(discord)$"
-        "noblur, tag:games*"
-        "fullscreen, tag:games*"
         "workspace 6, class:^(obsidian)$"
         "workspace 7, class:^(Cider)$"
-      ];
-      windowrule = [
-        "noborder,^(wofi)$"
-        "center,^(wofi)$"
-        "center,^(steam)$"
-        "float, nm-connection-editor|blueman-manager"
-        "float, vlc|Viewnior|pavucontrol"
-        "float, nwg-look|qt5ct|mpv"
       ];
 
       animations = {
