@@ -5,23 +5,19 @@
   # Inputs defines all external dependencies and optional modules.
   inputs = {
     # Main NixOS package sources (stable and unstable channels)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11"; # Stable Nixpkgs repository for general system packages
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # Unstable Nixpkgs when newer versions of packages are needed
-
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Unstable Nixpkgs when newer versions of packages are needed
     # Visual theming via Stylix module
-    stylix.url = "github:danth/stylix/ed91a20c84a80a525780dcb5ea3387dddf6cd2de";
+    stylix.url = "github:danth/stylix/release-25.05";
 
     # HyprPanel (Wayland panel for Hyprland window manager)
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-
     # Advanced shell for Wayland compositors (for custom widgets and scripting)
-    ags = {
-      url = "github:Aylur/ags";
-    };
+    ags.url = "github:Aylur/ags";
 
     # Home Manager as a flake input, for user-level package and dotfile configuration.
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -37,19 +33,15 @@
   outputs = {
     nixpkgs,
     home-manager,
-    hyprpanel,
     ags,
     ...
   } @ inputs: let
     # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
-    system = "aarch64-linux";
-
+    system = "x86_64-linux";
     # Name of this host, used for per-host configurations and imports
     host = "nixos";
-
     # Current user's username, used for user-level configuration imports
     username = "mitra";
-
     # Overlay with unstable packages for when the latest versions are required or for specific packages only found on unstable
     unstable-pkgs = import inputs.nixpkgs-unstable {
       inherit system;

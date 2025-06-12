@@ -59,7 +59,6 @@ in {
         gimp # Image editing software
         libreoffice # Office suite
         vlc # Media player
-        monitor # System monitoring tool (placeholder name)
 
         # Code editors and IDEs
         vscode # Visual Studio Code editor

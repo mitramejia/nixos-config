@@ -18,6 +18,7 @@ in {
       withNodeJs = true;
       extraPackages = with pkgs; [
         lua-language-server
+        nil
         gopls
         xclip
         wl-clipboard
