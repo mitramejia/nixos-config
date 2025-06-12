@@ -11,5 +11,4 @@
     };
     flake = "/home/${username}/nix-config";
   };
-
 }
