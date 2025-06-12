@@ -22,6 +22,7 @@ in {
     ../../config/rofi/config-long.nix
     ../../config/firefox.nix
     ../../config/chromium.nix
+    ./nh.nix
     ags.homeManagerModules.default
   ];
 
@@ -154,14 +155,6 @@ in {
 
     jq.enable = true;
 
-    nh = {
-      enable = true;
-      clean = {
-        enable = true;
-        extraArgs = "--keep-since 7d --keep 5";
-      };
-      flake = "/home/${username}/nix-config";
-    };
 
     fzf = {
       enable = true;
