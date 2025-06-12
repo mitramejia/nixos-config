@@ -15,17 +15,13 @@
     # Advanced shell for Wayland compositors (for custom widgets and scripting)
     ags.url = "github:Aylur/ags";
 
+    nvf.url = "github:notashelf/nvf";
+
     # Home Manager as a flake input, for user-level package and dotfile configuration.
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Fine-cmdline Neovim plugin, imported as plain source (not as a flake) for plugin compilation
-    fine-cmdline = {
-      url = "github:VonHeikemen/fine-cmdline.nvim";
-      flake = false;
     };
   };
 

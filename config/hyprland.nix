@@ -243,7 +243,7 @@ in {
         "$modifier,Tab,cyclenext"
         "$modifier,Tab,bringactivetotop"
         # https://wiki.hyprland.org/Configuring/Variables/#binds - the values mentioned here obviously configure hyprland behaviour
-        #https://wiki.hyprland.org/Configuring/Dispatchers/#workspaces - this part gives us the keywords/dispatchers and tell us what we can do with the workspace, for instance going to the previous workspace
+        # https://wiki.hyprland.org/Configuring/Dispatchers/#workspaces - this part gives us the keywords/dispatchers and tell us what we can do with the workspace, for instance going to the previous workspace
         # Switch tabs
         "ALT, Tab, cyclenext"
         "ALT, Tab, bringactivetotop"

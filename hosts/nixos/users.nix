@@ -71,7 +71,6 @@ in {
         # Frontend-focused development tools
         amdgpu_top # AMD GPU monitoring tool
         grimblast # Screenshot utility for Wayland compositors
-        lunarvim # Neovim-based IDE
         twingate # Remote network access tool
         doppler # Secrets management for application configs
 

@@ -16,13 +16,13 @@ in {
   imports = [
     ../../config/emoji.nix
     ../../config/hyprland.nix
-    ../../config/neovim.nix
     ../../config/rofi/rofi.nix
     ../../config/rofi/config-emoji.nix
     ../../config/rofi/config-long.nix
     ../../config/firefox.nix
     ../../config/chromium.nix
     ./nh.nix
+    ./neovim.nix
     ags.homeManagerModules.default
   ];
 
@@ -186,7 +186,7 @@ in {
       package = pkgs.kitty;
       shellIntegration.enableZshIntegration = true;
       settings = {
-        font_size = 12;
+        font_size = 11.5;
         scrollback_lines = 2000;
         wheel_scroll_min_lines = 1;
         window_padding_width = 4;
