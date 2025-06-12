@@ -155,7 +155,6 @@ in {
 
     jq.enable = true;
 
-
     fzf = {
       enable = true;
       defaultOptions = ["--color 16"];
@@ -194,7 +193,6 @@ in {
         confirm_os_window_close = 0;
         enable_audio_bell = false;
         mouse_hide_wait = 60;
-        cursor_trail = 1;
         tab_fade = 1;
         active_tab_font_style = "bold";
         inactive_tab_font_style = "bold";
