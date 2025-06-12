@@ -316,8 +316,7 @@ in {
         workspace = 6, monitor:DP-1, default:true
         workspace = 7, monitor:DP-1, default:true
         workspace = 8, monitor:DP-1, default:true
-        workspace = 9, monitor:DP-2, default: true
-
+        workspace = 9, monitor:DP-2, default:true
      ";
   };
 }
