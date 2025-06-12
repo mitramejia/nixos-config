@@ -43,13 +43,13 @@ in {
         "nm-applet --indicator"
         "lxqt-policykit-agent"
         "hyprpanel & hyprpaper"
-        "[workspace 1 silent] ${browser}"
-        "[workspace 2 silent] bash webstorm"
-        "[workspace 5 silent] slack"
-        "[workspace 5 silent] discord"
-        "[workspace 6 silent] obsidian"
-        "[workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage"
-        "[workspace 9 silent] kitty"
+        "[workspace 1] ${browser}"
+        "[workspace 2] bash webstorm"
+        "[workspace 5] slack"
+        "[workspace 5] discord"
+        "[workspace 6] obsidian"
+        "[workspace 7] appimage-run ~/AppImages/Cider/Cider.AppImage"
+        "[workspace 9] kitty"
       ];
 
       env = [
@@ -333,14 +333,12 @@ in {
         "keepaspectratio, title:^(Picture-in-Picture)$"
         "noblur, tag:games*"
         "fullscreen, tag:games*"
-        "workspace 1, class:^(${browser})$"
-        "workspace 5, class:^(slack)$"
-        "workspace 5, class:^(zapzap)$"
-        "workspace 5, class:^(discord)$"
+        "workspace 1, tag:browser*"
+        "workspace 5, tag:im*"
+        "workspace 8, tag:games*"
         "workspace 6, class:^(obsidian)$"
         "workspace 7, class:^(Cider)$"
       ];
-
       animations = {
         enabled = true;
         bezier = [
@@ -363,7 +361,6 @@ in {
 
     extraConfig = "
         ${extraMonitorSettings}
-
         workspace = 1, monitor:DP-1, default:true
         workspace = 2, monitor:DP-1, default:true
         workspace = 3, monitor:DP-1, default:true
@@ -373,6 +370,7 @@ in {
         workspace = 7, monitor:DP-1, default:true
         workspace = 8, monitor:DP-1, default:true
         workspace = 9, monitor:DP-2, default:true
+        workspace = 10, monitor:DP-2, default:true
      ";
   };
 }
