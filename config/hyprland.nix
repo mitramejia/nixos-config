@@ -44,12 +44,12 @@ in {
         "lxqt-policykit-agent"
         "hyprpanel & hyprpaper"
         "[workspace 1 silent] ${browser}"
+        "[workspace 2 silent] bash webstorm"
         "[workspace 5 silent] slack"
         "[workspace 5 silent] discord"
         "[workspace 6 silent] obsidian"
         "[workspace 7 silent] appimage-run ~/AppImages/Cider/Cider.AppImage"
         "[workspace 9 silent] kitty"
-        "[workspace 2] bash webstorm"
       ];
 
       env = [
