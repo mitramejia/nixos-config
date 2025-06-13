@@ -9,7 +9,6 @@
 in {
   imports = [
     ./hardware.nix
-    ./users.nix
     ./stylix.nix
     ./nix-ld.nix
     ./boot.nix

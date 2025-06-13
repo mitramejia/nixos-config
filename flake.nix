@@ -60,27 +60,10 @@
 
         # List of modules to configure the system
         modules = [
-          ./hosts/${host}/config.nix # Host-specific system settings
+          ./modules/home/config.nix # Host-specific system settings
+          ./modules/home/user.nix
           inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
           {nixpkgs.overlays = [inputs.hyprpanel.overlay];} # Overlay HyprPanel for Wayland panel functionality
-          home-manager.nixosModules.home-manager # Enable Home Manager at the system level
-          {
-            # Home Manager configuration block for this user/host
-            # Each definition in this block enhances user workspace, with proper backups & flexibility
-            home-manager = {
-              extraSpecialArgs = {
-                inherit username; # Makes the username available to user modules
-                inherit inputs; # Passes all flake inputs to home-manager modules
-                inherit host; # Lets modules perform host-specific customization
-                inherit ags; # Passes AGS reference for per-user shell widgets
-              };
-
-              useGlobalPkgs = true; # Ensures user environment uses global (system) packages for consistency
-              useUserPackages = true; # Allows the user to install and manage their own packages
-              backupFileExtension = "backup"; # Sets the file extension used for backups, assisting in safe upgrades or rollbacks
-              users.${username} = import ./hosts/${host}/home.nix; # Import user-level Home Manager config for this host
-            };
-          }
         ];
       };
     };

@@ -5,7 +5,7 @@
   ...
 }: let
   inherit
-    (import ../hosts/${host}/variables.nix)
+    (import ../modules/home/variables.nix)
     browser
     terminal
     extraMonitorSettings
