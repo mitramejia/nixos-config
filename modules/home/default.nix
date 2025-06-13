@@ -18,6 +18,24 @@ in {
     ./hyprland.nix
     ./swaync.nix
     ./virtualisation.nix
+    ./ideavim
+    ./kitty.nix
+    ./stylix.nix
+    ./gtk.nix
+    ./qt.nix
+    ./swapy.nix
+    ./btop.nix
+    ./xdg.nix
+    ./eza.nix
+    ./fzf.nix
+    ./lazygit.nix
+    ./bat.nix
+    ./tmux.nix
+    ./starship.nix
+    ./direnv.nix
+    ./zsh.nix
+    ./git.nix
+    ./gh.nix
     ags.homeManagerModules.default
   ];
 
@@ -26,60 +44,13 @@ in {
     source = ../../assets/wallpapers;
     recursive = true;
   };
-  home.file.".config/swappy/config".text = ''
-    [Default]
-    save_dir=/home/${username}/Pictures/Screenshots
-    save_filename_format=swappy-%Y%m%d-%H%M%S.png
-    show_panel=false
-    line_size=5
-    text_size=20
-    text_font=Ubuntu
-    paint_mode=brush
-    early_exit=true
-    fill_shape=false
-  '';
-
-  # Add IdeaVim configuration for JetBrains IDE's
-  home.file.".ideavimrc".source = ../../config/ideavim/.ideavimrc;
-
-  # Create XDG Dirs
-  xdg = {
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-    };
-  };
-
-  # Styling Options
-  stylix.targets = {
-    waybar.enable = false;
-    rofi.enable = false;
-    hyprland.enable = false;
-    firefox.profileNames = ["default"];
-  };
-
-  gtk = {
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-  };
-  qt = {
-    enable = true;
-  };
 
   # Scripts
   home.packages = [
-    (import ./emopicker9000.nix {inherit pkgs;})
-    (import ./web-search.nix {inherit pkgs;})
-    (import ./rofi-launcher.nix {inherit pkgs;})
-    (import ./screenshootin.nix {inherit pkgs;})
+    (import ./scripts/emopicker9000.nix {inherit pkgs;})
+    (import ./scripts/web-search.nix {inherit pkgs;})
+    (import ./scripts/rofi-launcher.nix {inherit pkgs;})
+    (import ./scripts/screenshootin.nix {inherit pkgs;})
     ags.packages.${pkgs.system}.default
   ];
 
@@ -106,184 +77,5 @@ in {
     };
   };
 
-  programs.bat = {
-    enable = true;
-    config = {
-      pager = "less -FR";
-    };
-    extraPackages = with pkgs.bat-extras; [
-      batman
-      batpipe
-      batgrep
-    ];
-  };
-
-  programs = {
-    home-manager.enable = true;
-
-    # Install & Configure Git
-    git = {
-      enable = true;
-      userName = "${gitUsername}";
-      userEmail = "${gitEmail}";
-      difftastic = {enable = true;};
-      extraConfig = {
-        push = {
-          autoSetupRemote = true;
-        };
-      };
-    };
-    gh = {
-      enable = true;
-      settings = {
-        git_protocol = "ssh";
-        editor = "vim";
-      };
-    };
-
-    jq.enable = true;
-
-    fzf = {
-      enable = true;
-      defaultOptions = ["--color 16"];
-      enableZshIntegration = true;
-    };
-    btop = {
-      enable = true;
-      package = pkgs.btop.override {
-        rocmSupport = true;
-        cudaSupport = true;
-      };
-      settings = {
-        vim_keys = true;
-        rounded_corners = true;
-        proc_tree = true;
-        show_gpu_info = "on";
-        show_uptime = true;
-        show_coretemp = true;
-        cpu_sensor = "auto";
-        show_disks = true;
-        only_physical = true;
-        io_mode = true;
-        io_graph_combined = false;
-      };
-    };
-
-    kitty = {
-      enable = true;
-      package = pkgs.kitty;
-      shellIntegration.enableZshIntegration = true;
-      settings = {
-        font_size = 11.5;
-        scrollback_lines = 2000;
-        wheel_scroll_min_lines = 1;
-        window_padding_width = 4;
-        confirm_os_window_close = 0;
-        enable_audio_bell = false;
-        mouse_hide_wait = 60;
-        tab_fade = 1;
-        active_tab_font_style = "bold";
-        inactive_tab_font_style = "bold";
-        tab_bar_edge = "top";
-        tab_bar_margin_width = 0;
-        tab_bar_style = "powerline";
-        enabled_layouts = "splits";
-      };
-      themeFile = "Catppuccin-Mocha";
-      extraConfig = ''
-        # Clipboard
-        map ctrl+shift+v        paste_from_selection
-        map shift+insert        paste_from_selection
-        # Miscellaneous
-        map ctrl+shift+up      increase_font_size
-        map ctrl+shift+down    decrease_font_size
-        map ctrl+shift+backspace restore_font_size
-      '';
-    };
-
-    starship = {
-      enable = true;
-      package = pkgs.starship;
-    };
-
-    direnv.enable = true;
-
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      syntaxHighlighting.enable = true;
-      autosuggestion.enable = true;
-      oh-my-zsh = {
-        enable = true;
-        plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "tmux" "yarn" "nvm" "jenv"];
-        theme = ""; # disable theme to allow nix/home-manager starship to control prompt
-        extraConfig = ''
-          ZSH_TMUX_AUTOSTART=true
-          export ANDROID_HOME=~/Android/Sdk
-          export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"
-        '';
-      };
-      initContent = ''
-        if command -v scmpuff 2>&1 >/dev/null
-        then
-          eval "$(scmpuff init -s)"
-        fi
-      '';
-      shellAliases = import ./shell-aliases.nix {
-        username = username;
-        host = host;
-      };
-    };
-
-    tmux = {
-      enable = true;
-      shell = "${pkgs.zsh}/bin/zsh";
-      historyLimit = 1000000;
-      terminal = "tmux-256color";
-      keyMode = "vi";
-      newSession = true;
-      mouse = true;
-      baseIndex = 1;
-      disableConfirmationPrompt = true;
-      prefix = "C-Space";
-      extraConfig = ''
-        set -g pane-base-index 1
-        set-window-option -g pane-base-index 1
-
-        # keybindings
-        bind-key -T copy-mode-vi v send-keys -X begin-selection
-        bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-        bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
-        bind - split-window -v -c "#{pane_current_path}"
-        bind | split-window -h -c "#{pane_current_path}"
-
-        bind h select-pane -L
-        bind j select-pane -D
-        bind k select-pane -U
-        bind l select-pane -R
-      '';
-
-      plugins = with pkgs; [
-        {
-          plugin = tmuxPlugins.catppuccin;
-          extraConfig = ''
-            set -g @catppuccin_flavour 'mocha'
-            set -g @catppuccin_window_tabs_enabled on
-            set -g @catppuccin_date_time "%H:%M"
-          '';
-        }
-        {
-          plugin = tmuxPlugins.continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-boot 'on'
-            set -g @continuum-save-interval '10'
-          '';
-        }
-        tmuxPlugins.better-mouse-mode
-        tmuxPlugins.yank
-      ];
-    };
-  };
+  programs.home-manager.enable = true;
 }
