@@ -6,7 +6,7 @@
   ags,
   ...
 }: let
-  inherit (import ./variables.nix) gitUsername;
+  inherit (import ../variables.nix) gitUsername;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   home-manager = {
@@ -20,7 +20,7 @@ in {
       inherit ags; # Passes AGS reference for per-user shell widgets
     };
     users.${username} = {
-      imports = [../home/home.nix];
+      imports = [../home];
       home = {
         username = "${username}";
         homeDirectory = "/home/${username}";

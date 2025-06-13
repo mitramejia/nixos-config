@@ -2,112 +2,36 @@
   pkgs,
   host,
   username,
+  inputs,
   options,
   ...
 }: let
-  inherit (import ./variables.nix) keyboardLayout;
+  inherit (import ../variables.nix) keyboardLayout;
 in {
   imports = [
     ./hardware.nix
+    ./packages.nix
+    ./user.nix
     ./stylix.nix
     ./nix-ld.nix
+    ./nh.nix
     ./boot.nix
     ./timezone.nix
     ./starship.nix
     ./thunar.nix
     ./steam.nix
     ./greetd.nix
+    ./virtualisation.nix
+    inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
+    {nixpkgs.overlays = [inputs.hyprpanel.overlay];} # Overlay HyprPanel for Wayland panel functionality
   ];
-
-  virtualisation.docker.enable = true;
-  # Styling Options
 
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = host;
   networking.timeServers = options.networking.timeServers.default ++ ["pool.ntp.org"];
 
-  programs.hyprland = {
-    enable = true;
-  };
-
-  programs = {
-    _1password.enable = true;
-    _1password-gui.enable = true;
-
-    adb.enable = true;
-
-    dconf.enable = true;
-    seahorse.enable = true;
-    fuse.userAllowOther = true;
-    mtr.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-    virt-manager.enable = true;
-  };
-
   nixpkgs.config.allowUnfree = true;
-
-  users = {
-    mutableUsers = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    bash
-    ollama-rocm # Run AI models locally
-    vim # Text editor
-    wget # File download utility
-    killall # Process termination utility
-    eza # Modern replacement for ls
-    git # Version control system
-    cmatrix # Terminal matrix effect
-    lolcat # Rainbow text colorizer
-    libvirt # Virtualization API
-    lxqt.lxqt-policykit # PolicyKit authentication agent
-    lm_sensors # Hardware monitoring utilities
-    unzip # ZIP file extraction
-    unrar # RAR file extraction
-    libnotify # Desktop notifications library
-    v4l-utils # Video4Linux utilities
-    ydotool # X11 automation tool
-    duf # Disk usage utility
-    ncdu # NCurses disk usage analyzer
-    wl-clipboard # Wayland clipboard utilities
-    pciutils # PCI utilities
-    ffmpeg # Multimedia framework
-    socat # Multipurpose relay tool
-    ripgrep # Fast grep alternative
-    lshw # Hardware lister
-    pkg-config # Development tool
-    meson # Build system
-    hyprpicker # Color picker for Hyprland
-    ninja # Build system
-    brightnessctl # Brightness control
-    virt-viewer # Virtual machine viewer
-    swappy # Screenshot editor
-    appimage-run # AppImage runner
-    networkmanagerapplet # Network manager GUI
-    yad # Dialog display utility
-    inxi # System information tool
-    playerctl # Media player controller
-    nixfmt-rfc-style # Nix code formatter
-    libvirt # Virtualization API
-    swww # Wayland wallpaper daemon
-    hyprpaper # Hyprland wallpaper utility
-    grim # Screenshot utility
-    slurp # Region selector
-    file-roller # Archive manager
-    imv # Image viewer
-    mpv # Media player
-    tree # Directory listing tool
-    neofetch # System info display
-    greetd.tuigreet # TUI greeter
-    gearlever # Distrobox manager
-    pavucontrol # PulseAudio volume control
-    nwg-displays #configure monitor configs via GUI
-  ];
 
   fonts = {
     packages = with pkgs; [
@@ -176,13 +100,6 @@ in {
     '';
   };
 
-  # Extra Logitech Support
-  hardware.logitech.wireless.enable = true;
-  hardware.logitech.wireless.enableGraphical = true;
-
-  # Bluetooth Support
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
   # Enable sound with pipewire.
@@ -220,9 +137,6 @@ in {
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
   };
-
-  # Virtualization / Containers
-  virtualisation.libvirtd.enable = true;
 
   console.keyMap = "${keyboardLayout}";
 

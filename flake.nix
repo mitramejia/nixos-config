@@ -29,7 +29,6 @@
   # Outputs expose the 'nixosConfigurations' for deployment
   outputs = {
     nixpkgs,
-    home-manager,
     ags,
     ...
   } @ inputs: let
@@ -46,6 +45,7 @@
     };
   in {
     nixosConfigurations = {
+      inherit system;
       # Define a NixOS system configuration for the specified host
       "${host}" = nixpkgs.lib.nixosSystem {
         # Pass arguments to all loaded modules for easier customization and DRY configurations
@@ -60,10 +60,7 @@
 
         # List of modules to configure the system
         modules = [
-          ./modules/home/config.nix # Host-specific system settings
-          ./modules/home/user.nix
-          inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
-          {nixpkgs.overlays = [inputs.hyprpanel.overlay];} # Overlay HyprPanel for Wayland panel functionality
+          ./modules/core # Host-specific system settings
         ];
       };
     };

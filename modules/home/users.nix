@@ -5,7 +5,7 @@
   ...
 }: let
   # Import the Git username from variables file
-  inherit (import ./variables.nix) gitUsername;
+  inherit (import ../variables.nix) gitUsername;
 in {
   users.users = {
     # Primary user configuration with development environment

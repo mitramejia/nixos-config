@@ -1,5 +1,10 @@
 {pkgs, ...}: {
   boot = {
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "uas" "usbhid" "sd_mod"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
+
     # Kernel
     kernelPackages = pkgs.linuxPackages_latest;
 

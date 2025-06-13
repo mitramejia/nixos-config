@@ -12,11 +12,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "uas" "usbhid" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/633bdaa4-2b25-4ebc-aee2-432c7d503972";
     fsType = "ext4";
@@ -29,6 +24,14 @@
   };
 
   swapDevices = [];
+
+  # Extra Logitech Support
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
+
+  # Bluetooth Support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   hardware.graphics = {
     enable = true;

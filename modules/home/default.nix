@@ -5,30 +5,25 @@
   ags,
   ...
 }: let
-  inherit (import ./variables.nix) gitUsername gitEmail;
+  inherit (import ../variables.nix) gitUsername gitEmail;
 in {
-  # Home Manager Settings
-  home.username = "${username}";
-  home.homeDirectory = "/home/${username}";
-  home.stateVersion = "23.11";
-
   # Import Program Configurations
   imports = [
-    ../../config/emoji.nix
-    ../../config/hyprland.nix
-    ../../config/rofi/rofi.nix
-    ../../config/rofi/config-emoji.nix
-    ../../config/rofi/config-long.nix
-    ../../config/firefox.nix
-    ../../config/chromium.nix
-    ./nh.nix
+    ./emoji.nix
+    ./rofi/rofi.nix
+    ./rofi/config-emoji.nix
+    ./rofi/config-long.nix
     ./neovim.nix
+    ./chromium.nix
+    ./hyprland.nix
+    ./swaync.nix
+    ./virtualisation.nix
     ags.homeManagerModules.default
   ];
 
   # Place Files Inside Home Directory
   home.file."Pictures/Wallpapers" = {
-    source = ../../config/wallpapers;
+    source = ../../assets/wallpapers;
     recursive = true;
   };
   home.file.".config/swappy/config".text = ''
@@ -52,13 +47,6 @@ in {
     userDirs = {
       enable = true;
       createDirectories = true;
-    };
-  };
-
-  dconf.settings = {
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
     };
   };
 
@@ -88,10 +76,10 @@ in {
 
   # Scripts
   home.packages = [
-    (import ../../scripts/emopicker9000.nix {inherit pkgs;})
-    (import ../../scripts/web-search.nix {inherit pkgs;})
-    (import ../../scripts/rofi-launcher.nix {inherit pkgs;})
-    (import ../../scripts/screenshootin.nix {inherit pkgs;})
+    (import ./emopicker9000.nix {inherit pkgs;})
+    (import ./web-search.nix {inherit pkgs;})
+    (import ./rofi-launcher.nix {inherit pkgs;})
+    (import ./screenshootin.nix {inherit pkgs;})
     ags.packages.${pkgs.system}.default
   ];
 

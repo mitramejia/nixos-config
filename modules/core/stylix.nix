@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  inherit (import ./variables.nix) stylixImage;
+  inherit (import ../variables.nix) stylixImage;
 in {
   stylix = {
     enable = true;
