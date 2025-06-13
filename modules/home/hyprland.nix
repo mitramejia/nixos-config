@@ -178,10 +178,9 @@ in {
       bind = [
         "$modifier,Return,exec,${terminal}"
         "$modifier,SPACE,exec,rofi-launcher"
-        "$modifierSHIFT,W,exec,web-search"
-        "$modifierSHIFT,N,exec,swaync-client -rs"
+        "$modifier,SHIFT,W,exec,web-search"
         "$modifier,W,exec,${browser}"
-        "$modifierSHIFT,E,exec,emopicker9000"
+        "$modifier,SHIFT,E,exec,emopicker9000"
         "$modifier,M,exec,flatpak run sh.cider.genten"
         # Take screenshot
         "$modifier,S,exec,grimblast save area"

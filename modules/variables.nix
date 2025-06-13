@@ -14,11 +14,6 @@
     monitor=DP-2,preferred,auto,1.50,transform,3
   '';
 
-  # Waybar Settings
-  # Customize the Waybar appearance and settings, which is a highly customizable status bar for Wayland.
-  # Documentation: https://github.com/Alexays/Waybar
-  clock24h = false; # Set to true for 24-hour format, false for 12-hour format
-  theme = "Catppuccin-Mocha"; # Theme for Waybar
   wallpaper_img = "/home/mitra/Pictures/Wallpapers/pexels.jpg"; # Path to the wallpaper image
   stylixImage = ../assets/wallpapers/pexels.jpg;
 

@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   username,
   host,
   ags,
@@ -16,7 +17,6 @@ in {
     ./neovim.nix
     ./chromium.nix
     ./hyprland.nix
-    ./swaync.nix
     ./virtualisation.nix
     ./ideavim
     ./kitty.nix
