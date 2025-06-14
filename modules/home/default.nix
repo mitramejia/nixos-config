@@ -1,22 +1,17 @@
 {
   pkgs,
-  inputs,
-  username,
-  host,
   ags,
   ...
-}: let
-  inherit (import ../variables.nix) gitUsername gitEmail;
-in {
+}: {
   # Import Program Configurations
   imports = [
+    ./hyprland.nix
     ./emoji.nix
     ./rofi/rofi.nix
     ./rofi/config-emoji.nix
     ./rofi/config-long.nix
     ./neovim.nix
     ./chromium.nix
-    ./hyprland.nix
     ./virtualisation.nix
     ./ideavim
     ./kitty.nix
@@ -36,7 +31,6 @@ in {
     ./zsh.nix
     ./git.nix
     ./gh.nix
-    ags.homeManagerModules.default
   ];
 
   # Place Files Inside Home Directory
@@ -53,29 +47,6 @@ in {
     (import ./scripts/screenshootin.nix {inherit pkgs;})
     ags.packages.${pkgs.system}.default
   ];
-
-  services = {
-    hypridle = {
-      settings = {
-        general = {
-          after_sleep_cmd = "hyprctl dispatch dpms on";
-          ignore_dbus_inhibit = false;
-          lock_cmd = "hyprlock";
-        };
-        listener = [
-          {
-            timeout = 900;
-            on-timeout = "hyprlock";
-          }
-          {
-            timeout = 1200;
-            on-timeout = "hyprctl dispatch dpms off";
-            on-resume = "hyprctl dispatch dpms on";
-          }
-        ];
-      };
-    };
-  };
 
   programs.home-manager.enable = true;
 }

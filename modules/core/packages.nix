@@ -37,7 +37,6 @@
     lm_sensors # Hardware monitoring utilities
     unzip # ZIP file extraction
     unrar # RAR file extraction
-    libnotify # Desktop notifications library
     v4l-utils # Video4Linux utilities
     ydotool # X11 automation tool
     duf # Disk usage utility
@@ -62,7 +61,6 @@
     playerctl # Media player controller
     nixfmt-rfc-style # Nix code formatter
     libvirt # Virtualization API
-    swww # Wayland wallpaper daemon
     hyprpaper # Hyprland wallpaper utility
     grim # Screenshot utility
     slurp # Region selector

@@ -23,7 +23,6 @@ in {
     ./greetd.nix
     ./virtualisation.nix
     inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
-    {nixpkgs.overlays = [inputs.hyprpanel.overlay];} # Overlay HyprPanel for Wayland panel functionality
   ];
 
   # Enable networking
@@ -53,7 +52,7 @@ in {
         variant = "";
       };
     };
-    displayManager.autoLogin.enable = false;
+    displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "mitra";
     smartd = {
       enable = false;

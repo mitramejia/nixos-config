@@ -15,6 +15,8 @@
   '';
 
   wallpaper_img = "/home/mitra/Pictures/Wallpapers/pexels.jpg"; # Path to the wallpaper image
+  wallpaper_img_vertical = "/home/mitra/Pictures/Wallpapers/pexels-vertical.jpg"; # Path to the wallpaper image
+
   stylixImage = ../assets/wallpapers/pexels.jpg;
 
   # Program Options

@@ -1,6 +1,7 @@
 {
   pkgs,
-  host,
+  inputs,
+  ags,
   config,
   ...
 }: let
@@ -11,14 +12,62 @@
     extraMonitorSettings
     keyboardLayout
     wallpaper_img
+    wallpaper_img_vertical
     ;
 in {
+  imports = [
+    ags.homeManagerModules.default
+    inputs.hyprpanel.homeManagerModules.hyprpanel
+  ];
+
   services.hyprpaper = {
     enable = true;
     settings = {
       preload = [wallpaper_img];
-      wallpaper = [", ${wallpaper_img}"];
+      wallpaper = ["DP-1, ${wallpaper_img}"];
     };
+  };
+
+  services.hypridle = {
+    settings = {
+      general = {
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        ignore_dbus_inhibit = false;
+        lock_cmd = "hyprlock";
+      };
+      listener = [
+        {
+          timeout = 900;
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 1200;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
+    };
+  };
+
+  services.swaync = {
+    enable = false;
+  };
+
+  programs.hyprpanel = {
+    # Enable the module.
+    # Default: false
+    enable = true;
+
+    # Automatically restart HyprPanel with systemd.
+    # Useful when updating your config so that you
+    # don't need to manually restart it.
+    # Default: false
+    systemd.enable = true;
+
+    # Add '/nix/store/.../hyprpanel' to your
+    # Hyprland config 'exec-once'.
+    # Default: false
+    hyprland.enable = true;
   };
 
   systemd.user.targets.hyprland-session.Unit.Wants = [
@@ -30,7 +79,6 @@ in {
     xwayland.enable = true;
     systemd = {
       enable = true;
-      enableXdgAutostart = true;
       variables = ["--all"];
     };
 
