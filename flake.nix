@@ -12,7 +12,11 @@
     stylix.url = "github:danth/stylix/release-25.05";
 
     # HyprPanel (Wayland panel for Hyprland window manager)
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    hyprpanel = {
+      url = "github:Jas-SinghFSU/HyprPanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Advanced shell for Wayland compositors (for custom widgets and scripting)
     ags.url = "github:Aylur/ags";
 
@@ -29,7 +33,6 @@
   # Outputs expose the 'nixosConfigurations' for deployment
   outputs = {
     nixpkgs,
-    home-manager,
     ags,
     ...
   } @ inputs: let
@@ -46,6 +49,7 @@
     };
   in {
     nixosConfigurations = {
+      inherit system;
       # Define a NixOS system configuration for the specified host
       "${host}" = nixpkgs.lib.nixosSystem {
         # Pass arguments to all loaded modules for easier customization and DRY configurations
@@ -60,27 +64,7 @@
 
         # List of modules to configure the system
         modules = [
-          ./hosts/${host}/config.nix # Host-specific system settings
-          inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
-          {nixpkgs.overlays = [inputs.hyprpanel.overlay];} # Overlay HyprPanel for Wayland panel functionality
-          home-manager.nixosModules.home-manager # Enable Home Manager at the system level
-          {
-            # Home Manager configuration block for this user/host
-            # Each definition in this block enhances user workspace, with proper backups & flexibility
-            home-manager = {
-              extraSpecialArgs = {
-                inherit username; # Makes the username available to user modules
-                inherit inputs; # Passes all flake inputs to home-manager modules
-                inherit host; # Lets modules perform host-specific customization
-                inherit ags; # Passes AGS reference for per-user shell widgets
-              };
-
-              useGlobalPkgs = true; # Ensures user environment uses global (system) packages for consistency
-              useUserPackages = true; # Allows the user to install and manage their own packages
-              backupFileExtension = "backup"; # Sets the file extension used for backups, assisting in safe upgrades or rollbacks
-              users.${username} = import ./hosts/${host}/home.nix; # Import user-level Home Manager config for this host
-            };
-          }
+          ./modules/core # Host-specific system settings
         ];
       };
     };

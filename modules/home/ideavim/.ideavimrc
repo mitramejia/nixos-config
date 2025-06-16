@@ -1,0 +1,197 @@
+"" .ideavimrc - Mitra Mejia
+
+
+"" Base Settings
+"" ========================================================
+
+set scrolloff=10
+set relativenumber
+set showmode
+set showcmd
+
+
+set idearefactormode=keep
+set ideavimsupport=dialog
+
+
+set smartcase
+set incsearch
+set hlsearch
+
+set visualbell
+
+" Use system clipboard
+set clipboard+=unnamedplus
+
+let mapleader = " "
+
+
+"" Plugin Settings
+"" ========================================================
+
+set surround
+set highlightedyank
+set nerdtree
+
+" Easymotion settings
+set easymotion
+set notimeout
+
+" Which-key settings
+set which-key
+
+"" Key mappings
+"" ========================================================
+
+" Tab navigation
+nnoremap <A-n> :tabnext<CR>
+nnoremap <A-p> :tabprev<CR>
+
+" Pane navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
+" Jump between methods
+nnoremap [[ <action>(MethodUp)
+nnoremap ]] <action>(MethodDown)
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Execute macro saved in 'q' register
+nnoremap qj @q
+
+" Popup navigation
+inoremap <C-j> <action>(PopupMenu-selectNext)
+inoremap <C-k> <action>(PopupMenu-selectPrev)
+
+
+"" Leader commands
+"" ========================================================
+
+" Comment lines
+map cl <action>(CommentByLineComment)
+
+map / <action>(Find)
+
+" Open NERDTree (use q to exit)
+map <leader>e :NERDTreeToggle<CR>
+map T :NERDTreeToggle<CR>
+
+" Folding
+map <leader>zc :action CollapseAllRegions<CR>
+map <leader>zo :action ExpandAllRegions<CR>
+
+" Window splits
+map <leader>wv <action>(SplitVertically)
+map <leader>ws <action>(SplitHorizontally)
+map <leader>wu <action>(Unsplit)
+map <leader>wm <action>(MoveEditorToOppositeTabGroup)
+
+" Display options
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen)
+
+" actions
+map <leader>am <action>(ShowIntentionActions)
+map <leader>as <action>(SearchEverywhere)
+map <leader>ar <action>(RunMenu)
+map <leader>ae <action>(GotoNextError)
+map ge <action>(GotoNextError)
+nmap <leader>ait <action>(ActivateAIAssistantToolWindow)
+nmap <leader>aia <action>(AIAssistant.CodeGeneration.Actions.AcceptAllChanges)
+nmap <leader>aid <action>(AIAssistant.CodeGeneration.Actions.Drop)
+nmap <leader>aia <action>(AIAssistant.CodeGeneration.Actions.ShowIntentionActions)
+nmap <leader>aim <action>(Vcs.LLMCommitMessageAction)
+nmap <leader>aic <action>(AIAssistant.Editor.CompleteCodeWithAI)
+nmap <leader>aig <action>(AIAssistant.Editor.GenerateCodeInplace)
+
+" File navigation
+map <leader>f <action>(GotoFile)
+map gf <action>(GotoFile)
+map <leader>fn <action>(NewFile)
+map <leader>fr <action>(RecentFiles)
+map <leader>fp <action>(FindInPath)
+nmap fp <action>(FindInPath)
+vmap fp <action>(FindInPath)
+map <leader>fl <action>(RecentLocations)
+map <leader>fs <action>(NewScratchFile)
+" Press `F` to activate Target Mode
+nmap F <Action>(AceLineAction)
+
+" Bookmarks
+map <leader>ba <action>(ToggleBookmarkWithMnemonic)
+map <leader>bt <action>(ToggleBookmark)
+
+map <leader>bl <action>(Bookmarks)
+map <leader>b0 <action>(GotoBookmark0)
+map <leader>b1 <action>(GotoBookmark1)
+map <leader>b2 <action>(GotoBookmark2)
+map <leader>b3 <action>(GotoBookmark3)
+map <leader>b4 <action>(GotoBookmark4)
+map <leader>b5 <action>(GotoBookmark5)
+map <leader>b6 <action>(GotoBookmark6)
+map <leader>b7 <action>(GotoBookmark7)
+map <leader>b8 <action>(GotoBookmark8)
+map <leader>b9 <action>(GotoBookmark9)
+
+nmap g0 <action>(GotoBookmark0)
+nmap g1 <action>(GotoBookmark1)
+nmap g2 <action>(GotoBookmark2)
+nmap g3 <action>(GotoBookmark3)
+nmap g4 <action>(GotoBookmark4)
+nmap g5 <action>(GotoBookmark5)
+nmap g6 <action>(GotoBookmark6)
+nmap g7 <action>(GotoBookmark7)
+nmap g8 <action>(GotoBookmark8)
+nmap g9 <action>(GotoBookmark9)
+
+" Close active tab
+map <leader>q <action>(CloseContent)
+
+" Refactoring
+map <leader>r <action>(Refactorings.QuickListPopupAction)
+nmap R <action>(Refactorings.QuickListPopupAction)
+vmap R <action>(Refactorings.QuickListPopupAction)
+
+" Go to code
+nmap gd <action>(GotoDeclaration)
+nmap <leader>u <action>(ShowUsages)
+nmap U <action>(ShowUsages)
+nmap gt <action>(GotoTest)
+
+" Git windows
+map <leader>gw <action>(ActivateVersionControlToolWindow)
+map <leader>gb <action>(Git.Branches)
+map <leader>gs <action>(Git.Stash)
+map <leader>gpl <action>(Git.Pull)
+map <leader>gp <action>(Vcs.Push)
+map <leader>gl <action>(Git.ShowLog)
+map <leader>c <action>(CheckinProject)
+map <leader>grc <action>(Git.ResolveConflicts)
+map <leader>gh <action>(Git.ShowHistory)
+map <leader>gc <action>(Github.Create.Pull.Request)
+map <leader>go <action>(Github.Open.Commit.In.Browser)
+map <leader>grv <action>(ChangesView.Revert)
+
+
+" Errors
+map <leader>se <action>(ShowErrorDescription)
+map <leader>si <action>(ShowIntentionActions)
+map <leader>sb <action>(ShowBookmarks)
+map <leader>sm <action>(ShowPopupMenu)
+
+" Save some keystrokes
+
+" Move to the start of line
+nnoremap H ^
+vnoremap H ^
+" Move to the end of line
+nnoremap L $
+vnoremap L $
+
+map <leader>R <action>(IdeaVim.ReloadVimRc.reload)
