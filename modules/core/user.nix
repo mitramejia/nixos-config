@@ -107,12 +107,14 @@ in {
       gvfs # Virtual filesystem layer
       obs-studio # Screen recording and streaming software
 
-      hyprpanel # Panel for Hyprland window manager
       ## Utilities to enhance the Hyprland experience
       gpu-screen-recorder # GPU-accelerated screen recorder
       hyprpicker # Color picker for Hyprland
       hyprsunset # Blue light filter for display
-      hypridle # Idle detection for Hyprland
+
+      ## Security
+      yubikey-manager
+      yubioath-flutter
     ];
   };
 }
