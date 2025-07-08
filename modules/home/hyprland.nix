@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   ags,
   config,
   ...
@@ -12,13 +11,16 @@
     extraMonitorSettings
     keyboardLayout
     wallpaper_img
-    wallpaper_img_vertical
     ;
 in {
   imports = [
     ags.homeManagerModules.default
-    inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
+
+  programs.hyprpanel = {
+    dontAssertNotificationDaemons = true;
+    enable = true;
+  };
 
   services.hyprpaper = {
     enable = true;
@@ -53,23 +55,6 @@ in {
     enable = false;
   };
 
-  programs.hyprpanel = {
-    # Enable the module.
-    # Default: false
-    enable = true;
-
-    # Automatically restart HyprPanel with systemd.
-    # Useful when updating your config so that you
-    # don't need to manually restart it.
-    # Default: false
-    systemd.enable = true;
-
-    # Add '/nix/store/.../hyprpanel' to your
-    # Hyprland config 'exec-once'.
-    # Default: false
-    hyprland.enable = true;
-  };
-
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
   ];
@@ -90,7 +75,6 @@ in {
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "nm-applet --indicator"
         "lxqt-policykit-agent"
-        "hyprpanel & hyprpaper"
         "[workspace 1] ${browser}"
         "[workspace 2] bash webstorm"
         "[workspace 5] slack"
