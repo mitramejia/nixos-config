@@ -64,6 +64,7 @@ in {
     xwayland.enable = true;
     systemd = {
       enable = true;
+      enableXdgAutostart = true;
       variables = ["--all"];
     };
 
@@ -90,6 +91,7 @@ in {
         "XDG_CURRENT_DESKTOP, Hyprland"
         "XDG_SESSION_TYPE, wayland"
         "XDG_SESSION_DESKTOP, Hyprland"
+        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
         "GDK_BACKEND, wayland, x11"
         "CLUTTER_BACKEND, wayland"
         "QT_QPA_PLATFORM=wayland;xcb"
@@ -100,6 +102,7 @@ in {
         "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
         "GDK_SCALE,1"
         "QT_SCALE_FACTOR,1"
+        "TERMINAL,kitty"
         "EDITOR,nvim"
       ];
 
@@ -370,24 +373,6 @@ in {
         "workspace 6, class:^(obsidian)$"
         "workspace 7, class:^(Cider)$"
       ];
-      animations = {
-        enabled = true;
-        bezier = [
-          "wind, -1.05, 0.9, 0.1, 1.05"
-          "winIn, -1.1, 1.1, 0.1, 1.1"
-          "winOut, -1.3, -0.3, 0, 1"
-          "liner, 0, 1, 1, 1"
-        ];
-        animation = [
-          "windows, 0, 6, wind, slide"
-          "windowsIn, 0, 6, winIn, slide"
-          "windowsOut, 0, 5, winOut, slide"
-          "windowsMove, 0, 5, wind, slide"
-          "border, 0, 1, liner"
-          "fade, 0, 10, default"
-          "workspaces, 0, 5, wind"
-        ];
-      };
     };
 
     extraConfig = "
@@ -403,5 +388,16 @@ in {
         workspace = 9, monitor:DP-2, default:true
         workspace = 10, monitor:DP-2, default:true
      ";
+  };
+
+  wayland.windowManager.hyprland.settings = {
+    animation = {
+      enabled = true;
+      animation = [
+        "windows, 1, 7, default, slide"
+        "workspaces, 1, 6, default"
+        "fade, 1, 10, default"
+      ];
+    };
   };
 }

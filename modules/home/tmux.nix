@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  programs. tmux = {
+  programs.tmux = {
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     historyLimit = 1000000;
@@ -8,6 +8,7 @@
     newSession = true;
     mouse = true;
     baseIndex = 1;
+    focusEvents = true;
     disableConfirmationPrompt = true;
     prefix = "C-Space";
     extraConfig = ''
@@ -33,6 +34,12 @@
         plugin = tmuxPlugins.catppuccin;
         extraConfig = ''
           set -g @catppuccin_flavour 'mocha'
+          set -g @catppuccin_window_status_style "rounded"
+          set -g status-right-length 100
+          set -g status-left-length 100
+          set -g status-left ""
+          set -g status-right "#{E:@catppuccin_status_application}"
+          set -ag status-right "#{E:@catppuccin_status_session}"
           set -g @catppuccin_window_tabs_enabled on
           set -g @catppuccin_date_time "%H:%M"
         '';
@@ -47,6 +54,8 @@
       }
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.yank
+      tmuxPlugins.open
+      tmuxPlugins.copycat
     ];
   };
 }
