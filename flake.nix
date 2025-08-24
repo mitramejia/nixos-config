@@ -11,12 +11,6 @@
     # Visual theming via Stylix module
     stylix.url = "github:danth/stylix/release-25.05";
 
-    # HyprPanel (Wayland panel for Hyprland window manager)
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Advanced shell for Wayland compositors (for custom widgets and scripting)
     ags.url = "github:Aylur/ags";
 

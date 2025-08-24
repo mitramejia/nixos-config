@@ -55,6 +55,7 @@ in {
       rustc # Rust compiler
       ruby # Ruby language
       jdk17 # Java Development Kit
+      jq
 
       # Internet and communication applications
       zapzap # Messaging app (possibly WhatsApp client)

@@ -5,7 +5,6 @@
     historyLimit = 1000000;
     terminal = "tmux-256color";
     keyMode = "vi";
-    newSession = true;
     mouse = true;
     baseIndex = 1;
     focusEvents = true;
@@ -69,4 +68,6 @@
       tmuxPlugins.copycat
     ];
   };
+
+  home.sessionVariables.HM_TMUX_PROBE = "yes";
 }

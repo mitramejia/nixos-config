@@ -26,6 +26,7 @@
     ./lazygit.nix
     ./bat.nix
     ./tmux.nix
+    ./hyprpanel
     ./starship.nix
     ./direnv.nix
     ./zsh.nix
