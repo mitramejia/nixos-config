@@ -21,7 +21,7 @@
 
   # Program Options
   # Set default applications for the system.
-  browser = "brave"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
+  browser = "flatpak run app.zen_browser.zen"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
   terminal = "kitty"; # Default terminal emulator
   keyboardLayout = "us"; # Keyboard layout configuration
 }
