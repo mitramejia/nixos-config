@@ -13,6 +13,7 @@
       plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "tmux" "yarn" "nvm" "jenv"];
       theme = ""; # disable theme to allow nix/home-manager starship to control prompt
       extraConfig = ''
+        export ZSH_TMUX_AUTOSTART=false
         export ANDROID_HOME=~/Android/Sdk
         export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"
       '';
