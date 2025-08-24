@@ -11,6 +11,7 @@
     extraMonitorSettings
     keyboardLayout
     wallpaper_img
+    wallpaper_img_vertical
     ;
 in {
   imports = [
@@ -22,11 +23,13 @@ in {
     enable = true;
   };
 
+  programs.hyprlock.enable = true;
+
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = [wallpaper_img];
-      wallpaper = ["DP-1, ${wallpaper_img}"];
+      preload = [wallpaper_img wallpaper_img_vertical];
+      wallpaper = ["DP-1, ${wallpaper_img}" "DP-2, ${wallpaper_img_vertical}"];
     };
   };
 
@@ -213,9 +216,8 @@ in {
       bind = [
         "$modifier,Return,exec,${terminal}"
         "$modifier,SPACE,exec,rofi-launcher"
-        "$modifier,SHIFT,W,exec,web-search"
+        "$modifier SHIFT,W,exec,web-search"
         "$modifier,W,exec,${browser}"
-        "$modifier,SHIFT,E,exec,emopicker9000"
         "$modifier,M,exec,flatpak run sh.cider.genten"
         # Take screenshot
         "$modifier,S,exec,grimblast save area"
@@ -373,6 +375,38 @@ in {
         "workspace 6, class:^(obsidian)$"
         "workspace 7, class:^(Cider)$"
       ];
+
+      animations = {
+        enabled = true;
+        bezier = [
+          "linear, 0, 0, 1, 1"
+          "md3_standard, 0.2, 0, 0, 1"
+          "md3_decel, 0.05, 0.7, 0.1, 1"
+          "md3_accel, 0.3, 0, 0.8, 0.15"
+          "overshot, 0.05, 0.9, 0.1, 1.1"
+          "crazyshot, 0.1, 1.5, 0.76, 0.92 "
+          "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
+          "menu_decel, 0.1, 1, 0, 1"
+          "menu_accel, 0.38, 0.04, 1, 0.07"
+          "easeInOutCirc, 0.85, 0, 0.15, 1"
+          "easeOutCirc, 0, 0.55, 0.45, 1"
+          "easeOutExpo, 0.16, 1, 0.3, 1"
+          "softAcDecel, 0.26, 0.26, 0.15, 1"
+          "md2, 0.4, 0, 0.2, 1 # use with .2s duration"
+        ];
+        animation = [
+          "windows, 1, 1.6, md3_decel, popin 60%"
+          "windowsIn, 1, 1.6, md3_decel, popin 60%"
+          "windowsOut, 1, 1.6, md3_accel, popin 60%"
+          "border, 1, 5, default"
+          "fade, 1, 1.6, md3_decel"
+          "layersIn, 1, 1.6, menu_decel, slide"
+          "layersOut, 1, 1.0, menu_accel"
+          "fadeLayersIn, 1, 1.0, menu_decel"
+          "fadeLayersOut, 1, 2.0, menu_accel"
+          "workspaces, 1, 3.5, menu_decel, slide"
+        ];
+      };
     };
 
     extraConfig = "
@@ -388,16 +422,5 @@ in {
         workspace = 9, monitor:DP-2, default:true
         workspace = 10, monitor:DP-2, default:true
      ";
-  };
-
-  wayland.windowManager.hyprland.settings = {
-    animation = {
-      enabled = true;
-      animation = [
-        "windows, 1, 7, default, slide"
-        "workspaces, 1, 6, default"
-        "fade, 1, 10, default"
-      ];
-    };
   };
 }

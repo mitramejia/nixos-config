@@ -6,12 +6,22 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    syntaxHighlighting.enable = true;
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = ["main" "brackets" "pattern" "regexp" "root" "line"];
+    };
+    historySubstringSearch.enable = true;
+
+    history = {
+      ignoreDups = true;
+      save = 10000;
+      size = 10000;
+    };
     autosuggestion.enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "yarn" "nvm" "jenv"];
-      theme = ""; # disable theme to allow nix/home-manager starship to control prompt
+      plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "yarn" "nvm" "jenv" "tmux"];
+      theme = "";
       extraConfig = ''
         export ANDROID_HOME=~/Android/Sdk
         export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"

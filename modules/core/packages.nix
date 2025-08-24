@@ -12,7 +12,6 @@
     fuse.userAllowOther = true;
     mtr.enable = true;
     adb.enable = true;
-    hyprlock.enable = true;
 
     gnupg.agent = {
       enable = true;
@@ -23,6 +22,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    hyprshot
     bash
     ollama-rocm # Run AI models locally
     vim # Text editor

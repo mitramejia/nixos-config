@@ -25,8 +25,6 @@ in {
     inputs.stylix.nixosModules.stylix # Theme and appearance customization via Stylix
   ];
 
-  home-manager.users.${username} = import ../home;
-
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = host;

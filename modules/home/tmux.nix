@@ -3,7 +3,8 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     historyLimit = 1000000;
-    terminal = "tmux-256color";
+    newSession = true;
+    terminal = "screen-256color";
     keyMode = "vi";
     mouse = true;
     baseIndex = 1;
@@ -13,32 +14,32 @@
     aggressiveResize = true;
     escapeTime = 0;
     extraConfig = ''
-           set-window-option -g pane-base-index 1
+         set-window-option -g pane-base-index 1
 
-           # truecolor (RGB) support with tmux-256color
-           set -ga terminal-overrides ",tmux-256color:RGB"
+         # truecolor (RGB) support with tmux-256color
+         set -ga terminal-overrides ",tmux-256color:RGB"
 
-           # keybindings
-           bind-key -T copy-mode-vi v send-keys -X begin-selection
-           bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-           bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+         # keybindings
+         bind-key -T copy-mode-vi v send-keys -X begin-selection
+         bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+         bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-           bind - split-window -v -c "#{pane_current_path}"
-           bind | split-window -h -c "#{pane_current_path}"
+         bind - split-window -v -c "#{pane_current_path}"
+         bind | split-window -h -c "#{pane_current_path}"
 
-           bind h select-pane -L
-           bind j select-pane -D
-           bind k select-pane -U
-           bind l select-pane -R
+         bind h select-pane -L
+         bind j select-pane -D
+         bind k select-pane -U
+         bind l select-pane -R
 
-           # reload tmux configuration
-           bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
+         # reload tmux configuration
+         bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
 
       # renumber when window is closed
       set -g renumber-windows on
       # set left and right status bar
       set -g allow-rename off
-      set -g status-position top
+      set -g status-position bottom
       set -g status-interval 5
       set -g status-left-length 100
       set -g status-right-length 100
@@ -77,6 +78,7 @@
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.yank
       tmuxPlugins.open
+      tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.copycat
     ];
   };
