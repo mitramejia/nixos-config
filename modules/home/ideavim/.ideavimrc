@@ -114,8 +114,6 @@ map gf <action>(GotoFile)
 map <leader>fn <action>(NewFile)
 map <leader>fr <action>(RecentFiles)
 map <leader>fp <action>(FindInPath)
-nmap fp <action>(FindInPath)
-vmap fp <action>(FindInPath)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 " Press `F` to activate Target Mode
