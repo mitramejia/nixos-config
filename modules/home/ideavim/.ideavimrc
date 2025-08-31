@@ -32,10 +32,8 @@ let mapleader = " "
 set surround
 set highlightedyank
 set nerdtree
+set quickscope
 
-" Easymotion settings
-set easymotion
-set notimeout
 
 " Which-key settings
 set which-key

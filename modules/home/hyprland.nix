@@ -79,6 +79,7 @@ in {
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "nm-applet --indicator"
         "lxqt-policykit-agent"
+        "hyprpanel"
         "[workspace 1] ${browser}"
         "[workspace 2] bash webstorm"
         "[workspace 5] slack"
@@ -319,6 +320,7 @@ in {
         "tag +terminal, class:^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$"
         "tag +browser, class:^(Brave-browser(-beta|-dev|-unstable)?)$"
         "tag +browser, class:^(brave)$"
+        "tag +browser, class:^(zen)$"
         "tag +browser, class:^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$"
         "tag +browser, class:^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$"
         "tag +browser, class:^([Tt]horium-browser|[Cc]achy-browser)$"
@@ -370,6 +372,7 @@ in {
         "noblur, tag:games*"
         "fullscreen, tag:games*"
         "workspace 1, tag:browser*"
+        "workspace 2, tag:projects*"
         "workspace 5, tag:im*"
         "workspace 8, tag:games*"
         "workspace 6, class:^(obsidian)$"
@@ -379,6 +382,9 @@ in {
       animations = {
         enabled = true;
         bezier = [
+          "wind, -1.05, 0.9, 0.1, 1.05"
+          "winIn, -1.1, 1.1, 0.1, 1.1"
+          "winOut, -1.3, -0.3, 0, 1"
           "linear, 0, 0, 1, 1"
           "md3_standard, 0.2, 0, 0, 1"
           "md3_decel, 0.05, 0.7, 0.1, 1"
@@ -392,19 +398,19 @@ in {
           "easeOutCirc, 0, 0.55, 0.45, 1"
           "easeOutExpo, 0.16, 1, 0.3, 1"
           "softAcDecel, 0.26, 0.26, 0.15, 1"
-          "md2, 0.4, 0, 0.2, 1 # use with .2s duration"
+          "md2, 0.4, 0, 0.1, 1 # use with .2s duration"
         ];
         animation = [
-          "windows, 1, 1.6, md3_decel, popin 60%"
-          "windowsIn, 1, 1.6, md3_decel, popin 60%"
-          "windowsOut, 1, 1.6, md3_accel, popin 60%"
-          "border, 1, 5, default"
-          "fade, 1, 1.6, md3_decel"
-          "layersIn, 1, 1.6, menu_decel, slide"
+          "windows, 1, 1.2, wind, slide"
+          "windowsIn, 1, 1.2, wind, slide"
+          "windowsOut, 1, 1.2, wind, slide"
+          "border, 1, 4.5, default"
+          "fade, 1, 1.2, md3_decel"
+          "layersIn, 1, 1.2, menu_decel, slide"
           "layersOut, 1, 1.0, menu_accel"
           "fadeLayersIn, 1, 1.0, menu_decel"
-          "fadeLayersOut, 1, 2.0, menu_accel"
-          "workspaces, 1, 3.5, menu_decel, slide"
+          "fadeLayersOut, 1, 1.0, menu_accel"
+          "workspaces, 1, 2, menu_decel, slide"
         ];
       };
     };
