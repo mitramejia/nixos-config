@@ -372,7 +372,6 @@ in {
         "noblur, tag:games*"
         "fullscreen, tag:games*"
         "workspace 1, tag:browser*"
-        "workspace 2, tag:projects*"
         "workspace 5, tag:im*"
         "workspace 8, tag:games*"
         "workspace 6, class:^(obsidian)$"
