@@ -10,10 +10,11 @@
   # Documentation: https://github.com/larkery/Hyprland
   # To see monitor ID's i.e DP-1, run in terminal:  hyprctl monitors all
   extraMonitorSettings = ''
-    monitor=DP-1,preferred,auto,1.50
-    monitor=DP-2,preferred,auto,1.50,transform,3
+    monitor=DP-2,preferred,auto,1.50
   '';
 
+  #monitor=DP-1,preferred,auto,1.50
+  #monitor=DP-2,preferred,auto,1.50,transform,3
   wallpaper_img = "/home/mitra/Pictures/Wallpapers/pexels.jpg"; # Path to the wallpaper image
   wallpaper_img_vertical = "/home/mitra/Pictures/Wallpapers/pexels-vertical.jpg"; # Path to the wallpaper image
 
