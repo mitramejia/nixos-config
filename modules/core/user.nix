@@ -84,7 +84,7 @@ in {
       vlc # Media player
 
       # Code editors and IDEs
-      vscode # Visual Studio Code editor
+      code-cursor # Visual Studio Code editor
       jetbrains-toolbox # JetBrains Toolbox for IDE management
       android-studio # Android development IDE
       android-studio-tools # Android Studio extra tools
