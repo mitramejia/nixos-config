@@ -20,6 +20,7 @@ in {
 
   programs.hyprpanel = {
     dontAssertNotificationDaemons = true;
+   systemd.enable =true;
     enable = true;
   };
 
@@ -311,11 +312,11 @@ in {
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
         # fix tooltips (always have a title of `win.<id>`)
-        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
-        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+#        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+#        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
         # fix tab dragging (always have a single space character as their title)
-        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
-        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
+#        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
+#        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
         "tag +file-manager, class:^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$"
         "tag +terminal, class:^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$"
         "tag +browser, class:^(Brave-browser(-beta|-dev|-unstable)?)$"
@@ -378,40 +379,24 @@ in {
         "workspace 7, class:^(Cider)$"
       ];
 
-      animations = {
-        enabled = true;
-        bezier = [
-          "wind, -1.05, 0.9, 0.1, 1.05"
-          "winIn, -1.1, 1.1, 0.1, 1.1"
-          "winOut, -1.3, -0.3, 0, 1"
-          "linear, 0, 0, 1, 1"
-          "md3_standard, 0.2, 0, 0, 1"
-          "md3_decel, 0.05, 0.7, 0.1, 1"
-          "md3_accel, 0.3, 0, 0.8, 0.15"
-          "overshot, 0.05, 0.9, 0.1, 1.1"
-          "crazyshot, 0.1, 1.5, 0.76, 0.92 "
-          "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
-          "menu_decel, 0.1, 1, 0, 1"
-          "menu_accel, 0.38, 0.04, 1, 0.07"
-          "easeInOutCirc, 0.85, 0, 0.15, 1"
-          "easeOutCirc, 0, 0.55, 0.45, 1"
-          "easeOutExpo, 0.16, 1, 0.3, 1"
-          "softAcDecel, 0.26, 0.26, 0.15, 1"
-          "md2, 0.4, 0, 0.1, 1 # use with .2s duration"
-        ];
-        animation = [
-          "windows, 1, 1.2, wind, slide"
-          "windowsIn, 1, 1.2, wind, slide"
-          "windowsOut, 1, 1.2, wind, slide"
-          "border, 1, 4.5, default"
-          "fade, 1, 1.2, md3_decel"
-          "layersIn, 1, 1.2, menu_decel, slide"
-          "layersOut, 1, 1.0, menu_accel"
-          "fadeLayersIn, 1, 1.0, menu_decel"
-          "fadeLayersOut, 1, 1.0, menu_accel"
-          "workspaces, 1, 2, menu_decel, slide"
-        ];
-      };
+  animations = {
+      enabled = true;
+      bezier = [
+        "overshot, 0.05, 0.9, 0.1, 1.05"
+        "smoothOut, 0.5, 0, 0.99, 0.99"
+        "smoothIn, 0.5, -0.5, 0.68, 1.5"
+      ];
+      animation = [
+        "windows, 1, 5, overshot, slide"
+        "windowsOut, 1, 3, smoothOut"
+        "windowsIn, 1, 3, smoothOut"
+        "windowsMove, 1, 4, smoothIn, slide"
+        "border, 1, 5, default"
+        "fade, 1, 5, smoothIn"
+        "fadeDim, 1, 5, smoothIn"
+        "workspaces, 1, 6, default"
+      ];
+    };
     };
 
     extraConfig = "
