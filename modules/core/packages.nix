@@ -17,8 +17,6 @@
       enable = true;
       enableSSHSupport = true;
     };
-
-    gamemode.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;
