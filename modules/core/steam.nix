@@ -6,7 +6,7 @@
       dedicatedServer.openFirewall = false;
       gamescopeSession.enable = true;
       extraCompatPackages = [pkgs.proton-ge-bin];
-       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
     gamescope = {
       enable = true;
@@ -16,6 +16,7 @@
         "--expose-wayland"
       ];
     };
+    gamemode.enable = true;
   };
   hardware.xone.enable = true; # support for the xbox controller USB dongle
 }
