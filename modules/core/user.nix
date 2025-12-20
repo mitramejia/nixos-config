@@ -89,7 +89,6 @@ in {
       android-studio # Android development IDE
       android-studio-tools # Android Studio extra tools
       chromedriver # ChromeDriver for browser automation
-      lmstudio
 
       # Frontend-focused development tools
       amdgpu_top # AMD GPU monitoring tool
