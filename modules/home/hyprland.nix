@@ -84,7 +84,6 @@ in {
         "[workspace 1] ${browser}"
         "[workspace 2] bash webstorm"
         "[workspace 5] slack"
-        "[workspace 5] discord"
         "[workspace 6] obsidian"
         "[workspace 7] appimage-run ~/AppImages/Cider/Cider.AppImage"
         "[workspace 9] kitty"
