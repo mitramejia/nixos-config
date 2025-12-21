@@ -20,7 +20,7 @@ in {
 
   programs.hyprpanel = {
     dontAssertNotificationDaemons = true;
-   systemd.enable =true;
+    systemd.enable = true;
     enable = true;
   };
 
@@ -311,11 +311,11 @@ in {
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
         # fix tooltips (always have a title of `win.<id>`)
-#        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
-#        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        #        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        #        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
         # fix tab dragging (always have a single space character as their title)
-#        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
-#        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
+        #        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
+        #        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
         "tag +file-manager, class:^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$"
         "tag +terminal, class:^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$"
         "tag +browser, class:^(Brave-browser(-beta|-dev|-unstable)?)$"
@@ -378,24 +378,24 @@ in {
         "workspace 7, class:^(Cider)$"
       ];
 
-  animations = {
-      enabled = true;
-      bezier = [
-        "overshot, 0.05, 0.9, 0.1, 1.05"
-        "smoothOut, 0.5, 0, 0.99, 0.99"
-        "smoothIn, 0.5, -0.5, 0.68, 1.5"
-      ];
-      animation = [
-        "windows, 1, 5, overshot, slide"
-        "windowsOut, 1, 3, smoothOut"
-        "windowsIn, 1, 3, smoothOut"
-        "windowsMove, 1, 4, smoothIn, slide"
-        "border, 1, 5, default"
-        "fade, 1, 5, smoothIn"
-        "fadeDim, 1, 5, smoothIn"
-        "workspaces, 1, 6, default"
-      ];
-    };
+      animations = {
+        enabled = true;
+        bezier = [
+          "overshot, 0.05, 0.9, 0.1, 1.05"
+          "smoothOut, 0.5, 0, 0.99, 0.99"
+          "smoothIn, 0.5, -0.5, 0.68, 1.5"
+        ];
+        animation = [
+          "windows, 1, 5, overshot, slide"
+          "windowsOut, 1, 3, smoothOut"
+          "windowsIn, 1, 3, smoothOut"
+          "windowsMove, 1, 4, smoothIn, slide"
+          "border, 1, 5, default"
+          "fade, 1, 5, smoothIn"
+          "fadeDim, 1, 5, smoothIn"
+          "workspaces, 1, 6, default"
+        ];
+      };
     };
 
     extraConfig = "

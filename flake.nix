@@ -43,7 +43,6 @@
     };
   in {
     nixosConfigurations = {
-      inherit system;
       # Define a NixOS system configuration for the specified host
       "${host}" = nixpkgs.lib.nixosSystem {
         # Pass arguments to all loaded modules for easier customization and DRY configurations
