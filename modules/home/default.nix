@@ -46,7 +46,7 @@
     (import ./scripts/web-search.nix {inherit pkgs;})
     (import ./scripts/rofi-launcher.nix {inherit pkgs;})
     (import ./scripts/screenshootin.nix {inherit pkgs;})
-    ags.packages.${pkgs.system}.default
+    ags.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.home-manager.enable = true;
