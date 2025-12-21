@@ -7,7 +7,6 @@
     # Main NixOS package sources (stable and unstable channels)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Unstable Nixpkgs when newer versions of packages are needed
     # Visual theming via Stylix module
     stylix.url = "github:danth/stylix/release-25.05";
 
@@ -36,11 +35,6 @@
     host = "nixos";
     # Current user's username, used for user-level configuration imports
     username = "mitra";
-    # Overlay with unstable packages for when the latest versions are required or for specific packages only found on unstable
-    unstable-pkgs = import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true; # Enable unfree packages (e.g., proprietary software)
-    };
   in {
     nixosConfigurations = {
       # Define a NixOS system configuration for the specified host
@@ -52,7 +46,6 @@
           inherit username; # Current user
           inherit host; # Hostname
           inherit ags; # AGS module for custom shell widgets
-          inherit unstable-pkgs; # Unstable package set for selective use
         };
 
         # List of modules to configure the system
