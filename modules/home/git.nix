@@ -3,11 +3,11 @@
 in {
   programs.git = {
     enable = true;
-    userName = "${gitUsername}";
-    userEmail = "${gitEmail}";
-
-    difftastic = {enable = true;};
-    extraConfig = {
+    settings = {
+      user = {
+        name = "${gitUsername}";
+        email = "${gitEmail}";
+      };
       push = {
         default = "simple"; # Match modern push behavior
         autoSetupRemote = true;
@@ -20,5 +20,10 @@ in {
       # Conflict resolution style for readable diffs
       merge.conflictStyle = "diff3";
     };
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
   };
 }
