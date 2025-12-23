@@ -18,12 +18,6 @@ in {
     ags.homeManagerModules.default
   ];
 
-  programs.hyprpanel = {
-    dontAssertNotificationDaemons = true;
-    systemd.enable = true;
-    enable = true;
-  };
-
   programs.hyprlock.enable = true;
 
   services.hyprpaper = {
@@ -191,11 +185,7 @@ in {
         no_warps = true;
       };
 
-      render = {
-        explicit_sync = 1; # Change to 1 to disable
-        explicit_sync_kms = 1;
-        direct_scanout = 0;
-      };
+      render.direct_scanout = 0;
 
       master = {
         new_status = "master";
@@ -203,16 +193,9 @@ in {
         mfact = 0.5;
       };
 
-      gestures = {
-        workspace_swipe = 1;
-        workspace_swipe_fingers = 3;
-        workspace_swipe_distance = 500;
-        workspace_swipe_invert = 1;
-        workspace_swipe_min_speed_to_force = 30;
-        workspace_swipe_cancel_ratio = 0.5;
-        workspace_swipe_create_new = 1;
-        workspace_swipe_forever = 1;
-      };
+      gesture = [
+        "3, horizontal, workspace"
+      ];
 
       bind = [
         "$modifier,Return,exec,${terminal}"

@@ -7,6 +7,8 @@
     # Enable Hyprpanel: installs the package and sets up the user service under Home Manager.
     enable = true;
 
+    systemd.enable = true;
+
     # Use the Nix-native settings attrset (ported from hyprpanel.config.json).
     settings = import ./settings.nix;
   };
