@@ -5,10 +5,10 @@
   # Inputs defines all external dependencies and optional modules.
   inputs = {
     # Main NixOS package sources (stable and unstable channels)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # Visual theming via Stylix module
-    stylix.url = "github:danth/stylix/release-25.11";
+    stylix.url = "github:danth/stylix/release-25.05";
 
     # Advanced shell for Wayland compositors (for custom widgets and scripting)
     ags.url = "github:Aylur/ags";
@@ -17,7 +17,7 @@
 
     # Home Manager as a flake input, for user-level package and dotfile configuration.
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-25.05";
       # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.
       inputs.nixpkgs.follows = "nixpkgs";
     };

@@ -64,12 +64,12 @@
     hyprpaper # Hyprland wallpaper utility
     grim # Screenshot utility
     slurp # Region selector
+    file-roller # Archive manager
     imv # Image viewer
     mpv # Media player
     tree # Directory listing tool
     neofetch # System info display
-    tuigreet # TUI greeter
-    file-roller # Archive manager
+    greetd.tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
     nwg-displays #configure monitor configs via GUI

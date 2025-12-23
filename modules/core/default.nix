@@ -34,7 +34,7 @@ in {
 
   fonts = {
     packages = with pkgs; [
-      noto-fonts-color-emoji
+      noto-fonts-emoji
       noto-fonts-cjk-sans
       font-awesome
       # Commenting Symbola out to fix install this will need to be fixed or an alternative found.
@@ -78,7 +78,7 @@ in {
     rpcbind.enable = false;
     nfs.server.enable = false;
   };
-
+  services.twingate.enable = true;
   systemd.services.flatpak-repo = {
     path = [pkgs.flatpak];
     script = ''
