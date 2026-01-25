@@ -18,5 +18,5 @@
     };
     gamemode.enable = true;
   };
-  hardware.xone.enable = true; # support for the xbox controller USB dongle
+  hardware.xpadneo.enable = true; # support for the xbox controller USB dongle
 }
