@@ -14,26 +14,27 @@
     aggressiveResize = true;
     escapeTime = 0;
     extraConfig = ''
-         set-window-option -g pane-base-index 1
 
-         # truecolor (RGB) support with tmux-256color
-         set -ga terminal-overrides ",tmux-256color:RGB"
+      set-option -g set-clipboard on
+      set-window-option -g pane-base-index 1
 
-         # keybindings
-         bind-key -T copy-mode-vi v send-keys -X begin-selection
-         bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-         bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+      # truecolor (RGB) support with tmux-256color
+      set -ga terminal-overrides ",tmux-256color:RGB"
 
-         bind - split-window -v -c "#{pane_current_path}"
-         bind | split-window -h -c "#{pane_current_path}"
+      # keybindings
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-         bind h select-pane -L
-         bind j select-pane -D
-         bind k select-pane -U
-         bind l select-pane -R
+      bind - split-window -v -c "#{pane_current_path}"
+      bind | split-window -h -c "#{pane_current_path}"
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
 
-         # reload tmux configuration
-         bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
+      # reload tmux configuration
+      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
 
       # renumber when window is closed
       set -g renumber-windows on

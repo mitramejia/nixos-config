@@ -73,5 +73,6 @@
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
     nwg-displays #configure monitor configs via GUI
+    zoxide
   ];
 }

@@ -21,6 +21,7 @@
     ./swapy.nix
     ./btop.nix
     ./xdg.nix
+    ./yazi.nix
     ./eza.nix
     ./fzf.nix
     ./lazygit.nix
