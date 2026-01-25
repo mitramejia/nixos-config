@@ -82,6 +82,7 @@ in {
       gimp # Image editing software
       libreoffice # Office suite
       vlc # Media player
+      yazi # TUI file manager
 
       # Code editors and IDEs
       code-cursor # Visual Studio Code editor

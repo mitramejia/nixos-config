@@ -3,11 +3,11 @@
 in {
   programs.git = {
     enable = true;
-    settings = {
-      user = {
-        name = "${gitUsername}";
-        email = "${gitEmail}";
-      };
+    userName = "${gitUsername}";
+    userEmail = "${gitEmail}";
+
+    difftastic = {enable = true;};
+    extraConfig = {
       push = {
         default = "simple"; # Match modern push behavior
         autoSetupRemote = true;
