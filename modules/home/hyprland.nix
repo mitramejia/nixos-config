@@ -296,6 +296,8 @@ in {
       windowrulev2 = [
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
+        "focusonactivate, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        "focusonactivate, floating:1, class:^(.*jetbrains.*)$"
         # fix tooltips (always have a title of `win.<id>`)
         #        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
         #        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
@@ -372,14 +374,14 @@ in {
           "smoothIn, 0.5, -0.5, 0.68, 1.5"
         ];
         animation = [
-          "windows, 1, 5, overshot, slide"
-          "windowsOut, 1, 3, smoothOut"
-          "windowsIn, 1, 3, smoothOut"
-          "windowsMove, 1, 4, smoothIn, slide"
-          "border, 1, 5, default"
-          "fade, 1, 5, smoothIn"
-          "fadeDim, 1, 5, smoothIn"
-          "workspaces, 1, 6, default"
+          "windows, 1, 3, overshot, slide"
+          "windowsOut, 1, 2, smoothOut"
+          "windowsIn, 1, 2, smoothOut"
+          "windowsMove, 1, 3, smoothIn, slide"
+          "border, 1, 4, default"
+          "fade, 1, 3, smoothIn"
+          "fadeDim, 1, 3, smoothIn"
+          "workspaces, 1, 4, default"
         ];
       };
     };
