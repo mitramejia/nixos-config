@@ -6,7 +6,7 @@
     extraModulePackages = [];
 
     # Kernel
-    kernelPackages = pkgs.linuxPackages_6_17;
+    kernelPackages = pkgs.linuxPackages;
 
     # Needed For Some Steam Games
     kernel.sysctl = {
