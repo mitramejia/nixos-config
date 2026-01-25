@@ -69,7 +69,7 @@
     mpv # Media player
     tree # Directory listing tool
     neofetch # System info display
-    greetd.tuigreet # TUI greeter
+    tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
     nwg-displays #configure monitor configs via GUI
