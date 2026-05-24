@@ -169,13 +169,13 @@ in {
         rounding = 10;
         blur = {
           enabled = true;
-          size = 5;
-          passes = 3;
-          ignore_opacity = false;
+          size = 4;
+          passes = 1;
+          ignore_opacity = true;
           new_optimizations = true;
         };
         shadow = {
-          enabled = true;
+          enabled = false;
           range = 4;
           render_power = 3;
           color = "rgba(1a1a1aee)";
@@ -369,19 +369,16 @@ in {
       animations = {
         enabled = true;
         bezier = [
-          "overshot, 0.05, 0.9, 0.1, 1.05"
-          "smoothOut, 0.5, 0, 0.99, 0.99"
-          "smoothIn, 0.5, -0.5, 0.68, 1.5"
+          "easeOut, 0.25, 1, 0.5, 1"
+          "easeInOut, 0.42, 0, 0.58, 1"
         ];
         animation = [
-          "windows, 1, 3, overshot, slide"
-          "windowsOut, 1, 2, smoothOut"
-          "windowsIn, 1, 2, smoothOut"
-          "windowsMove, 1, 3, smoothIn, slide"
-          "border, 1, 4, default"
-          "fade, 1, 3, smoothIn"
-          "fadeDim, 1, 3, smoothIn"
-          "workspaces, 1, 4, default"
+          "windows, 1, 2, easeOut, popin 80%"
+          "windowsOut, 1, 1, easeInOut"
+          "windowsIn, 1, 1, easeOut"
+          "windowsMove, 1, 2, easeInOut"
+          "fade, 1, 2, easeOut"
+          "workspaces, 1, 2, easeOut"
         ];
       };
     };

@@ -13,6 +13,7 @@ in {
     useUserPackages = true;
     useGlobalPkgs = false;
     backupFileExtension = "backup";
+    overwriteBackup = true;
     extraSpecialArgs = {
       inherit username; # Makes the username available to user modules
       inherit inputs; # Passes all flake inputs to home-manager modules
@@ -63,7 +64,7 @@ in {
       thunderbird # Email client
       zoom-us # Video conferencing application
       discord # Chat for communities
-
+      localsend
       # Development tools for code, system, and infrastructure
       alejandra # Nix formatter
       lazydocker # Terminal UI for managing Docker
@@ -87,8 +88,6 @@ in {
       # Code editors and IDEs
       code-cursor # Visual Studio Code editor
       jetbrains-toolbox # JetBrains Toolbox for IDE management
-      android-studio # Android development IDE
-      android-studio-tools # Android Studio extra tools
       chromedriver # ChromeDriver for browser automation
 
       # Frontend-focused development tools
