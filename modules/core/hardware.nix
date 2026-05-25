@@ -25,26 +25,35 @@
 
   swapDevices = [];
 
-  # Extra Logitech Support
-  hardware.logitech.wireless.enable = true;
-  hardware.logitech.wireless.enableGraphical = true;
+  hardware = {
+    # Extra Logitech Support
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
 
-  # Bluetooth Support
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+    # Bluetooth Support
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [rocmPackages.clr.icd];
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [rocmPackages.clr.icd];
+    };
+
+    # This configu=ration ensures that AMD video drivers are included
+    # in the initial ramdisk (initrd). This is crucial because it makes
+    # the drivers available before the operating system starts, ensuring
+    # that the hardware is properly initialized and can be used for display
+    # and other GPU-related tasks during the early boot process.
+    amdgpu.initrd.enable = true;
+
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
-
-  # This configu=ration ensures that AMD video drivers are included
-  # in the initial ramdisk (initrd). This is crucial because it makes
-  # the drivers available before the operating system starts, ensuring
-  # that the hardware is properly initialized and can be used for display
-  # and other GPU-related tasks during the early boot process.
-  hardware.amdgpu.initrd.enable = true;
 
   services.xserver.videoDrivers = ["amdgpu"];
 
@@ -55,7 +64,5 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp8s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp9s0.useDHCP = lib.mkDefault true;
-  hardware.enableRedistributableFirmware = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

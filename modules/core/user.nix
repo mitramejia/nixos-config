@@ -67,6 +67,7 @@ in {
       localsend
       # Development tools for code, system, and infrastructure
       alejandra # Nix formatter
+      statix # Nix linter
       lazydocker # Terminal UI for managing Docker
       rofi-power-menu # Power menu extension for Rofi
       tmux # Terminal multiplexer
@@ -77,6 +78,7 @@ in {
       just # Task/command runner for project scripts
       docker-compose # Define and run multi-container applications
       trimage # Image compression utility
+      lact
 
       # Productivity, media, and general GUI applications
       obsidian # Note-taking app
