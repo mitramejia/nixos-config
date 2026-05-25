@@ -56,6 +56,10 @@
   };
 
   services.xserver.videoDrivers = ["amdgpu"];
+  services.udev.extraRules = ''
+    KERNEL=="card*", KERNELS=="0000:03:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/amd-rx9070"
+    KERNEL=="card*", KERNELS=="0000:12:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/amd-igpu"
+  '';
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

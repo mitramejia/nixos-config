@@ -104,11 +104,12 @@ in {
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
         "SDL_VIDEODRIVER,wayland"
         "MOZ_ENABLE_WAYLAND,1"
-        # These by-path entries are udev symlinks to DRM card devices:
-        # pci-0000:03:00.0-card is the RX 9070, and pci-0000:12:00.0-card is the Raphael iGPU.
-        # Find them with `ls -l /dev/dri/by-path`, then match PCI IDs with `lspci -nnk`.
-        # Hyprland uses the first AQ_DRM_DEVICES entry as the primary GPU; card0/card1 can swap.
-        "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:03:00.0-card:/dev/dri/by-path/pci-0000:12:00.0-card"
+        # Use stable udev aliases from modules/core/hardware.nix:
+        # amd-rx9070 points to PCI 0000:03:00.0, and amd-igpu points to PCI 0000:12:00.0.
+        # Find the source devices with `ls -l /dev/dri/by-path`, then match PCI IDs with `lspci -nnk`.
+        # AQ_DRM_DEVICES is colon-separated, so raw by-path PCI names cannot be used because they contain ':'.
+        # Hyprland uses the first entry as the primary GPU; card0/card1 can swap across boots.
+        "AQ_DRM_DEVICES,/dev/dri/amd-rx9070:/dev/dri/amd-igpu"
         "GDK_SCALE,1"
         "QT_SCALE_FACTOR,1"
         "TERMINAL,kitty"
