@@ -7,6 +7,9 @@
     # Main NixOS package sources (stable and unstable channels)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
+    # Kernel-only pin for Linux 7.0.10, which includes the MediaTek btmtk Bluetooth fix.
+    nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
+
     # Visual theming via Stylix module
     stylix.url = "github:danth/stylix/release-25.11";
 
@@ -35,6 +38,10 @@
     host = "nixos";
     # Current user's username, used for user-level configuration imports
     username = "mitra";
+    kernelPkgs = import inputs.nixpkgs-kernel {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
     nixosConfigurations = {
       # Define a NixOS system configuration for the specified host
@@ -46,6 +53,7 @@
           inherit username; # Current user
           inherit host; # Hostname
           inherit ags; # AGS module for custom shell widgets
+          inherit kernelPkgs; # Kernel packages pinned separately from the system channel
         };
 
         # List of modules to configure the system

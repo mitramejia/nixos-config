@@ -1,12 +1,17 @@
-{pkgs, ...}: {
+{
+  kernelPkgs,
+  pkgs,
+  ...
+}: {
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "uas" "usbhid" "sd_mod"];
-    initrd.kernelModules = [];
+    initrd.kernelModules = ["amdgpu"];
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
 
     # Kernel
-    kernelPackages = pkgs.linuxPackages;
+    # Use 7.0.10 for the upstream MediaTek btmtk Bluetooth fix.
+    kernelPackages = kernelPkgs.linuxPackages_7_0;
 
     # Needed For Some Steam Games
     kernel.sysctl = {
