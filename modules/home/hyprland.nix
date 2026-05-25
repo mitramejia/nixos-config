@@ -25,37 +25,39 @@ in {
 
   programs.hyprlock.enable = true;
 
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      preload = [wallpaper_img wallpaper_img_vertical];
-      wallpaper = ["DP-1, ${wallpaper_img}" "DP-2, ${wallpaper_img_vertical}"];
-    };
-  };
-
-  services.hypridle = {
-    settings = {
-      general = {
-        after_sleep_cmd = "hyprctl dispatch dpms on";
-        ignore_dbus_inhibit = false;
-        lock_cmd = "hyprlock";
+  services = {
+    hyprpaper = {
+      enable = true;
+      settings = {
+        preload = [wallpaper_img wallpaper_img_vertical];
+        wallpaper = ["DP-1, ${wallpaper_img}" "DP-2, ${wallpaper_img_vertical}"];
       };
-      listener = [
-        {
-          timeout = 900;
-          on-timeout = "hyprlock";
-        }
-        {
-          timeout = 1200;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-      ];
     };
-  };
 
-  services.swaync = {
-    enable = false;
+    hypridle = {
+      settings = {
+        general = {
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+          ignore_dbus_inhibit = false;
+          lock_cmd = "hyprlock";
+        };
+        listener = [
+          {
+            timeout = 900;
+            on-timeout = "hyprlock";
+          }
+          {
+            timeout = 1200;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+        ];
+      };
+    };
+
+    swaync = {
+      enable = false;
+    };
   };
 
   systemd.user.targets.hyprland-session.Unit.Wants = [
@@ -122,7 +124,7 @@ in {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
-        vfr = true; # Variable Frame Rate
+        vfr = false; # Variable Frame Rate
       };
 
       #The selected code defines a configuration block for the `dwindle` layout in Hyprland, a Wayland compositor.
