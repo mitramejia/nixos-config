@@ -26,9 +26,15 @@ in {
   ];
 
   # Enable networking
-  networking.networkmanager.enable = true;
-  networking.hostName = host;
-  networking.timeServers = options.networking.timeServers.default ++ ["pool.ntp.org"];
+  networking = {
+    networkmanager.enable = true;
+    hostName = host;
+    timeServers = options.networking.timeServers.default ++ ["pool.ntp.org"];
+    firewall = {
+      enable = false;
+      allowedTCPPorts = [80 8081 8082 8080 8083 3000 5000 8000];
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -92,24 +98,28 @@ in {
   services.pulseaudio.enable = false;
 
   # Security / Polkit
-  security.rtkit.enable = true;
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (
-        subject.isInGroup("users")
-          && (
-            action.id == "org.freedesktop.login1.reboot" ||
-            action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
-            action.id == "org.freedesktop.login1.power-off" ||
-            action.id == "org.freedesktop.login1.power-off-multiple-sessions"
-          )
-        )
-      {
-        return polkit.Result.YES;
-      }
-    })
-  '';
+  security = {
+    rtkit.enable = true;
+    polkit = {
+      enable = true;
+      extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          if (
+            subject.isInGroup("users")
+              && (
+                action.id == "org.freedesktop.login1.reboot" ||
+                action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+                action.id == "org.freedesktop.login1.power-off" ||
+                action.id == "org.freedesktop.login1.power-off-multiple-sessions"
+              )
+            )
+          {
+            return polkit.Result.YES;
+          }
+        })
+      '';
+    };
+  };
 
   # Optimization settings and garbage collection automation
   nix = {
@@ -125,15 +135,6 @@ in {
   };
 
   console.keyMap = "${keyboardLayout}";
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall = {
-    enable = false;
-    allowedTCPPorts = [80 8081 8082 8080 8083 3000 5000 8000];
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
