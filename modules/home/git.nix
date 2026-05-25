@@ -1,4 +1,4 @@
-{...}: let
+_: let
   inherit (import ../variables.nix) gitUsername gitEmail;
 in {
   programs.git = {

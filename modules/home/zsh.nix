@@ -34,8 +34,8 @@
       fi
     '';
     shellAliases = import ./shell-aliases.nix {
-      username = username;
-      host = host;
+      inherit username;
+      inherit host;
     };
   };
 }
