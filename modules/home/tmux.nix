@@ -4,7 +4,7 @@
     shell = "${pkgs.zsh}/bin/zsh";
     historyLimit = 1000000;
     newSession = true;
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
     keyMode = "vi";
     mouse = true;
     baseIndex = 1;
@@ -16,6 +16,7 @@
     extraConfig = ''
 
       set-option -g set-clipboard on
+      set-option -g allow-passthrough on
       set-window-option -g pane-base-index 1
 
       # truecolor (RGB) support with tmux-256color
@@ -24,7 +25,7 @@
       # keybindings
       bind-key -T copy-mode-vi v send-keys -X begin-selection
       bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "${pkgs.wl-clipboard}/bin/wl-copy"
 
       bind - split-window -v -c "#{pane_current_path}"
       bind | split-window -h -c "#{pane_current_path}"

@@ -6,6 +6,7 @@
   # Import Program Configurations
   imports = [
     ./hyprland.nix
+    ./clipboard.nix
     ./emoji.nix
     ./rofi/rofi.nix
     ./rofi/config-emoji.nix

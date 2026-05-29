@@ -22,8 +22,9 @@
     themeFile = "Catppuccin-Mocha";
     extraConfig = ''
       # Clipboard
-      map ctrl+shift+v        paste_from_selection
-      map shift+insert        paste_from_selection
+      map ctrl+shift+v        paste_from_clipboard
+      map ctrl+insert         copy_to_clipboard
+      map shift+insert        paste_from_clipboard
       # Miscellaneous
       map ctrl+shift+up      increase_font_size
       map ctrl+shift+down    decrease_font_size
