@@ -16,7 +16,26 @@
     # Noctalia v4 shell. Keep its nixpkgs independent because it needs recent Quickshell.
     noctalia.url = "github:noctalia-dev/noctalia-shell";
 
-    nvf.url = "github:notashelf/nvf";
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+    };
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
 
     # Home Manager as a flake input, for user-level package and dotfile configuration.
     home-manager = {

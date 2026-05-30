@@ -1,8 +1,10 @@
-{...}: {
+{ ... }:
+{
   # Import Program Configurations
   imports = [
     ./hyprland.nix
     ./clipboard.nix
+    ./agent-skills.nix
     ./noctalia.nix
     ./neovim.nix
     ./chromium.nix

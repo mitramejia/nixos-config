@@ -64,6 +64,8 @@ in {
       discord # Chat for communities
       localsend
       # Development tools for code, system, and infrastructure
+      claude-code # Claude Code CLI from the flake overlay
+      codex # Codex CLI from the flake overlay
       alejandra # Nix formatter
       statix # Nix linter
       lazydocker # Terminal UI for managing Docker
@@ -75,7 +77,6 @@ in {
       just # Task/command runner for project scripts
       docker-compose # Define and run multi-container applications
       trimage # Image compression utility
-      lact
 
       # Productivity, media, and general GUI applications
       obsidian # Note-taking app
