@@ -369,7 +369,9 @@ in
     };
 
     extraConfig = "
-        ${extraMonitorSettings}
+        ${
+              extraMonitorSettings
+            }
         workspace = 1, monitor:DP-1, default:true
         workspace = 2, monitor:DP-1, default:true
         workspace = 3, monitor:DP-1, default:true
