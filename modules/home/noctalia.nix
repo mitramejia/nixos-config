@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   lib,
   pkgs,
@@ -12,7 +11,6 @@
     ;
 
   system = pkgs.stdenv.hostPlatform.system;
-  wallpaperDirectory = "${config.home.homeDirectory}/Pictures/Wallpapers";
   pluginSource = "https://github.com/noctalia-dev/noctalia-plugins";
   enabledPlugins = [
     "web-search"
@@ -104,68 +102,8 @@ in {
     enable = true;
     systemd.enable = false;
     package = noctaliaPackage;
-
-    settings = {
-      general = {
-        showChangelogOnStartup = false;
-        lockOnSuspend = true;
-      };
-
-      bar = {
-        position = "top";
-        displayMode = "always_visible";
-        widgets = {
-          left = [
-            {id = "Launcher";}
-            {id = "Workspace";}
-            {id = "ActiveWindow";}
-          ];
-          center = [
-            {id = "MediaMini";}
-          ];
-          right = [
-            {id = "Tray";}
-            {id = "Volume";}
-            {id = "Bluetooth";}
-            {id = "Clock";}
-            {id = "NotificationHistory";}
-            {id = "ControlCenter";}
-          ];
-        };
-      };
-
-      colorSchemes = {
-        darkMode = true;
-        useWallpaperColors = false;
-      };
-
-      dock.enabled = false;
-
-      idle = {
-        enabled = true;
-        lockTimeout = 900;
-        screenOffTimeout = 1200;
-        suspendTimeout = 0;
-      };
-
-      wallpaper = {
-        enabled = true;
-        directory = wallpaperDirectory;
-        enableMultiMonitorDirectories = true;
-        setWallpaperOnAllMonitors = false;
-        monitorDirectories = [
-          {
-            name = "DP-1";
-            directory = wallpaperDirectory;
-          }
-          {
-            name = "DP-2";
-            directory = wallpaperDirectory;
-          }
-        ];
-      };
-    };
-
+    # Leave shell settings unmanaged while experimenting in the Noctalia UI.
+    # Later, ~/.config/noctalia/settings.json can be converted back into Nix.
     plugins = {
       version = 2;
       sources = [

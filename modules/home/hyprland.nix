@@ -2,15 +2,40 @@
   pkgs,
   config,
   ...
-}: let
-  inherit
-    (import ../variables.nix)
+}:
+let
+  inherit (import ../variables.nix)
     browser
     terminal
     extraMonitorSettings
     keyboardLayout
     ;
-in {
+  ciderAppImage = pkgs.writeShellScriptBin "cider-appimage" ''
+    set -euo pipefail
+
+    for app in "$HOME/AppImages/Cider/Cider.AppImage"; do
+      if [ -x "$app" ]; then
+        export ELECTRON_OZONE_PLATFORM_HINT=wayland
+        export NIXOS_OZONE_WL=1
+        export GDK_BACKEND=wayland,x11,*
+
+        exec ${pkgs.appimage-run}/bin/appimage-run "$app" \
+          --ozone-platform=wayland \
+          --disable-zero-copy \
+          --disable-gpu-memory-buffer-video-frames \
+          "$@"
+      fi
+    done
+
+    echo "cider-appimage: no executable Cider AppImage found in $HOME/AppImages/Cider" >&2
+    exit 1
+  '';
+in
+{
+  home.packages = [
+    ciderAppImage
+  ];
+
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
   ];
@@ -21,7 +46,7 @@ in {
     systemd = {
       enable = true;
       enableXdgAutostart = true;
-      variables = ["--all"];
+      variables = [ "--all" ];
     };
 
     settings = {
@@ -31,12 +56,11 @@ in {
         "nm-applet --indicator"
         "lxqt-policykit-agent"
         "noctalia-shell"
-        "set-noctalia-wallpapers"
         "[workspace 1] ${browser}"
         "[workspace 2] bash webstorm"
         "[workspace 5] slack"
         "[workspace 6] obsidian"
-        "[workspace 7] appimage-run ~/AppImages/Cider/Cider.AppImage"
+        "[workspace 7] cider-appimage"
         "[workspace 9] kitty"
       ];
 
@@ -118,7 +142,8 @@ in {
         gaps_out = 8;
         border_size = 2;
         resize_on_border = true;
-        "col.active_border" = "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
+        "col.active_border" =
+          "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
         "col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
       };
 
@@ -162,13 +187,14 @@ in {
         "$modifier,SPACE,exec,noctalia-shell ipc call launcher toggle"
         "$modifier SHIFT,W,exec,noctalia-shell ipc call plugin:web-search toggle"
         "$modifier ALT,F,exec,noctalia-shell ipc call plugin:file-search toggle"
-        "$modifier,TAB,exec,noctalia-shell ipc call plugin:workspace-overview toggle"
+        "$modifier,TAB,cyclenext"
+        "$modifier,TAB,bringactivetotop"
         "$modifier CTRL,R,exec,noctalia-shell ipc call plugin:screen-recorder toggle"
         "$modifier ALT,T,exec,noctalia-shell ipc call plugin:timer toggle"
         "$modifier CTRL,L,exec,noctalia-shell ipc call lockScreen lock"
         "$modifier SHIFT,R,exec,restart.noctalia"
         "$modifier,W,exec,${browser}"
-        "$modifier,M,exec,flatpak run sh.cider.genten"
+        "$modifier,M,exec,cider-appimage"
         # Take screenshot
         "$modifier,S,exec,sh -lc 'mkdir -p \"$HOME/Pictures/Screenshots\" && hyprshot -m region -o \"$HOME/Pictures/Screenshots\"'"
         "$modifier,D,exec,discord"
@@ -227,6 +253,8 @@ in {
         "$modifier,mouse_up,workspace, e-1"
         # https://wiki.hyprland.org/Configuring/Variables/#binds - the values mentioned here obviously configure hyprland behaviour
         # https://wiki.hyprland.org/Configuring/Dispatchers/#workspaces - this part gives us the keywords/dispatchers and tell us what we can do with the workspace, for instance going to the previous workspace
+        # Cycle recent workspaces
+        "$modifier, Tab, workspace,previous"
         # Switch tabs
         "ALT, Tab, cyclenext"
         "ALT, Tab, bringactivetotop"
