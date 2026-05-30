@@ -129,6 +129,38 @@
         "type": "github"
       }
     },
+    "cursor-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780105540,
+        "narHash": "sha256-qviVo/2zHEguQ5qKS+j7PoA2lLXHUfHKNLNUloZdKGQ=",
+        "owner": "cursor",
+        "repo": "plugins",
+        "rev": "c8402bc8e3673b973719fe3acc2c4837fef34f86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cursor",
+        "repo": "plugins",
+        "type": "github"
+      }
+    },
+    "expo-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780012665,
+        "narHash": "sha256-SGw826S/LMsIB3Ph62SEwJyqWQjrD7rQJJlxF7EdBV4=",
+        "owner": "expo",
+        "repo": "skills",
+        "rev": "fdd3df12151a208853fe540ffea9a67773446377",
+        "type": "github"
+      },
+      "original": {
+        "owner": "expo",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -556,6 +588,8 @@
         "agent-skills": "agent-skills",
         "claude-code": "claude-code",
         "codex-cli-nix": "codex-cli-nix",
+        "cursor-plugins": "cursor-plugins",
+        "expo-skills": "expo-skills",
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs_3",

@@ -32,6 +32,16 @@
       flake = false;
     };
 
+    cursor-plugins = {
+      url = "github:cursor/plugins";
+      flake = false;
+    };
+
+    expo-skills = {
+      url = "github:expo/skills";
+      flake = false;
+    };
+
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
@@ -46,35 +56,38 @@
   };
 
   # Outputs expose the 'nixosConfigurations' for deployment
-  outputs = {nixpkgs, ...} @ inputs: let
-    # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
-    system = "x86_64-linux";
-    # Name of this host, used for per-host configurations and imports
-    host = "nixos";
-    # Current user's username, used for user-level configuration imports
-    username = "mitra";
-    kernelPkgs = import inputs.nixpkgs-kernel {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in {
-    nixosConfigurations = {
-      # Define a NixOS system configuration for the specified host
-      "${host}" = nixpkgs.lib.nixosSystem {
-        # Pass arguments to all loaded modules for easier customization and DRY configurations
-        specialArgs = {
-          inherit system; # Target system architecture
-          inherit inputs; # All flake inputs (dependencies)
-          inherit username; # Current user
-          inherit host; # Hostname
-          inherit kernelPkgs; # Kernel packages pinned separately from the system channel
-        };
+  outputs =
+    { nixpkgs, ... }@inputs:
+    let
+      # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
+      system = "x86_64-linux";
+      # Name of this host, used for per-host configurations and imports
+      host = "nixos";
+      # Current user's username, used for user-level configuration imports
+      username = "mitra";
+      kernelPkgs = import inputs.nixpkgs-kernel {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations = {
+        # Define a NixOS system configuration for the specified host
+        "${host}" = nixpkgs.lib.nixosSystem {
+          # Pass arguments to all loaded modules for easier customization and DRY configurations
+          specialArgs = {
+            inherit system; # Target system architecture
+            inherit inputs; # All flake inputs (dependencies)
+            inherit username; # Current user
+            inherit host; # Hostname
+            inherit kernelPkgs; # Kernel packages pinned separately from the system channel
+          };
 
-        # List of modules to configure the system
-        modules = [
-          ./modules/core # Host-specific system settings
-        ];
+          # List of modules to configure the system
+          modules = [
+            ./modules/core # Host-specific system settings
+          ];
+        };
       };
     };
-  };
 }
