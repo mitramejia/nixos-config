@@ -13,8 +13,8 @@
     # Visual theming via Stylix module
     stylix.url = "github:danth/stylix/release-25.11";
 
-    # Advanced shell for Wayland compositors (for custom widgets and scripting)
-    ags.url = "github:Aylur/ags";
+    # Noctalia v4 shell. Keep its nixpkgs independent because it needs recent Quickshell.
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
 
     nvf.url = "github:notashelf/nvf";
 
@@ -27,11 +27,7 @@
   };
 
   # Outputs expose the 'nixosConfigurations' for deployment
-  outputs = {
-    nixpkgs,
-    ags,
-    ...
-  } @ inputs: let
+  outputs = {nixpkgs, ...} @ inputs: let
     # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
     system = "x86_64-linux";
     # Name of this host, used for per-host configurations and imports
@@ -52,7 +48,6 @@
           inherit inputs; # All flake inputs (dependencies)
           inherit username; # Current user
           inherit host; # Hostname
-          inherit ags; # AGS module for custom shell widgets
           inherit kernelPkgs; # Kernel packages pinned separately from the system channel
         };
 

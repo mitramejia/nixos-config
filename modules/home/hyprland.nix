@@ -1,6 +1,5 @@
 {
   pkgs,
-  ags,
   config,
   ...
 }: let
@@ -10,56 +9,8 @@
     terminal
     extraMonitorSettings
     keyboardLayout
-    wallpaper_img
-    wallpaper_img_vertical
     ;
 in {
-  imports = [
-    ags.homeManagerModules.default
-  ];
-
-  programs.hyprpanel = {
-    systemd.enable = true;
-    enable = true;
-  };
-
-  programs.hyprlock.enable = true;
-
-  services = {
-    hyprpaper = {
-      enable = true;
-      settings = {
-        preload = [wallpaper_img wallpaper_img_vertical];
-        wallpaper = ["DP-1, ${wallpaper_img}" "DP-2, ${wallpaper_img_vertical}"];
-      };
-    };
-
-    hypridle = {
-      settings = {
-        general = {
-          after_sleep_cmd = "hyprctl dispatch dpms on";
-          ignore_dbus_inhibit = false;
-          lock_cmd = "hyprlock";
-        };
-        listener = [
-          {
-            timeout = 900;
-            on-timeout = "hyprlock";
-          }
-          {
-            timeout = 1200;
-            on-timeout = "hyprctl dispatch dpms off";
-            on-resume = "hyprctl dispatch dpms on";
-          }
-        ];
-      };
-    };
-
-    swaync = {
-      enable = false;
-    };
-  };
-
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
   ];
@@ -79,7 +30,8 @@ in {
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "nm-applet --indicator"
         "lxqt-policykit-agent"
-        "hyprpanel"
+        "noctalia-shell"
+        "set-noctalia-wallpapers"
         "[workspace 1] ${browser}"
         "[workspace 2] bash webstorm"
         "[workspace 5] slack"
@@ -207,12 +159,18 @@ in {
 
       bind = [
         "$modifier,Return,exec,${terminal}"
-        "$modifier,SPACE,exec,rofi-launcher"
-        "$modifier SHIFT,W,exec,web-search"
+        "$modifier,SPACE,exec,noctalia-shell ipc call launcher toggle"
+        "$modifier SHIFT,W,exec,noctalia-shell ipc call plugin:web-search toggle"
+        "$modifier ALT,F,exec,noctalia-shell ipc call plugin:file-search toggle"
+        "$modifier,TAB,exec,noctalia-shell ipc call plugin:workspace-overview toggle"
+        "$modifier CTRL,R,exec,noctalia-shell ipc call plugin:screen-recorder toggle"
+        "$modifier ALT,T,exec,noctalia-shell ipc call plugin:timer toggle"
+        "$modifier CTRL,L,exec,noctalia-shell ipc call lockScreen lock"
+        "$modifier SHIFT,R,exec,restart.noctalia"
         "$modifier,W,exec,${browser}"
         "$modifier,M,exec,flatpak run sh.cider.genten"
         # Take screenshot
-        "$modifier,S,exec,grimblast save area"
+        "$modifier,S,exec,sh -lc 'mkdir -p \"$HOME/Pictures/Screenshots\" && hyprshot -m region -o \"$HOME/Pictures/Screenshots\"'"
         "$modifier,D,exec,discord"
         "$modifier,O,exec,obs"
         "$modifier,E,exec,hyprpicker -a"
@@ -239,7 +197,6 @@ in {
         "$modifier,up,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
         # Volume down through wireplumber
         "$modifier,down,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"
-        "$modifier,TAB,cyclenext"
         "$modifier,h,movefocus,l"
         "$modifier,l,movefocus,r"
         "$modifier,k,movefocus,u"
@@ -268,16 +225,12 @@ in {
         "$modifierCONTROL,left,workspace,e-1"
         "$modifier,mouse_down,workspace, e+1"
         "$modifier,mouse_up,workspace, e-1"
-        "$modifier,Tab,cyclenext"
-        "$modifier,Tab,bringactivetotop"
         # https://wiki.hyprland.org/Configuring/Variables/#binds - the values mentioned here obviously configure hyprland behaviour
         # https://wiki.hyprland.org/Configuring/Dispatchers/#workspaces - this part gives us the keywords/dispatchers and tell us what we can do with the workspace, for instance going to the previous workspace
         # Switch tabs
         "ALT, Tab, cyclenext"
         "ALT, Tab, bringactivetotop"
         "SHIFT ALT, Tab, cyclenext, prev"
-        # Cycle recent workspaces
-        "$modifier, Tab, workspace,previous"
         ",XF86AudioRaiseVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ",XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         " ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -328,7 +281,6 @@ in {
         "tag +gamestore, class:^([Ss]team)$"
         "tag +gamestore, title:^([Ll]utris)$"
         "tag +settings, class:^(gnome-disks|wihotspot(-gui)?)$"
-        "tag +settings, class:^([Rr]ofi)$"
         "tag +settings, class:^(file-roller|org.gnome.FileRoller)$"
         "tag +settings, class:^(nm-applet|nm-connection-editor|blueman-manager)$"
         "tag +settings, class:^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$"

@@ -61,7 +61,6 @@
     playerctl # Media player controller
     nixfmt-rfc-style # Nix code formatter
     libvirt # Virtualization API
-    hyprpaper # Hyprland wallpaper utility
     grim # Screenshot utility
     slurp # Region selector
     file-roller # Archive manager

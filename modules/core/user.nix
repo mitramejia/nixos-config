@@ -3,7 +3,6 @@
   inputs,
   username,
   host,
-  ags,
   ...
 }: let
   inherit (import ../variables.nix) gitUsername;
@@ -18,7 +17,6 @@ in {
       inherit username; # Makes the username available to user modules
       inherit inputs; # Passes all flake inputs to home-manager modules
       inherit host; # Lets modules perform host-specific customization
-      inherit ags; # Passes AGS reference for per-user shell widgets
     };
     users.${username} = {
       imports = [../home];
@@ -69,7 +67,6 @@ in {
       alejandra # Nix formatter
       statix # Nix linter
       lazydocker # Terminal UI for managing Docker
-      rofi-power-menu # Power menu extension for Rofi
       tmux # Terminal multiplexer
       scmpuff # Git command helper tool
       act # Run GitHub Actions locally
@@ -94,7 +91,6 @@ in {
 
       # Frontend-focused development tools
       amdgpu_top # AMD GPU monitoring tool
-      grimblast # Screenshot utility for Wayland compositors
       twingate # Remote network access tool
       doppler # Secrets management for application configs
 

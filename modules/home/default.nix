@@ -1,16 +1,9 @@
-{
-  pkgs,
-  ags,
-  ...
-}: {
+{...}: {
   # Import Program Configurations
   imports = [
     ./hyprland.nix
     ./clipboard.nix
-    ./emoji.nix
-    ./rofi/rofi.nix
-    ./rofi/config-emoji.nix
-    ./rofi/config-long.nix
+    ./noctalia.nix
     ./neovim.nix
     ./chromium.nix
     ./virtualisation.nix
@@ -28,7 +21,6 @@
     ./lazygit.nix
     ./bat.nix
     ./tmux.nix
-    ./hyprpanel
     ./starship.nix
     ./direnv.nix
     ./zsh.nix
@@ -41,15 +33,6 @@
     source = ../../assets/wallpapers;
     recursive = true;
   };
-
-  # Scripts
-  home.packages = [
-    (import ./scripts/emopicker9000.nix {inherit pkgs;})
-    (import ./scripts/web-search.nix {inherit pkgs;})
-    (import ./scripts/rofi-launcher.nix {inherit pkgs;})
-    (import ./scripts/screenshootin.nix {inherit pkgs;})
-    ags.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
 
   programs.home-manager.enable = true;
 }

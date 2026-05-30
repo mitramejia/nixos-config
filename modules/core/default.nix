@@ -81,6 +81,8 @@ in {
       pulse.enable = true;
       wireplumber.enable = true;
     };
+    upower.enable = true;
+    power-profiles-daemon.enable = true;
     rpcbind.enable = false;
     nfs.server.enable = false;
   };
