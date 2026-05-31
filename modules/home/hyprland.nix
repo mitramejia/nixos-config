@@ -202,7 +202,7 @@ in
         "$modifier,E,exec,hyprpicker -a"
         "$modifier,G,exec,gimp"
         "$modifierSHIFT,G,exec,godot4"
-        "$modifier,T,exec,thunar"
+        "$modifier,T,exec,yazy"
         "$modifier,Q,killactive"
         "$modifier,P,pseudo,"
         "$modifierSHIFT,I,togglesplit,"
