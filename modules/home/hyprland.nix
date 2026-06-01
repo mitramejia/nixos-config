@@ -2,9 +2,9 @@
   pkgs,
   config,
   ...
-}:
-let
-  inherit (import ../variables.nix)
+}: let
+  inherit
+    (import ../variables.nix)
     browser
     terminal
     extraMonitorSettings
@@ -30,8 +30,7 @@ let
     echo "cider-appimage: no executable Cider AppImage found in $HOME/AppImages/Cider" >&2
     exit 1
   '';
-in
-{
+in {
   home.packages = [
     ciderAppImage
   ];
@@ -49,7 +48,7 @@ in
     systemd = {
       enable = true;
       enableXdgAutostart = true;
-      variables = [ "--all" ];
+      variables = ["--all"];
     };
 
     settings = {
@@ -153,8 +152,7 @@ in
         gaps_out = 8;
         border_size = 2;
         resize_on_border = true;
-        "col.active_border" =
-          "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
+        "col.active_border" = "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
         "col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
       };
 
@@ -290,77 +288,77 @@ in
         allow_workspace_cycles = true;
       };
 
-      # `windowrulev2` was renamed to `windowrule` in Hyprland (v2 syntax is now the default).
+      # Hyprland 0.55 uses explicit match:* props for window rules.
       windowrule = [
-        "stayfocused, title:^()$,class:^(steam)$"
-        "minsize 1 1, title:^()$,class:^(steam)$"
-        "focusonactivate, class:^(.*jetbrains.*)$, title:^(win.*)$"
-        "focusonactivate, floating:1, class:^(.*jetbrains.*)$"
+        "match:title ^()$, match:class ^(steam)$, stay_focused on"
+        "match:title ^()$, match:class ^(steam)$, min_size 1 1"
+        "match:class ^(.*jetbrains.*)$, match:title ^(win.*)$, focus_on_activate on"
+        "match:float true, match:class ^(.*jetbrains.*)$, focus_on_activate on"
         # fix tooltips (always have a title of `win.<id>`)
-        #        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
-        #        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+        #        "match:class ^(.*jetbrains.*)$, match:title ^(win.*)$, no_initial_focus on"
+        #        "match:class ^(.*jetbrains.*)$, match:title ^(win.*)$, no_focus on"
         # fix tab dragging (always have a single space character as their title)
-        #        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
-        #        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
-        "tag +file-manager, class:^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$"
-        "tag +terminal, class:^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$"
-        "tag +browser, class:^(Brave-browser(-beta|-dev|-unstable)?)$"
-        "tag +browser, class:^(brave)$"
-        "tag +browser, class:^(zen)$"
-        "tag +browser, class:^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$"
-        "tag +browser, class:^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$"
-        "tag +browser, class:^([Tt]horium-browser|[Cc]achy-browser)$"
-        "tag +projects, class:^(.*jetbrains.*)$"
-        "tag +projects, class:^(codium|codium-url-handler|VSCodium)$"
-        "tag +projects, class:^(VSCode|code-url-handler)$"
-        "tag +im, class:^([Dd]iscord|[Ww]ebCord|[Vv]esktop)$"
-        "tag +im, class:^([Ww]hatsapp-for-linux)$"
-        "tag +im, class:^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$"
-        "tag +games, class:^(gamescope)$"
-        "tag +games, class:^(steam_app_\d+)$"
-        "tag +gamestore, class:^([Ss]team)$"
-        "tag +gamestore, title:^([Ll]utris)$"
-        "tag +settings, class:^(gnome-disks|wihotspot(-gui)?)$"
-        "tag +settings, class:^(file-roller|org.gnome.FileRoller)$"
-        "tag +settings, class:^(nm-applet|nm-connection-editor|blueman-manager)$"
-        "tag +settings, class:^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$"
-        "tag +settings, class:^(nwg-look|qt5ct|qt6ct|[Yy]ad)$"
-        "tag +settings, class:(xdg-desktop-portal-gtk)"
-        "tag +settings, class:(.blueman-manager-wrapped)"
-        "tag +settings, class:(nwg-displays)"
-        "move 72% 7%,title:^(Picture-in-Picture)$"
-        "center, class:^([Ff]erdium)$"
-        "float, class:^([Ww]aypaper)$"
-        "center, class:^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$"
-        "center, class:([Tt]hunar), title:negative:(.*[Tt]hunar.*)"
-        "center, title:^(Authentication Required)$"
-        "idleinhibit fullscreen, class:^(*)$"
-        "idleinhibit fullscreen, title:^(*)$"
-        "idleinhibit fullscreen, fullscreen:1"
-        "float, tag:settings*"
-        "float, class:^([Ff]erdium)$"
-        "float, title:^(Picture-in-Picture)$"
-        "float, class:^(mpv|com.github.rafostar.Clapper)$"
-        "float, title:^(Authentication Required)$"
-        "float, class:(codium|codium-url-handler|VSCodium), title:negative:(.*codium.*|.*VSCodium.*)"
-        "float, class:^([Ss]team)$, title:negative:^([Ss]team)$"
-        "float, class:([Tt]hunar), title:negative:(.*[Tt]hunar.*)"
-        "float, initialTitle:(Add Folder to Workspace)"
-        "float, initialTitle:(Open Files)"
-        "float, initialTitle:(wants to save)"
-        "size 70% 60%, initialTitle:(Open Files)"
-        "size 70% 60%, initialTitle:(Add Folder to Workspace)"
-        "size 70% 70%, tag:settings*"
-        "size 60% 70%, class:^([Ff]erdium)$"
-        "pin, title:^(Picture-in-Picture)$"
-        "keepaspectratio, title:^(Picture-in-Picture)$"
-        "noblur, tag:games*"
-        "fullscreen, tag:games*"
-        "workspace 1, tag:browser*"
-        "workspace 5, tag:im*"
-        "workspace 8, tag:games*"
-        "workspace 6, class:^(obsidian)$"
-        "workspace 7, class:^(Cider)$"
+        #        "match:class ^(.*jetbrains.*)$, match:title ^\s$, no_initial_focus on"
+        #        "match:class ^(.*jetbrains.*)$, match:title ^\s$, no_focus on"
+        "match:class ^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$, tag +file-manager"
+        "match:class ^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$, tag +terminal"
+        "match:class ^(Brave-browser(-beta|-dev|-unstable)?)$, tag +browser"
+        "match:class ^(brave)$, tag +browser"
+        "match:class ^(zen)$, tag +browser"
+        "match:class ^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$, tag +browser"
+        "match:class ^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$, tag +browser"
+        "match:class ^([Tt]horium-browser|[Cc]achy-browser)$, tag +browser"
+        "match:class ^(.*jetbrains.*)$, tag +projects"
+        "match:class ^(codium|codium-url-handler|VSCodium)$, tag +projects"
+        "match:class ^(VSCode|code-url-handler)$, tag +projects"
+        "match:class ^([Dd]iscord|[Ww]ebCord|[Vv]esktop)$, tag +im"
+        "match:class ^([Ww]hatsapp-for-linux)$, tag +im"
+        "match:class ^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$, tag +im"
+        "match:class ^(gamescope)$, tag +games"
+        "match:class ^(steam_app_\\d+)$, tag +games"
+        "match:class ^([Ss]team)$, tag +gamestore"
+        "match:title ^([Ll]utris)$, tag +gamestore"
+        "match:class ^(gnome-disks|wihotspot(-gui)?)$, tag +settings"
+        "match:class ^(file-roller|org.gnome.FileRoller)$, tag +settings"
+        "match:class ^(nm-applet|nm-connection-editor|blueman-manager)$, tag +settings"
+        "match:class ^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$, tag +settings"
+        "match:class ^(nwg-look|qt5ct|qt6ct|[Yy]ad)$, tag +settings"
+        "match:class (xdg-desktop-portal-gtk), tag +settings"
+        "match:class (.blueman-manager-wrapped), tag +settings"
+        "match:class (nwg-displays), tag +settings"
+        "match:title ^(Picture-in-Picture)$, move 72% 7%"
+        "match:class ^([Ff]erdium)$, center on"
+        "match:class ^([Ww]aypaper)$, float on"
+        "match:class ^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$, center on"
+        "match:class ([Tt]hunar), match:title negative:(.*[Tt]hunar.*), center on"
+        "match:title ^(Authentication Required)$, center on"
+        "match:class ^.*$, idle_inhibit fullscreen"
+        "match:title ^.*$, idle_inhibit fullscreen"
+        "match:fullscreen 1, idle_inhibit fullscreen"
+        "match:tag settings*, float on"
+        "match:class ^([Ff]erdium)$, float on"
+        "match:title ^(Picture-in-Picture)$, float on"
+        "match:class ^(mpv|com.github.rafostar.Clapper)$, float on"
+        "match:title ^(Authentication Required)$, float on"
+        "match:class (codium|codium-url-handler|VSCodium), match:title negative:(.*codium.*|.*VSCodium.*), float on"
+        "match:class ^([Ss]team)$, match:title negative:^([Ss]team)$, float on"
+        "match:class ([Tt]hunar), match:title negative:(.*[Tt]hunar.*), float on"
+        "match:initial_title (Add Folder to Workspace), float on"
+        "match:initial_title (Open Files), float on"
+        "match:initial_title (wants to save), float on"
+        "match:initial_title (Open Files), size 70% 60%"
+        "match:initial_title (Add Folder to Workspace), size 70% 60%"
+        "match:tag settings*, size 70% 70%"
+        "match:class ^([Ff]erdium)$, size 60% 70%"
+        "match:title ^(Picture-in-Picture)$, pin on"
+        "match:title ^(Picture-in-Picture)$, keep_aspect_ratio on"
+        "match:tag games*, no_blur on"
+        "match:tag games*, fullscreen on"
+        "match:tag browser*, workspace 1"
+        "match:tag im*, workspace 5"
+        "match:tag games*, workspace 8"
+        "match:class ^(obsidian)$, workspace 6"
+        "match:class ^(Cider)$, workspace 7"
       ];
 
       animations = {
@@ -381,9 +379,7 @@ in
     };
 
     extraConfig = "
-        ${
-              extraMonitorSettings
-            }
+        ${extraMonitorSettings}
         workspace = 1, monitor:DP-1, default:true
         workspace = 2, monitor:DP-1, default:true
         workspace = 3, monitor:DP-1, default:true

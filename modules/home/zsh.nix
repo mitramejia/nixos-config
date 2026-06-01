@@ -1,10 +1,12 @@
 {
+  config,
   username,
   host,
   ...
 }: {
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     enableCompletion = true;
     syntaxHighlighting = {
       enable = true;
