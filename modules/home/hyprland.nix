@@ -53,6 +53,11 @@ in
     };
 
     settings = {
+      # Hyprland variables must be declared at top level (global scope) and before first use.
+      # Hyprland 0.55 (shipped in 26.05) no longer hoists vars defined inside a category like
+      # general{}, so $modifier must live here, ahead of the binds that reference it.
+      "$modifier" = "SUPER";
+
       exec-once = [
         "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
@@ -106,6 +111,10 @@ in
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
+      };
+
+      # Hyprland 0.55 moved vfr from misc -> debug (debug-only knob now).
+      debug = {
         vfr = false; # Variable Frame Rate
       };
 
@@ -116,7 +125,7 @@ in
       #
       #This configuration is part of the `wayland.windowManager.hyprland.settings` block, which customizes the behavior and appearance of the Hyprland window manager.
       dwindle = {
-        pseudotile = true;
+        # `pseudotile` config option removed in Hyprland 0.55; the `pseudo` dispatcher still works.
         preserve_split = true;
       };
 
@@ -139,7 +148,6 @@ in
       };
 
       general = {
-        "$modifier" = "SUPER";
         layout = "dwindle";
         gaps_in = 6;
         gaps_out = 8;
@@ -208,7 +216,7 @@ in
         "$modifier,T,exec,yazy"
         "$modifier,Q,killactive"
         "$modifier,P,pseudo,"
-        "$modifierSHIFT,I,togglesplit,"
+        "$modifierSHIFT,I,layoutmsg,togglesplit"
         "$modifier,F,fullscreen,"
         "$modifierSHIFT,F,togglefloating,"
         "$modifierSHIFT,Q,exit,"
@@ -282,7 +290,8 @@ in
         allow_workspace_cycles = true;
       };
 
-      windowrulev2 = [
+      # `windowrulev2` was renamed to `windowrule` in Hyprland (v2 syntax is now the default).
+      windowrule = [
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
         "focusonactivate, class:^(.*jetbrains.*)$, title:^(win.*)$"
