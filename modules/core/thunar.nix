@@ -2,7 +2,8 @@
   programs = {
     thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      # 26.05 moved these thunar plugins from pkgs.xfce.* to top-level.
+      plugins = with pkgs; [
         thunar-archive-plugin
         thunar-volman
         thunar-media-tags-plugin

@@ -1,6 +1,8 @@
 _: {
   programs.yazi = {
     enable = true;
+    # 26.05 HM changed the shell-wrapper name default "yy" -> "y"; keep "yy".
+    shellWrapperName = "yy";
     settings = {
       yazi = {
         ratio = [

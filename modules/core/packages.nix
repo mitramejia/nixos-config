@@ -11,7 +11,6 @@
     seahorse.enable = true;
     fuse.userAllowOther = true;
     mtr.enable = true;
-    adb.enable = true;
 
     gnupg.agent = {
       enable = true;
@@ -28,6 +27,7 @@
     vim # Text editor
     wget # File download utility
     killall # Process termination utility
+    android-tools # adb/fastboot CLI (programs.adb removed in 26.05; systemd 258 handles uaccess)
     eza # Modern replacement for ls
     git # Version control system
     cmatrix # Terminal matrix effect
@@ -59,7 +59,7 @@
     yad # Dialog display utility
     inxi # System information tool
     playerctl # Media player controller
-    nixfmt-rfc-style # Nix code formatter
+    nixfmt # Nix code formatter (nixfmt-rfc-style is now an alias of nixfmt in 26.05)
     libvirt # Virtualization API
     grim # Screenshot utility
     slurp # Region selector
@@ -67,7 +67,7 @@
     imv # Image viewer
     mpv # Media player
     tree # Directory listing tool
-    neofetch # System info display
+    fastfetch # System info display (neofetch removed in 26.05, unmaintained upstream)
     tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control

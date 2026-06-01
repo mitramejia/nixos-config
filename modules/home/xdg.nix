@@ -26,6 +26,8 @@ in {
     userDirs = {
       enable = true;
       createDirectories = true;
+      # 26.05 HM flipped this default true -> false; keep exporting XDG_*_DIR env vars.
+      setSessionVariables = true;
     };
     enable = true;
     mime.enable = true;

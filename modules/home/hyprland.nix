@@ -41,6 +41,9 @@ in
   ];
   wayland.windowManager.hyprland = {
     enable = true;
+    # 26.05 home-manager flipped configType default "hyprlang" -> "lua". This config is
+    # hyprlang (structured settings + raw hyprlang extraConfig), so pin it to keep behavior.
+    configType = "hyprlang";
     package = pkgs.hyprland;
     xwayland.enable = true;
     systemd = {

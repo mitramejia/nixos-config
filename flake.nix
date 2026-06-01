@@ -5,19 +5,20 @@
   # Inputs defines all external dependencies and optional modules.
   inputs = {
     # Main NixOS package sources (stable and unstable channels)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # Kernel-only pin for Linux 7.0.10, which includes the MediaTek btmtk Bluetooth fix.
     nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
 
-    # Visual theming via Stylix module
-    stylix.url = "github:danth/stylix/release-25.11";
+    # Visual theming via Stylix module.
+    # Tracking master: no release-26.05 branch cut yet as of 2026-05. Revisit when it lands.
+    stylix.url = "github:danth/stylix";
 
     # Noctalia v4 shell. Keep its nixpkgs independent because it needs recent Quickshell.
     noctalia.url = "github:noctalia-dev/noctalia-shell";
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
+      url = "github:nix-community/nixvim/nixos-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,7 +50,7 @@
 
     # Home Manager as a flake input, for user-level package and dotfile configuration.
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.
       inputs.nixpkgs.follows = "nixpkgs";
     };
