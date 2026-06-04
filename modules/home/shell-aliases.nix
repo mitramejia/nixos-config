@@ -16,5 +16,6 @@
   gasha = "git stash apply";
   gplo = "git pull origin";
   open-pr = "gh pr create";
+  copy = "wl-copy";
   p = "pnpm";
 }

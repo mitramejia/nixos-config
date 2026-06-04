@@ -23,7 +23,7 @@
           --ozone-platform=wayland \
           --disable-zero-copy \
           --disable-gpu-memory-buffer-video-frames \
-          "$@"
+          "$@" >>"$HOME/.cache/cider.log" 2>&1
       fi
     done
 
@@ -61,6 +61,7 @@ in {
         "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "nm-applet --indicator"
+        "blueman-applet"
         "lxqt-policykit-agent"
         "noctalia-shell"
         "[workspace 1] ${browser}"
@@ -304,7 +305,7 @@ in {
         "match:class ^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$, tag +terminal"
         "match:class ^(Brave-browser(-beta|-dev|-unstable)?)$, tag +browser"
         "match:class ^(brave)$, tag +browser"
-        "match:class ^(zen)$, tag +browser"
+        "match:class ^(zen|app[.]zen_browser[.]zen)$, tag +browser"
         "match:class ^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$, tag +browser"
         "match:class ^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$, tag +browser"
         "match:class ^([Tt]horium-browser|[Cc]achy-browser)$, tag +browser"

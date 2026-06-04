@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   # Import Program Configurations
   imports = [
     ./hyprland.nix
@@ -12,7 +11,6 @@
     ./ideavim
     ./kitty.nix
     ./stylix.nix
-    ./gtk.nix
     ./qt.nix
     ./swapy.nix
     ./btop.nix

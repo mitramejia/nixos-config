@@ -1,4 +1,20 @@
 {pkgs, ...}: let
+  defaultAssociations = mimeTypes: desktopFile:
+    builtins.listToAttrs
+    (map (mimeType: {
+        name = mimeType;
+        value = desktopFile;
+      })
+      mimeTypes);
+
+  browserDesktopFile = "app.zen_browser.zen.desktop";
+  browserMimeTypes = [
+    "application/xhtml+xml"
+    "text/html"
+    "x-scheme-handler/http"
+    "x-scheme-handler/https"
+  ];
+
   imvDesktopFile = "imv.desktop";
   imvMimeTypes = [
     "image/png"
@@ -34,16 +50,19 @@ in {
     mimeApps = {
       enable = true;
       defaultApplications =
-        builtins.listToAttrs
-        (map (mimeType: {
-            name = mimeType;
-            value = imvDesktopFile;
-          })
-          imvMimeTypes);
+        (defaultAssociations imvMimeTypes imvDesktopFile)
+        // (defaultAssociations browserMimeTypes browserDesktopFile);
     };
     portal = {
       enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config.common.default = [
+        "hyprland"
+        "gtk"
+      ];
       configPackages = [pkgs.hyprland];
     };
   };
