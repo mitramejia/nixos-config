@@ -5,14 +5,17 @@
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = false;
       gamescopeSession.enable = true;
+      gamescopeSession.args = [
+        "--prefer-output"
+        "DP-1" # force Steam/gamescope session onto the primary display
+      ];
       extraCompatPackages = [pkgs.proton-ge-bin];
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
     gamescope = {
       enable = true;
-      capSysNice = true;
+      capSysNice = false;
       args = [
-        "--rt"
         "--expose-wayland"
       ];
     };
