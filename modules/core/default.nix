@@ -15,6 +15,7 @@ in {
     ./stylix.nix
     ./nix-ld.nix
     ./nh.nix
+    ./ollama.nix
     ./boot.nix
     ./timezone.nix
     ./starship.nix

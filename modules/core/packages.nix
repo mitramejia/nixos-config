@@ -23,7 +23,6 @@
   environment.systemPackages = with pkgs; [
     hyprshot
     bash
-    ollama-rocm # Run AI models locally
     vim # Text editor
     wget # File download utility
     killall # Process termination utility
