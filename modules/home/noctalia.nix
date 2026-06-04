@@ -121,4 +121,36 @@ in {
     restartNoctalia
     setNoctaliaWallpapers
   ];
+
+  xdg.desktopEntries = {
+    media-play-pause = {
+      name = "Media Play/Pause";
+      genericName = "Media control";
+      comment = "Toggle playback for the active media player";
+      exec = "${pkgs.playerctl}/bin/playerctl play-pause";
+      icon = "media-playback-start";
+      terminal = false;
+      categories = ["AudioVideo"];
+    };
+
+    media-next = {
+      name = "Media Next";
+      genericName = "Media control";
+      comment = "Skip to the next track";
+      exec = "${pkgs.playerctl}/bin/playerctl next";
+      icon = "media-skip-forward";
+      terminal = false;
+      categories = ["AudioVideo"];
+    };
+
+    media-previous = {
+      name = "Media Previous";
+      genericName = "Media control";
+      comment = "Skip to the previous track";
+      exec = "${pkgs.playerctl}/bin/playerctl previous";
+      icon = "media-skip-backward";
+      terminal = false;
+      categories = ["AudioVideo"];
+    };
+  };
 }
