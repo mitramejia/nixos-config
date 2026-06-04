@@ -79,6 +79,10 @@
           filesystem.window.mappings = {
             "o" = "open";
           };
+          filesystem.follow_current_file = {
+            enabled = true;
+            leave_dirs_open = false;
+          };
         };
       };
       telescope.enable = true;
