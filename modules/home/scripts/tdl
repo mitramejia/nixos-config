@@ -1,0 +1,50 @@
+# Create a Tmux Dev Layout with editor, Codex, and a terminal.
+# Usage: tdl [agent] [second_agent]
+
+set -euo pipefail
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "Usage: tdl [agent] [second_agent]"
+  echo "Defaults to codex on the right and \$EDITOR on the left."
+  exit 0
+fi
+
+if [ "$#" -gt 2 ]; then
+  echo "Usage: tdl [agent] [second_agent]" >&2
+  exit 1
+fi
+
+if [ -z "${TMUX:-}" ]; then
+  echo "tdl: start tmux before creating the layout." >&2
+  exit 1
+fi
+
+current_dir="$PWD"
+editor_command="${EDITOR:-nvim} ."
+agent_command="${1:-codex}"
+second_agent_command="${2:-}"
+editor_pane="${TMUX_PANE:?tdl: TMUX_PANE is not set}"
+
+send_tmux_command() {
+  pane_id="$1"
+  pane_command="$2"
+
+  tmux send-keys -t "$pane_id" -l "$pane_command"
+  tmux send-keys -t "$pane_id" C-m
+}
+
+tmux rename-window -t "$editor_pane" "$(basename "$current_dir")"
+
+# Keep the bottom pane as an empty terminal, then split the original pane for code and Codex.
+tmux split-window -v -p 15 -t "$editor_pane" -c "$current_dir" >/dev/null
+agent_pane="$(tmux split-window -h -p 30 -t "$editor_pane" -c "$current_dir" -P -F '#{pane_id}')"
+
+if [ -n "$second_agent_command" ]; then
+  second_agent_pane="$(tmux split-window -v -t "$agent_pane" -c "$current_dir" -P -F '#{pane_id}')"
+  send_tmux_command "$second_agent_pane" "$second_agent_command"
+fi
+
+send_tmux_command "$agent_pane" "$agent_command"
+send_tmux_command "$editor_pane" "$editor_command"
+
+tmux select-pane -t "$editor_pane"

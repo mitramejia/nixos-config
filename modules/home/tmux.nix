@@ -1,4 +1,17 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  tdl = pkgs.writeShellApplication {
+    name = "tdl";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.tmux
+    ];
+    text = builtins.readFile ./scripts/tdl;
+  };
+in {
+  home.packages = [
+    tdl
+  ];
+
   programs.tmux = {
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
