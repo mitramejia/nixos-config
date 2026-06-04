@@ -9,6 +9,7 @@
     ./neovim/languages.nix
     ./neovim/keymaps.nix
     ./neovim/lua.nix
+    ./neovim/mobile.nix
   ];
 
   programs.nixvim = {
