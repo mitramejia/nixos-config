@@ -11,8 +11,7 @@
     nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
 
     # Visual theming via Stylix module.
-    # Tracking master: no release-26.05 branch cut yet as of 2026-05. Revisit when it lands.
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-26.05";
 
     # Noctalia v4 shell. Keep its nixpkgs independent because it needs recent Quickshell.
     noctalia.url = "github:noctalia-dev/noctalia-shell";
@@ -57,38 +56,35 @@
   };
 
   # Outputs expose the 'nixosConfigurations' for deployment
-  outputs =
-    { nixpkgs, ... }@inputs:
-    let
-      # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
-      system = "x86_64-linux";
-      # Name of this host, used for per-host configurations and imports
-      host = "nixos";
-      # Current user's username, used for user-level configuration imports
-      username = "mitra";
-      kernelPkgs = import inputs.nixpkgs-kernel {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-    {
-      nixosConfigurations = {
-        # Define a NixOS system configuration for the specified host
-        "${host}" = nixpkgs.lib.nixosSystem {
-          # Pass arguments to all loaded modules for easier customization and DRY configurations
-          specialArgs = {
-            inherit system; # Target system architecture
-            inherit inputs; # All flake inputs (dependencies)
-            inherit username; # Current user
-            inherit host; # Hostname
-            inherit kernelPkgs; # Kernel packages pinned separately from the system channel
-          };
-
-          # List of modules to configure the system
-          modules = [
-            ./modules/core # Host-specific system settings
-          ];
+  outputs = {nixpkgs, ...} @ inputs: let
+    # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
+    system = "x86_64-linux";
+    # Name of this host, used for per-host configurations and imports
+    host = "nixos";
+    # Current user's username, used for user-level configuration imports
+    username = "mitra";
+    kernelPkgs = import inputs.nixpkgs-kernel {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  in {
+    nixosConfigurations = {
+      # Define a NixOS system configuration for the specified host
+      "${host}" = nixpkgs.lib.nixosSystem {
+        # Pass arguments to all loaded modules for easier customization and DRY configurations
+        specialArgs = {
+          inherit system; # Target system architecture
+          inherit inputs; # All flake inputs (dependencies)
+          inherit username; # Current user
+          inherit host; # Hostname
+          inherit kernelPkgs; # Kernel packages pinned separately from the system channel
         };
+
+        # List of modules to configure the system
+        modules = [
+          ./modules/core # Host-specific system settings
+        ];
       };
     };
+  };
 }

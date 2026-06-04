@@ -8,6 +8,9 @@
 
   programs.nixvim = {
     enable = true;
+    # Keep nixvim on the same nixpkgs as the rest of the system while making
+    # the choice explicit, so nixvim does not warn about its followed input.
+    nixpkgs.source = inputs.nixpkgs;
     wrapRc = true;
     defaultEditor = true;
     viAlias = true;
