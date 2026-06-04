@@ -37,12 +37,12 @@ in {
         name = "JetBrainsMono Nerd Font Mono";
       };
       sansSerif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.inter;
+        name = "Inter";
       };
       serif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.inter;
+        name = "Inter";
       };
       sizes = {
         applications = 13;

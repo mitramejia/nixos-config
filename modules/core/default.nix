@@ -45,6 +45,7 @@ in {
 
   fonts = {
     packages = with pkgs; [
+      inter
       noto-fonts-color-emoji
       noto-fonts-cjk-sans
       font-awesome
