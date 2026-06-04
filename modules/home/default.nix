@@ -4,6 +4,7 @@
     ./hyprland.nix
     ./clipboard.nix
     ./agent-skills.nix
+    ./android.nix
     ./noctalia.nix
     ./neovim.nix
     ./chromium.nix

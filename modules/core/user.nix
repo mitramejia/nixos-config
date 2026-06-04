@@ -78,6 +78,19 @@ in {
       docker-compose # Define and run multi-container applications
       trimage # Image compression utility
 
+      # Mobile app development tools
+      detekt
+      gradle
+      just-lsp
+      kotlin
+      kotlin-language-server
+      ktlint
+      sourcekit-lsp
+      swift
+      swift-format
+      swiftlint
+      watchman
+
       # Productivity, media, and general GUI applications
       obsidian # Note-taking app
       gimp # Image editing software

@@ -24,10 +24,6 @@
       enable = true;
       plugins = ["node" "git" "aws" "z" "vi-mode" "aliases" "yarn" "nvm" "jenv" "tmux"];
       theme = "";
-      extraConfig = ''
-        export ANDROID_HOME=~/Android/Sdk
-        export PATH="$PATH:/home/mitra/.cache/lm-studio/bin"
-      '';
     };
     initContent = ''
       if command -v scmpuff 2>&1 >/dev/null
