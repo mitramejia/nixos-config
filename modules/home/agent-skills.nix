@@ -1,5 +1,4 @@
-{ inputs, ... }:
-let
+{inputs, ...}: let
   cursorTeamKitSkills = [
     "cursor-team-kit/check-compiler-errors"
     "cursor-team-kit/control-cli"
@@ -24,37 +23,38 @@ let
     "expo/upgrading-expo"
     "expo/expo-deployment"
   ];
-in
-{
-  imports = [ inputs.agent-skills.homeManagerModules.default ];
+in {
+  imports = [inputs.agent-skills.homeManagerModules.default];
 
   programs.agent-skills = {
     enable = true;
 
-    sources.mattpocock-productivity = {
-      input = "mattpocock-skills";
-      subdir = "skills/productivity";
-      filter.maxDepth = 1;
-    };
+    sources = {
+      mattpocock-productivity = {
+        input = "mattpocock-skills";
+        subdir = "skills/productivity";
+        filter.maxDepth = 1;
+      };
 
-    sources.mattpocock-engineering = {
-      input = "mattpocock-skills";
-      subdir = "skills/engineering";
-      filter.maxDepth = 1;
-    };
+      mattpocock-engineering = {
+        input = "mattpocock-skills";
+        subdir = "skills/engineering";
+        filter.maxDepth = 1;
+      };
 
-    sources.cursor-team-kit = {
-      input = "cursor-plugins";
-      subdir = "cursor-team-kit/skills";
-      idPrefix = "cursor-team-kit";
-      filter.maxDepth = 1;
-    };
+      cursor-team-kit = {
+        input = "cursor-plugins";
+        subdir = "cursor-team-kit/skills";
+        idPrefix = "cursor-team-kit";
+        filter.maxDepth = 1;
+      };
 
-    sources.expo = {
-      input = "expo-skills";
-      subdir = "plugins/expo/skills";
-      idPrefix = "expo";
-      filter.maxDepth = 1;
+      expo = {
+        input = "expo-skills";
+        subdir = "plugins/expo/skills";
+        idPrefix = "expo";
+        filter.maxDepth = 1;
+      };
     };
 
     skills.enable = cursorTeamKitSkills ++ expoSkills;
