@@ -5,7 +5,7 @@
       lualine = {
         enable = true;
         settings = {
-          options = {theme = "catppuccin";};
+          options = {theme = "auto";};
         };
       };
       bufferline.enable = true;
@@ -25,6 +25,11 @@
           filesystem.follow_current_file = {
             enabled = true;
             leave_dirs_open = false;
+          };
+          filesystem.filtered_items = {
+            visible = true;
+            hide_dotfiles = false;
+            hide_gitignored = false;
           };
         };
       };
@@ -78,6 +83,10 @@
 
       trouble.enable = true;
       markdown-preview.enable = true;
+      schemastore = {
+        enable = true;
+        yaml.enable = false;
+      };
 
       blink-cmp = {
         enable = true;
@@ -120,6 +129,7 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      cmp-npm
       snacks-nvim
     ];
   };

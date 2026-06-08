@@ -15,6 +15,7 @@
           eslint.enable = true;
           html.enable = true;
           cssls.enable = true;
+          jsonls.enable = true;
           clangd.enable = true;
           zls.enable = true;
           marksman.enable = true;

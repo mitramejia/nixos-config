@@ -38,6 +38,24 @@
       options.desc = "New file";
     }
     {
+      key = "<leader>fb";
+      mode = ["n"];
+      action = "<cmd>Telescope buffers<cr>";
+      options.desc = "Find open buffer";
+    }
+    {
+      key = "<leader>fs";
+      mode = ["n"];
+      action = "<cmd>Telescope lsp_document_symbols<cr>";
+      options.desc = "Find symbol (file)";
+    }
+    {
+      key = "<leader>fS";
+      mode = ["n"];
+      action = "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>";
+      options.desc = "Find symbol (workspace)";
+    }
+    {
       key = "<leader>e";
       mode = ["n"];
       action = "<cmd>Neotree toggle<cr>";

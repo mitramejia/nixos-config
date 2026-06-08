@@ -56,13 +56,6 @@
 
     keymaps = [
       {
-        key = "<leader>ml";
-        mode = ["n"];
-        action = "<cmd>MobileLogcat<CR>";
-        options.desc = "Android Logcat";
-      }
-
-      {
         key = "<leader>jr";
         mode = ["n"];
         action = "<cmd>JustSelect<CR>";
@@ -112,26 +105,9 @@
       if ok_wk_mobile then
         wk_mobile.add({
           { "<leader>j", group = "Just" },
-          { "<leader>m", group = "Mobile" },
           { "<leader>p", group = "Packages" },
         })
       end
-
-      vim.api.nvim_create_user_command("MobileLogcat", function()
-        local command = "adb logcat '*:S' ReactNative:V ReactNativeJS:V"
-        local ok_toggleterm, terminal = pcall(require, "toggleterm.terminal")
-        if ok_toggleterm then
-          terminal.Terminal:new({
-            cmd = command,
-            direction = "float",
-            close_on_exit = false,
-            hidden = true,
-            display_name = "Android Logcat",
-          }):toggle()
-          return
-        end
-        vim.cmd("terminal " .. command)
-      end, {})
     '';
   };
 }
