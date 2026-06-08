@@ -40,7 +40,6 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     inputs.claude-code.overlays.default
-    inputs.codex-cli-nix.overlays.default
   ];
 
   fonts = {

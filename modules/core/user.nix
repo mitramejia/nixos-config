@@ -65,7 +65,6 @@ in {
       localsend
       # Development tools for code, system, and infrastructure
       claude-code # Claude Code CLI from the flake overlay
-      codex # Codex CLI from the flake overlay
       alejandra # Nix formatter
       statix # Nix linter
       lazydocker # Terminal UI for managing Docker

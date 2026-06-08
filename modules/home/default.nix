@@ -3,6 +3,7 @@
   imports = [
     ./hyprland.nix
     ./clipboard.nix
+    ./codex.nix
     ./agent-skills.nix
     ./android.nix
     ./noctalia.nix
