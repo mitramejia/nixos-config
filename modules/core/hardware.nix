@@ -59,6 +59,9 @@
   services.udev.extraRules = ''
     KERNEL=="card*", KERNELS=="0000:03:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/amd-rx9070"
     KERNEL=="card*", KERNELS=="0000:12:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/amd-igpu"
+    # Logitech USB receiver (046d:c548) signals wakeup the instant the machine
+    # suspends, causing it to resume immediately. Disarm its wakeup capability.
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c548", ATTR{power/wakeup}="disabled"
   '';
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

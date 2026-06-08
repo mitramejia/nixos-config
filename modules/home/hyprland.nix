@@ -32,8 +32,11 @@
   '';
 in {
   home.packages = [
+    pkgs.gcr # Provides org.gnome.keyring.SystemPrompter
     ciderAppImage
   ];
+
+  services.gnome-keyring.enable = true;
 
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
