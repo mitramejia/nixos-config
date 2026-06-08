@@ -4,7 +4,7 @@
 
   # Inputs defines all external dependencies and optional modules.
   inputs = {
-    # Main NixOS package sources (stable and unstable channels)
+    # Main NixOS package source
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # Kernel-only pin for Linux 7.0.10, which includes the MediaTek btmtk Bluetooth fix.
