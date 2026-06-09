@@ -10,6 +10,9 @@
     # Kernel-only pin for Linux 7.0.10, which includes the MediaTek btmtk Bluetooth fix.
     nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
 
+    # Hyprland main branch, used while nixpkgs lags fixes for the NixOS cap_sys_nice wrapper.
+    hyprland.url = "github:hyprwm/Hyprland";
+
     # Visual theming via Stylix module.
     stylix.url = "github:danth/stylix/release-26.05";
 

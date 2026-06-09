@@ -1,8 +1,11 @@
-_: {
+{pkgs, ...}: {
   programs.yazi = {
     enable = true;
     # 26.05 HM changed the shell-wrapper name default "yy" -> "y"; keep "yy".
     shellWrapperName = "yy";
+    extraPackages = [
+      pkgs.dragon-drop
+    ];
     settings = {
       yazi = {
         ratio = [
@@ -39,6 +42,15 @@ _: {
         macro_workers = 10;
         bizarre_retry = 5;
       };
+    };
+    keymap = {
+      mgr.prepend_keymap = [
+        {
+          on = "<C-n>";
+          run = "shell -- ${pkgs.dragon-drop}/bin/dragon-drop -x -i -T %h";
+          desc = "Drag hovered file";
+        }
+      ];
     };
   };
 }

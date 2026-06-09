@@ -22,8 +22,8 @@
       ${pkgs.libnotify}/bin/notify-send "Noctalia picker unavailable" "$1"
     }
 
-    if ! command -v noctalia-shell >/dev/null 2>&1; then
-      notify_unavailable "noctalia-shell was not found."
+    if ! command -v noctalia >/dev/null 2>&1; then
+      notify_unavailable "noctalia was not found."
       exit 1
     fi
 
@@ -32,7 +32,7 @@
       --arg resultFile "$result_file" \
       '{prompt: $prompt, resultFile: $resultFile, resultFormat: "plain", maxResults: 200}')"
 
-    if ! noctalia-shell ipc call plugin:dmenu showFromFile "$items_file" "$options" >/dev/null 2>&1; then
+    if ! noctalia msg plugin:dmenu showFromFile "$items_file" "$options" >/dev/null 2>&1; then
       notify_unavailable "The dmenu plugin is not ready."
       exit 1
     fi

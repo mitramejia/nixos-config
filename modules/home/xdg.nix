@@ -1,11 +1,18 @@
-{pkgs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
+  hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+
   defaultAssociations = mimeTypes: desktopFile:
-    builtins.listToAttrs
-    (map (mimeType: {
+    builtins.listToAttrs (
+      map (mimeType: {
         name = mimeType;
         value = desktopFile;
       })
-      mimeTypes);
+      mimeTypes
+    );
 
   browserDesktopFile = "app.zen_browser.zen.desktop";
   browserMimeTypes = [
@@ -35,7 +42,10 @@ in {
       exec = "${pkgs.imv}/bin/imv %F";
       icon = "imv";
       terminal = false;
-      categories = ["Graphics" "Viewer"];
+      categories = [
+        "Graphics"
+        "Viewer"
+      ];
       mimeType = imvMimeTypes;
     };
 
@@ -56,14 +66,13 @@ in {
     portal = {
       enable = true;
       extraPortals = [
-        pkgs.xdg-desktop-portal-hyprland
         pkgs.xdg-desktop-portal-gtk
       ];
       config.common.default = [
         "hyprland"
         "gtk"
       ];
-      configPackages = [pkgs.hyprland];
+      configPackages = [hyprlandPkgs.hyprland];
     };
   };
 }

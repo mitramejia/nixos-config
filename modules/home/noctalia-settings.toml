@@ -1,0 +1,97 @@
+[bar.default]
+center = [ "media", "volume" ]
+end = [ "tray", "temp", "ram", "notifications", "clock" ]
+margin_edge = 8
+margin_ends = 8
+padding = 16
+start = [ "session", "workspaces" ]
+thickness = 38
+widget_spacing = 10
+
+[location]
+address = "Santo Domingo, Dominican Republic"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@DP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1280.0
+    cy = 1317.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 720.0
+    cy = 2437.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "login_box"
+
+[shell]
+app_icon_colorize = true
+avatar_path = "/home/mitra/profile.jpg"
+font_family = "Inter"
+screen_time_enabled = true
+settings_show_advanced = true
+
+[theme]
+builtin = "Catppuccin"
+
+    [theme.templates]
+    enable_builtin_templates = false
+
+[wallpaper]
+per_monitor_directories = true
+transition = [ "fade" ]
+
+    [wallpaper.last]
+    path = "/home/mitra/Pictures/Wallpapers/milad-fakurian-E8Ufcyxz514-unsplash.jpg"
+
+    [wallpaper.monitor.DP-1]
+    directory = "/home/mitra/Pictures/Wallpapers/"
+    directory_dark = "/home/mitra/Pictures/Wallpapers/"
+    directory_light = "/home/mitra/Pictures/Wallpapers/"
+
+    [wallpaper.monitor.DP-2]
+    directory = "/home/mitra/Pictures/Wallpapers/vertical"
+    directory_dark = "/home/mitra/Pictures/Wallpapers/vertical"
+    directory_light = "/home/mitra/Pictures/Wallpapers/vertical"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/mitra/Pictures/Wallpapers/milad-fakurian-E8Ufcyxz514-unsplash.jpg"
+
+    [wallpaper.monitors.DP-2]
+    path = "/home/mitra/Pictures/Wallpapers/vertical/pexels-vertical.jpg"
+
+[widget.clock]
+format = "{:%A, %B %d at %-I:%M %p}"
+
+[widget.media]
+hide_when_no_media = true
+max_length = 320
+
+[widget.ram]
+display = "text"
+show_label = false
+
+[widget.temp]
+display = "text"
+
+[widget.tray]
+drawer = true
+
+[widget.workspaces]
+minimal = true
+scale = 1.1000000000000001

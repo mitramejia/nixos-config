@@ -96,6 +96,7 @@ in {
       libreoffice # Office suite
       vlc # Media player
       yazi # TUI file manager
+      trash-cli # Command-line trash utilities
 
       # Code editors and IDEs
       code-cursor # Visual Studio Code editor

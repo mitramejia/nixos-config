@@ -1,6 +1,5 @@
 {
   inputs,
-  lib,
   pkgs,
   ...
 }: let
@@ -11,30 +10,7 @@
     ;
 
   system = pkgs.stdenv.hostPlatform.system;
-  pluginSource = "https://github.com/noctalia-dev/noctalia-plugins";
-  enabledPlugins = [
-    "web-search"
-    "file-search"
-    "model-usage"
-    "workspace-overview"
-    "screen-recorder"
-    "timer"
-    "dmenu"
-    "clipboard"
-  ];
-
-  pluginStates = lib.genAttrs enabledPlugins (_: {
-    enabled = true;
-    sourceUrl = pluginSource;
-  });
-
-  noctaliaPackage = inputs.noctalia.packages.${system}.default.override {
-    extraPackages = with pkgs; [
-      fd
-      gpu-screen-recorder
-      jq
-    ];
-  };
+  noctaliaPackage = inputs.noctalia.packages.${system}.default;
 
   restartNoctalia = pkgs.writeShellScriptBin "restart.noctalia" ''
     set -euo pipefail
@@ -43,7 +19,8 @@
       ${pkgs.procps}/bin/ps -eo pid=,cmd= | while read -r pid cmd; do
         [ "$pid" = "$$" ] && continue
 
-        if [[ "$cmd" =~ (^|/)noctalia-shell([[:space:]]|$) ]] ||
+        if [[ "$cmd" =~ (^|/)noctalia([[:space:]]|$) ]] ||
+           [[ "$cmd" =~ (^|/)noctalia-shell([[:space:]]|$) ]] ||
            [[ "$cmd" =~ (^|[[:space:]])(qs|quickshell)([[:space:]]).*-c(=|[[:space:]])?noctalia-shell([[:space:]]|$) ]]; then
           printf '%s\n' "$pid"
         fi
@@ -68,7 +45,7 @@
     }
 
     start_noctalia() {
-      ${pkgs.util-linux}/bin/setsid -f ${noctaliaPackage}/bin/noctalia-shell >/dev/null 2>&1
+      ${pkgs.util-linux}/bin/setsid -f ${noctaliaPackage}/bin/noctalia >/dev/null 2>&1
     }
 
     terminate_targets
@@ -80,44 +57,50 @@
 
     wait_for_noctalia() {
       for _ in {1..50}; do
-        if ${noctaliaPackage}/bin/noctalia-shell ipc call wallpaper get all >/dev/null 2>&1; then
+        if ${noctaliaPackage}/bin/noctalia msg wallpaper-get >/dev/null 2>&1; then
           return 0
         fi
         ${pkgs.coreutils}/bin/sleep 0.2
       done
-      echo "set-noctalia-wallpapers: noctalia-shell IPC unavailable" >&2
+      echo "set-noctalia-wallpapers: noctalia IPC unavailable" >&2
       exit 1
     }
 
     wait_for_noctalia
-    ${noctaliaPackage}/bin/noctalia-shell ipc call wallpaper set "${wallpaper_img}" DP-1
-    ${noctaliaPackage}/bin/noctalia-shell ipc call wallpaper set "${wallpaper_img_vertical}" DP-2
+    ${noctaliaPackage}/bin/noctalia msg wallpaper-set DP-1 "${wallpaper_img}"
+    ${noctaliaPackage}/bin/noctalia msg wallpaper-set DP-2 "${wallpaper_img_vertical}"
+  '';
+
+  persistNoctaliaSettings = pkgs.writeShellScriptBin "persist-noctalia-settings" ''
+    set -euo pipefail
+
+    source_file="''${XDG_STATE_HOME:-$HOME/.local/state}/noctalia/settings.toml"
+    target_file="$HOME/nix-config/modules/home/noctalia-settings.toml"
+
+    if [ ! -f "$source_file" ]; then
+      echo "persist-noctalia-settings: $source_file does not exist" >&2
+      exit 1
+    fi
+
+    ${pkgs.coreutils}/bin/install -D -m 0644 "$source_file" "$target_file"
+    echo "Saved Noctalia UI settings to $target_file"
   '';
 in {
   imports = [
     inputs.noctalia.homeModules.default
   ];
 
-  programs.noctalia-shell = {
+  programs.noctalia = {
     enable = true;
     systemd.enable = false;
     package = noctaliaPackage;
-    # Leave shell settings unmanaged while experimenting in the Noctalia UI.
-    # Later, ~/.config/noctalia/settings.json can be converted back into Nix.
-    plugins = {
-      version = 2;
-      sources = [
-        {
-          enabled = true;
-          name = "Noctalia Plugins";
-          url = pluginSource;
-        }
-      ];
-      states = pluginStates;
-    };
+    # Declarative baseline. Noctalia UI changes are still written to
+    # ~/.local/state/noctalia/settings.toml and override this at runtime.
+    settings = ./noctalia-settings.toml;
   };
 
   home.packages = [
+    persistNoctaliaSettings
     restartNoctalia
     setNoctaliaWallpapers
   ];

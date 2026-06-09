@@ -7,8 +7,10 @@
       font_size = 11.5;
       scrollback_lines = 2000;
       wheel_scroll_min_lines = 1;
-      window_padding_width = 12;
+      window_padding_width = 14;
       confirm_os_window_close = 0;
+      allow_remote_control = "socket-only";
+      listen_on = "unix:@kitty";
       enable_audio_bell = false;
       mouse_hide_wait = 60;
       tab_fade = 1;

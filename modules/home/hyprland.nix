@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }: let
   inherit
@@ -10,6 +11,7 @@
     extraMonitorSettings
     keyboardLayout
     ;
+  hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
   ciderAppImage = pkgs.writeShellScriptBin "cider-appimage" ''
     set -euo pipefail
 
@@ -46,7 +48,8 @@ in {
     # 26.05 home-manager flipped configType default "hyprlang" -> "lua". This config is
     # hyprlang (structured settings + raw hyprlang extraConfig), so pin it to keep behavior.
     configType = "hyprlang";
-    package = pkgs.hyprland;
+    package = hyprlandPkgs.hyprland;
+    portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;
@@ -66,10 +69,12 @@ in {
         "nm-applet --indicator"
         "blueman-applet"
         "lxqt-policykit-agent"
-        "noctalia-shell"
+        "noctalia"
         "[workspace 1] ${browser}"
-        "[workspace 2] bash webstorm"
+        "[workspace 2] ${terminal} -e tmux new-session -A -s 2"
+        "[workspace 3] ${terminal} -e tmux new-session -A -s 3"
         "[workspace 5] slack"
+        "[workspace 5] zapzap"
         "[workspace 6] obsidian"
         "[workspace 7] cider-appimage"
         "[workspace 9] kitty"
@@ -197,14 +202,14 @@ in {
 
       bind = [
         "$modifier,Return,exec,${terminal}"
-        "$modifier,SPACE,exec,noctalia-shell ipc call launcher toggle"
-        "$modifier SHIFT,W,exec,noctalia-shell ipc call plugin:web-search toggle"
-        "$modifier ALT,F,exec,noctalia-shell ipc call plugin:file-search toggle"
+        "$modifier,SPACE,exec,noctalia msg panel-toggle launcher"
+        "$modifier SHIFT,W,exec,noctalia msg plugin:web-search toggle"
+        "$modifier ALT,F,exec,noctalia msg plugin:file-search toggle"
         "$modifier,TAB,cyclenext"
         "$modifier,TAB,bringactivetotop"
-        "$modifier CTRL,R,exec,noctalia-shell ipc call plugin:screen-recorder toggle"
-        "$modifier ALT,T,exec,noctalia-shell ipc call plugin:timer toggle"
-        "$modifier CTRL,L,exec,noctalia-shell ipc call lockScreen lock"
+        "$modifier CTRL,R,exec,noctalia msg plugin:screen-recorder toggle"
+        "$modifier ALT,T,exec,noctalia msg plugin:timer toggle"
+        "$modifier CTRL,L,exec,noctalia msg session lock"
         "$modifier SHIFT,R,exec,restart.noctalia"
         "$modifier,W,exec,${browser}"
         "$modifier,M,exec,cider-appimage"
@@ -315,8 +320,8 @@ in {
         "match:class ^(.*jetbrains.*)$, tag +projects"
         "match:class ^(codium|codium-url-handler|VSCodium)$, tag +projects"
         "match:class ^(VSCode|code-url-handler)$, tag +projects"
-        "match:class ^([Dd]iscord|[Ww]ebCord|[Vv]esktop)$, tag +im"
-        "match:class ^([Ww]hatsapp-for-linux)$, tag +im"
+        "match:class ^([Dd]iscord|[Ww]ebCord|[Vv]esktop|[Ss]lack)$, tag +im"
+        "match:class ^([Ww]hatsapp-for-linux|zapzap|com[.]rtosta[.]zapzap)$, tag +im"
         "match:class ^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$, tag +im"
         "match:class ^(gamescope)$, tag +games"
         "match:class ^(steam_app_\\d+)$, tag +games"

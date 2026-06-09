@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  system,
+  ...
+}: let
+  hyprlandPkgs = inputs.hyprland.packages.${system};
+in {
   programs = {
     _1password.enable = true;
     _1password-gui.enable = true;
@@ -7,7 +14,11 @@
       defaultEditor = true;
     };
     firefox.enable = false; # Firefox is not installed by default
-    hyprland.enable = true; #someone forgot to set this so desktop file is created
+    hyprland = {
+      enable = true; # someone forgot to set this so desktop file is created
+      package = hyprlandPkgs.hyprland;
+      portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
+    };
     seahorse.enable = true;
     fuse.userAllowOther = true;
     mtr.enable = true;
@@ -70,7 +81,7 @@
     tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
-    nwg-displays #configure monitor configs via GUI
+    nwg-displays # configure monitor configs via GUI
     zoxide
   ];
 }

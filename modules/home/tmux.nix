@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   tdl = pkgs.writeShellApplication {
     name = "tdl";
     runtimeInputs = [
@@ -7,6 +11,7 @@
     ];
     text = builtins.readFile ./scripts/tdl;
   };
+  colors = config.lib.stylix.colors;
 in {
   home.packages = [
     tdl
@@ -31,6 +36,7 @@ in {
       set-option -g set-clipboard on
       set-option -g allow-passthrough on
       set-window-option -g pane-base-index 1
+      set -ga update-environment " KITTY_LISTEN_ON KITTY_WINDOW_ID"
 
       # truecolor (RGB) support with tmux-256color
       set -ga terminal-overrides ",tmux-256color:RGB"
@@ -46,6 +52,7 @@ in {
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+      bind u run-shell -b "${pkgs.kitty}/bin/kitty @ action open_url_with_hints"
 
       # reload tmux configuration
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
@@ -58,6 +65,14 @@ in {
       set -g status-interval 5
       set -g status-left-length 100
       set -g status-right-length 100
+
+      # make the focused pane easier to spot
+      set -g pane-border-style "fg=#${colors.base03}"
+      set -g pane-active-border-style "fg=#${colors.base08},bold"
+      set -g pane-border-status top
+      set -g pane-border-format " #{?pane_active,#[fg=#${colors.base00},bg=#${colors.base08},bold] active #[default],#[fg=#${colors.base04}]#P#[default]} "
+      set -g display-panes-colour "#${colors.base04}"
+      set -g display-panes-active-colour "#${colors.base08}"
     '';
 
     plugins = with pkgs; [
