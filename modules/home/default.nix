@@ -1,4 +1,6 @@
 {...}: {
+  nixpkgs.config.allowUnfree = true;
+
   # Import Program Configurations
   imports = [
     ./hyprland.nix
@@ -6,6 +8,7 @@
     ./codex.nix
     ./agent-skills.nix
     ./android.nix
+    ./packages.nix
     ./noctalia.nix
     ./neovim.nix
     ./chromium.nix
