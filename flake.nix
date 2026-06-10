@@ -70,6 +70,7 @@
       inherit system;
       config.allowUnfree = true;
     };
+    hyprlandPkgs = inputs.hyprland.packages.${system};
   in {
     nixosConfigurations = {
       # Define a NixOS system configuration for the specified host
@@ -81,6 +82,7 @@
           inherit username; # Current user
           inherit host; # Hostname
           inherit kernelPkgs; # Kernel packages pinned separately from the system channel
+          inherit hyprlandPkgs; # Hyprland packages pinned to the Hyprland input
         };
 
         # List of modules to configure the system

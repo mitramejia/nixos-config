@@ -1,11 +1,8 @@
 {
-  inputs,
+  hyprlandPkgs,
   pkgs,
-  system,
   ...
-}: let
-  hyprlandPkgs = inputs.hyprland.packages.${system};
-in {
+}: {
   programs = {
     _1password.enable = true;
     _1password-gui.enable = true;

@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  hyprlandPkgs,
   username,
   host,
   ...
@@ -17,6 +18,7 @@ in {
       inherit username; # Makes the username available to user modules
       inherit inputs; # Passes all flake inputs to home-manager modules
       inherit host; # Lets modules perform host-specific customization
+      inherit hyprlandPkgs; # Keeps Hyprland package and portal versions aligned in Home Manager
     };
     users.${username} = {
       imports = [../home];

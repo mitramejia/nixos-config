@@ -3,7 +3,7 @@
 
   # Import Program Configurations
   imports = [
-    ./hyprland.nix
+    ./hyprland
     ./clipboard.nix
     ./codex.nix
     ./agent-skills.nix
