@@ -5,7 +5,7 @@
   imports = [
     ./hyprland
     ./clipboard.nix
-    ./codex.nix
+    ./codex
     ./agent-skills.nix
     ./android.nix
     ./packages.nix
