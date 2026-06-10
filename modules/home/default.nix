@@ -10,6 +10,7 @@
     ./android.nix
     ./packages.nix
     ./noctalia.nix
+    ./noctalia-clipboard.nix
     ./neovim.nix
     ./chromium.nix
     ./virtualisation.nix

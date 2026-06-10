@@ -1,10 +1,9 @@
 {
-  inputs,
+  hyprlandPkgs,
   pkgs,
   ...
 }: let
-  hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
-
+  inherit (import ../variables.nix) mimeDefaultApplications;
   defaultAssociations = mimeTypes: desktopFile:
     builtins.listToAttrs (
       map (mimeType: {
@@ -61,7 +60,8 @@ in {
       enable = true;
       defaultApplications =
         (defaultAssociations imvMimeTypes imvDesktopFile)
-        // (defaultAssociations browserMimeTypes browserDesktopFile);
+        // (defaultAssociations browserMimeTypes browserDesktopFile)
+        // mimeDefaultApplications;
     };
     portal = {
       enable = true;

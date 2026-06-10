@@ -19,17 +19,19 @@
           window.mappings = {
             "<space>" = "none";
           };
-          filesystem.window.mappings = {
-            "o" = "open";
-          };
-          filesystem.follow_current_file = {
-            enabled = true;
-            leave_dirs_open = false;
-          };
-          filesystem.filtered_items = {
-            visible = true;
-            hide_dotfiles = false;
-            hide_gitignored = false;
+          filesystem = {
+            window.mappings = {
+              "o" = "open";
+            };
+            follow_current_file = {
+              enabled = true;
+              leave_dirs_open = false;
+            };
+            filtered_items = {
+              visible = true;
+              hide_dotfiles = false;
+              hide_gitignored = false;
+            };
           };
         };
       };

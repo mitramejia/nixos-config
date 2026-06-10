@@ -75,7 +75,12 @@
     set -euo pipefail
 
     source_file="''${XDG_STATE_HOME:-$HOME/.local/state}/noctalia/settings.toml"
-    target_file="$HOME/nix-config/modules/home/noctalia-settings.toml"
+    target_file="''${1:-}"
+
+    if [ -z "$target_file" ]; then
+      echo "Usage: persist-noctalia-settings <target-settings.toml>" >&2
+      exit 2
+    fi
 
     if [ ! -f "$source_file" ]; then
       echo "persist-noctalia-settings: $source_file does not exist" >&2
