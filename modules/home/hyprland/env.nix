@@ -19,7 +19,7 @@ _: {
     "AQ_DRM_DEVICES,/dev/dri/amd-rx9070:/dev/dri/amd-igpu"
     "GDK_SCALE,1"
     "QT_SCALE_FACTOR,1"
-    "TERMINAL,kitty"
+    "TERMINAL,ghostty"
     "EDITOR,nvim"
   ];
 }

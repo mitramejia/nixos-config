@@ -18,4 +18,5 @@
   open-pr = "gh pr create";
   copy = "wl-copy";
   p = "pnpm";
+  codex = "headroom wrap codex";
 }

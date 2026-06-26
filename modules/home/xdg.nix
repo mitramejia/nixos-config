@@ -13,7 +13,7 @@
       mimeTypes
     );
 
-  browserDesktopFile = "app.zen_browser.zen.desktop";
+  browserDesktopFile = "zen-beta.desktop";
   browserMimeTypes = [
     "application/xhtml+xml"
     "text/html"

@@ -55,6 +55,18 @@ in {
         idPrefix = "expo";
         filter.maxDepth = 1;
       };
+
+      gh-open-pr-template = {
+        path = inputs.codex-skills;
+        subdir = "gh-open-pr-template";
+        filter.maxDepth = 1;
+      };
+
+      draft-mobile-platform-update = {
+        path = inputs.codex-skills;
+        subdir = "draft-mobile-platform-update";
+        filter.maxDepth = 1;
+      };
     };
 
     skills.enable = cursorTeamKitSkills ++ expoSkills;
@@ -62,6 +74,8 @@ in {
     skills.enableAll = [
       "mattpocock-productivity"
       "mattpocock-engineering"
+      "gh-open-pr-template"
+      "draft-mobile-platform-update"
     ];
 
     targets = {

@@ -62,6 +62,7 @@ in {
     act
     actionlint
     headroomAi
+    rtk
     virtualbox
     just
     docker-compose

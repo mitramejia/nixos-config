@@ -49,8 +49,25 @@
       url = "github:sadjow/claude-code-nix";
     };
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
+    codex-skills = {
+      url = "path:/home/mitra/.codex/skills";
+      flake = false;
+    };
 
     # Home Manager as a flake input, for user-level package and dotfile configuration.
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.

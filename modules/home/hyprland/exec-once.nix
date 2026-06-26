@@ -19,6 +19,6 @@ in {
     "[workspace 5] zapzap"
     "[workspace 6] obsidian"
     "[workspace 7] cider-appimage"
-    "[workspace 9] kitty"
+    "[workspace 9] ghostty"
   ];
 }

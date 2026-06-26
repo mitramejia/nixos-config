@@ -162,6 +162,19 @@
         "type": "github"
       }
     },
+    "codex-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782504455,
+        "narHash": "sha256-jLtbXY0G2RhejOjy8trZNQ8W1E0RgziItfTNIZZ1tFc=",
+        "path": "/home/mitra/.codex/skills",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/mitra/.codex/skills",
+        "type": "path"
+      }
+    },
     "cursor-plugins": {
       "flake": false,
       "locked": {
@@ -192,6 +205,28 @@
         "owner": "expo",
         "repo": "skills",
         "type": "github"
+      }
+    },
+    "firefox-addons": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1782446584,
+        "narHash": "sha256-Biqg+xsXAYC/C6iOeh1OSdIAhvpTlMpB17TTRmejjx0=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "0672374ed1b75645f1e97828721a4d688182b75f",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
       }
     },
     "firefox-gnome-theme": {
@@ -918,8 +953,10 @@
         "agent-skills": "agent-skills",
         "claude-code": "claude-code",
         "codex-cli-nix": "codex-cli-nix",
+        "codex-skills": "codex-skills",
         "cursor-plugins": "cursor-plugins",
         "expo-skills": "expo-skills",
+        "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "mattpocock-skills": "mattpocock-skills",
@@ -927,7 +964,8 @@
         "nixpkgs-kernel": "nixpkgs-kernel",
         "nixvim": "nixvim",
         "noctalia": "noctalia",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "zen-browser": "zen-browser"
       }
     },
     "stylix": {
@@ -1139,6 +1177,29 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782445527,
+        "narHash": "sha256-SxagHBpvd2R41gqt7S2PcWJY5lU30kg45uaDjSr302k=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "281e00d0a67d778a310b3b93e4941f43e9112d90",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

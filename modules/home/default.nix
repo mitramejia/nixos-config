@@ -13,9 +13,11 @@
     ./noctalia-clipboard.nix
     ./neovim.nix
     ./chromium.nix
+    ./zen-browser.nix
     ./virtualisation.nix
     ./ideavim
     ./kitty.nix
+    ./ghostty.nix
     ./stylix.nix
     ./qt.nix
     ./swapy.nix

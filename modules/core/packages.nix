@@ -26,6 +26,13 @@
     };
   };
 
+  environment.etc."1password/custom_allowed_browsers" = {
+    text = ''
+      .zen-beta-wrapped
+    '';
+    mode = "0755";
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
