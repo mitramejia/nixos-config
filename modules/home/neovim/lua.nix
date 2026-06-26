@@ -17,6 +17,14 @@
       map("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
       map("n", "gi", vim.lsp.buf.implementation, "Goto implementation")
       map("n", "gr", vim.lsp.buf.references, "References")
+      map("n", "U", function()
+        local ok_telescope, builtin = pcall(require, "telescope.builtin")
+        if ok_telescope then
+          builtin.lsp_references()
+        else
+          vim.lsp.buf.references()
+        end
+      end, "Show usages")
       map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
       map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
     end

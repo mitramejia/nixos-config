@@ -35,7 +35,33 @@
           };
         };
       };
-      telescope.enable = true;
+      telescope = {
+        enable = true;
+        settings = {
+          defaults.file_ignore_patterns = [
+            "%.git/"
+            "%.yarn/"
+            "%.direnv/"
+            "node_modules/"
+          ];
+          pickers.find_files = {
+            hidden = true;
+            find_command = [
+              "rg"
+              "--files"
+              "--hidden"
+              "--glob"
+              "!**/.git/*"
+              "--glob"
+              "!**/.yarn/*"
+              "--glob"
+              "!**/.direnv/*"
+              "--glob"
+              "!**/node_modules/*"
+            ];
+          };
+        };
+      };
 
       treesitter.enable = true;
       treesitter-context.enable = false;
