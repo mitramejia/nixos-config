@@ -70,8 +70,17 @@
       inherit system;
       config.allowUnfree = true;
     };
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     hyprlandPkgs = inputs.hyprland.packages.${system};
   in {
+    packages.${system} = rec {
+      headroom-ai = pkgs.callPackage ./packages/headroom-ai.nix {};
+      default = headroom-ai;
+    };
+
     nixosConfigurations = {
       # Define a NixOS system configuration for the specified host
       "${host}" = nixpkgs.lib.nixosSystem {

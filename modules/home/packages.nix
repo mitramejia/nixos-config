@@ -4,6 +4,7 @@
   ...
 }: let
   claudeCode = inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
+  headroomAi = pkgs.callPackage ../../packages/headroom-ai.nix {};
   scmpuff070 = pkgs.scmpuff.overrideAttrs (old: rec {
     version = "0.7.0";
 
@@ -60,6 +61,7 @@ in {
     scmpuff070
     act
     actionlint
+    headroomAi
     virtualbox
     just
     docker-compose
