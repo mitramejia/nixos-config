@@ -8,6 +8,10 @@
     initrd.kernelModules = ["amdgpu"];
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
+    # Test workaround for MT7922/mt7921e Wi-Fi latency and excessive retries.
+    extraModprobeConfig = ''
+      options mt7921e disable_aspm=1
+    '';
 
     # Kernel
     # Use 7.0.10 for the upstream MediaTek btmtk Bluetooth fix.
