@@ -91,7 +91,25 @@
       inherit system;
       config.allowUnfree = true;
     };
-    hyprlandPkgs = inputs.hyprland.packages.${system};
+    hyprlandInputPkgs = inputs.hyprland.packages.${system};
+    patchedHyprlandGuiutils =
+      inputs.hyprland.inputs.hyprland-guiutils.packages.${system}.hyprland-guiutils.overrideAttrs
+      (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.pkg-config];
+        buildInputs = (old.buildInputs or []) ++ [pkgs.pango];
+        preConfigure =
+          (old.preConfigure or "")
+          + ''
+            export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE $(pkg-config --cflags pango)"
+          '';
+      });
+    hyprlandPkgs =
+      hyprlandInputPkgs
+      // {
+        hyprland = hyprlandInputPkgs.hyprland.override {
+          hyprland-guiutils = patchedHyprlandGuiutils;
+        };
+      };
   in {
     packages.${system} = rec {
       headroom-ai = pkgs.callPackage ./packages/headroom-ai.nix {};
