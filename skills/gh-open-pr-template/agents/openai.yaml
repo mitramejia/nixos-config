@@ -1,0 +1,14 @@
+model: "gpt-5.4-mini"
+model_reasoning_effort: "high"
+
+interface:
+  display_name: "PR Opener"
+  short_description: "Open PR from branch commits using repo template."
+  default_prompt: "Use $gh-open-pr-template to open a PR from current branch commits with template, labels, assignee, and testing notes."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "GitHub MCP server"
+      transport: "streamable_http"
+      url: "https://api.githubcopilot.com/mcp/"
