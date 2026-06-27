@@ -57,13 +57,13 @@ in {
       };
 
       gh-open-pr-template = {
-        path = inputs.codex-skills;
+        path = ../../skills;
         subdir = "gh-open-pr-template";
         filter.maxDepth = 1;
       };
 
       draft-mobile-platform-update = {
-        path = inputs.codex-skills;
+        path = ../../skills;
         subdir = "draft-mobile-platform-update";
         filter.maxDepth = 1;
       };
