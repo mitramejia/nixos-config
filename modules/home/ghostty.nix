@@ -3,7 +3,8 @@
     enable = true;
     package = pkgs.ghostty;
     settings = {
-      font-size = 13.5;
+      font-size = 11.5;
+      confirm-close-surface = false;
       font-family = "JetBrainsMono Nerd Font Mono";
       scrollback-limit = 200000;
       mouse-hide-while-typing = true;
