@@ -41,7 +41,7 @@
       signcolumn = "yes";
       updatetime = 200;
       cursorline = true;
-      spell = true;
+      spell = false;
       spelllang = ["en"];
       clipboard = "unnamedplus";
       timeoutlen = 500;

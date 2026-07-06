@@ -1,17 +1,24 @@
 {
   programs.nixvim.extraConfigLua = ''
-    vim.diagnostic.config({
-      virtual_text = { prefix = "●", spacing = 2 },
-      update_in_insert = true,
-      severity_sort = true,
-      underline = true,
-      signs = true,
-    })
+vim.diagnostic.config({
+  virtual_text = { prefix = "●", spacing = 2 },
+  update_in_insert = true,
+  severity_sort = true,
+  underline = true,
+  signs = true,
+})
 
-    local function lsp_on_attach(_, bufnr)
-      local map = function(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-      end
+local autosave_group = vim.api.nvim_create_augroup("nixvim_autosave", { clear = true })
+vim.api.nvim_create_autocmd("FocusLost", {
+  group = autosave_group,
+  pattern = "*",
+  command = "silent! wa",
+})
+
+local function lsp_on_attach(_, bufnr)
+  local map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+  end
       map("n", "K", vim.lsp.buf.hover, "Hover docs")
       map("n", "gd", vim.lsp.buf.definition, "Goto definition")
       map("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
@@ -31,6 +38,66 @@
 
     if vim.g.__nixvim_lsp_attached ~= true then
       vim.g.__nixvim_lsp_attached = true
+      local function lsp_clients_supporting(bufnr, method)
+        local clients = {}
+
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+          if client.supports_method and client:supports_method(method, { bufnr = bufnr }) then
+            table.insert(clients, client)
+          end
+        end
+
+        return clients
+      end
+
+      local function find_lsp_symbols(scope)
+        local bufnr = vim.api.nvim_get_current_buf()
+        local method = scope == "workspace" and "workspace/symbol" or "textDocument/documentSymbol"
+        local telescope_builtin = require("telescope.builtin")
+        local picker = scope == "workspace"
+          and telescope_builtin.lsp_dynamic_workspace_symbols
+          or telescope_builtin.lsp_document_symbols
+
+        if #lsp_clients_supporting(bufnr, method) == 0 then
+          vim.wait(2000, function()
+            return #lsp_clients_supporting(bufnr, method) > 0
+          end, 100)
+        end
+
+        local symbol_clients = lsp_clients_supporting(bufnr, method)
+        if #symbol_clients == 0 then
+          local attached_clients = vim.iter(vim.lsp.get_clients({ bufnr = bufnr }))
+            :map(function(client)
+              return client.name
+            end)
+            :totable()
+
+          local message
+          if #attached_clients == 0 then
+            message = "No LSP client attached to the current buffer"
+          else
+            message = string.format(
+              "Attached LSP clients do not support %s: %s",
+              method,
+              table.concat(attached_clients, ", ")
+            )
+          end
+
+          vim.notify(string.format("[lsp-symbols] %s", message), vim.log.levels.WARN)
+          return
+        end
+
+        picker()
+      end
+
+      _G.find_document_symbols = function()
+        find_lsp_symbols("document")
+      end
+
+      _G.find_workspace_symbols = function()
+        find_lsp_symbols("workspace")
+      end
+
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           lsp_on_attach(nil, args.buf)

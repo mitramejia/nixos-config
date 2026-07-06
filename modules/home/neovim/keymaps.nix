@@ -46,13 +46,13 @@
     {
       key = "<leader>fs";
       mode = ["n"];
-      action = "<cmd>Telescope lsp_document_symbols<cr>";
+      action.__raw = "function() _G.find_document_symbols() end";
       options.desc = "Find symbol (file)";
     }
     {
       key = "<leader>fS";
       mode = ["n"];
-      action = "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>";
+      action.__raw = "function() _G.find_workspace_symbols() end";
       options.desc = "Find symbol (workspace)";
     }
     {
