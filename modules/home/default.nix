@@ -12,7 +12,6 @@
     ./noctalia.nix
     ./noctalia-clipboard.nix
     ./neovim.nix
-    ./chromium.nix
     ./zen-browser.nix
     ./virtualisation.nix
     ./ideavim

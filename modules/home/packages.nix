@@ -37,19 +37,19 @@
 in {
   home.packages = with pkgs; [
     # Programming language and toolchain managers
-    pnpm
     cargo
     rustc
     ruby
     jdk17
     jq
+    uv
 
     # Internet and communication applications
     zapzap
     slack
-    thunderbird
     zoom-us
     discord
+    thunderbird
     localsend
 
     # Development tools for code, system, and infrastructure
@@ -87,6 +87,7 @@ in {
     libreoffice
     vlc
     trash-cli
+    alpine
 
     # Code editors and IDEs
     code-cursor
