@@ -28,6 +28,8 @@
 
   environment.etc."1password/custom_allowed_browsers" = {
     text = ''
+      # 1Password verifies Zen against the inner browser binary name.
+      zen
       .zen-beta-wrapped
     '';
     mode = "0755";
