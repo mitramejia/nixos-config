@@ -1,5 +1,7 @@
 {
+  config,
   inputs,
+  lib,
   pkgs,
   ...
 }: let
@@ -103,6 +105,9 @@ in {
     # ~/.local/state/noctalia/settings.toml and override this at runtime.
     settings = ./noctalia-settings.toml;
   };
+  home.activation.noctaliaSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ${pkgs.coreutils}/bin/install -Dm0600 ${./noctalia-settings.toml} "${config.xdg.stateHome}/noctalia/settings.toml"
+  '';
 
   home.packages = [
     persistNoctaliaSettings
@@ -111,6 +116,16 @@ in {
   ];
 
   xdg.desktopEntries = {
+    slack = {
+      name = "Slack";
+      genericName = "Team communication";
+      comment = "Launch Slack";
+      exec = "${pkgs.slack}/bin/slack -s %U";
+      icon = "${pkgs.slack}/share/icons/hicolor/512x512/apps/slack.png";
+      terminal = false;
+      categories = ["Network" "InstantMessaging"];
+    };
+
     media-play-pause = {
       name = "Media Play/Pause";
       genericName = "Media control";

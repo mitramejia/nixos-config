@@ -1,15 +1,126 @@
 [bar.default]
 center = [ "media", "volume" ]
-end = [ "tray", "temp", "ram", "notifications", "clock" ]
-margin_edge = 8
-margin_ends = 8
+end = [ "tray", "cpu", "temp", "ram", "notifications", "clock" ]
+margin_edge = 0
+margin_ends = 0
 padding = 16
+radius = 0
 start = [ "session", "workspaces" ]
 thickness = 38
-widget_spacing = 10
+widget_spacing = 16
+
+[calendar]
+enabled = true
+
+    [calendar.account.comun_google]
+    name = "Comun"
+    type = "google"
+
+    [calendar.account.personal_google]
+    type = "google"
+
+[control_center]
+sidebar_section = "full"
+width = 1000
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "nightlight"
+
+    [[control_center.shortcuts]]
+    type = "notification"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = [
+    "desktop-widget-0000000000000002",
+    "desktop-widget-0000000000000003",
+    "desktop-widget-0000000000000004",
+    "desktop-widget-0000000000000005",
+    "desktop-widget-0000000000000006"
+]
+
+    [desktop_widgets.grid]
+    cell_size = 24
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000002]
+    box_height = 112.0
+    box_width = 304.0
+    cx = 240.0
+    cy = 232.0
+    output = "DP-2"
+    rotation = -0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
+        display = "graph"
+        gauge_layout = "vertical"
+        stat = "gpu_usage"
+        stat2 = "gpu_temp"
+
+    [desktop_widgets.widget.desktop-widget-0000000000000003]
+    box_height = 128.0
+    box_width = 304.0
+    cx = 1248.0
+    cy = 368.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "audio_visualizer"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000003.settings]
+        bands = 32
+        show_when_idle = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000004]
+    box_height = 112.0
+    box_width = 304.0
+    cx = 1248.0
+    cy = 208.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "weather"
+
+    [desktop_widgets.widget.desktop-widget-0000000000000005]
+    box_height = 112.0
+    box_width = 296.0
+    cx = 244.0
+    cy = 376.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000005.settings]
+        stat = "cpu_usage"
+        stat2 = "cpu_temp"
+
+    [desktop_widgets.widget.desktop-widget-0000000000000006]
+    box_height = 120.0
+    box_width = 288.0
+    cx = 244.0
+    cy = 536.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000006.settings]
+        stat = "ram_pct"
+        stat2 = ""
+
+[keybinds]
+validate = [ "Return", "KP_Enter" ]
 
 [location]
 address = "Santo Domingo, Dominican Republic"
+
+[lockscreen]
+blurred_desktop = true
 
 [lockscreen_widgets]
 enabled = false
@@ -39,25 +150,32 @@ widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@DP-1" ]
     rotation = 0.0
     type = "login_box"
 
+[plugins]
+enabled = [ "noctalia/translator", "noctalia/timer" ]
+
 [shell]
-app_icon_colorize = true
+app_icon_colorize = false
 avatar_path = "/home/mitra/profile.jpg"
 font_family = "Inter"
 screen_time_enabled = true
 settings_show_advanced = true
+
+    [shell.launcher]
+    session_search = true
 
 [theme]
 builtin = "Catppuccin"
 
     [theme.templates]
     enable_builtin_templates = false
+    enable_community_templates = false
 
 [wallpaper]
 per_monitor_directories = true
 transition = [ "fade" ]
 
     [wallpaper.last]
-    path = "/home/mitra/Pictures/Wallpapers/milad-fakurian-E8Ufcyxz514-unsplash.jpg"
+    path = "/home/mitra/Pictures/Wallpapers/pexels-vertical.jpg"
 
     [wallpaper.monitor.DP-1]
     directory = "/home/mitra/Pictures/Wallpapers/"
@@ -65,18 +183,19 @@ transition = [ "fade" ]
     directory_light = "/home/mitra/Pictures/Wallpapers/"
 
     [wallpaper.monitor.DP-2]
-    directory = "/home/mitra/Pictures/Wallpapers/vertical"
-    directory_dark = "/home/mitra/Pictures/Wallpapers/vertical"
     directory_light = "/home/mitra/Pictures/Wallpapers/vertical"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/mitra/Pictures/Wallpapers/milad-fakurian-E8Ufcyxz514-unsplash.jpg"
+    path = "/home/mitra/Pictures/Wallpapers/pexels.jpg"
 
     [wallpaper.monitors.DP-2]
-    path = "/home/mitra/Pictures/Wallpapers/vertical/pexels-vertical.jpg"
+    path = "/home/mitra/Pictures/Wallpapers/pexels-vertical.jpg"
 
 [widget.clock]
 format = "{:%A, %B %d at %-I:%M %p}"
+
+[widget.cpu]
+display = "text"
 
 [widget.media]
 hide_when_no_media = true
@@ -93,5 +212,6 @@ display = "text"
 drawer = true
 
 [widget.workspaces]
+empty_color = "tertiary"
 minimal = true
-scale = 1.1000000000000001
+scale = 1.25
