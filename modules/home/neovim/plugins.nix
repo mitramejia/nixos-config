@@ -31,6 +31,14 @@
               visible = true;
               hide_dotfiles = false;
               hide_gitignored = false;
+              never_show = [
+                ".expo-shared"
+                ".git"
+                ".cursor"
+                ".claude"
+                ".husky"
+                ".vscode"
+              ];
             };
           };
         };
@@ -39,7 +47,12 @@
         enable = true;
         settings = {
           defaults.file_ignore_patterns = [
+            "%.expo%-shared/"
             "%.git/"
+            "%.cursor/"
+            "%.claude/"
+            "%.husky/"
+            "%.vscode/"
             "%.yarn/"
             "%.direnv/"
             "node_modules/"
@@ -51,7 +64,17 @@
               "--files"
               "--hidden"
               "--glob"
+              "!**/.expo-shared/*"
+              "--glob"
               "!**/.git/*"
+              "--glob"
+              "!**/.cursor/*"
+              "--glob"
+              "!**/.claude/*"
+              "--glob"
+              "!**/.husky/*"
+              "--glob"
+              "!**/.vscode/*"
               "--glob"
               "!**/.yarn/*"
               "--glob"

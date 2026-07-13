@@ -27,6 +27,10 @@
       maplocalleader = " ";
     };
 
+    filetype.filename = {
+      Fastfile = "ruby";
+    };
+
     opts = {
       number = true;
       relativenumber = true;
