@@ -1,0 +1,4 @@
+interface:
+  display_name: "Linear Issue From Diff"
+  short_description: "Create a Linear issue from current git changes with defaults."
+  default_prompt: "Create a Linear issue from current staged/unstaged changes for Mobile Platform, assign mitra, set In Progress."

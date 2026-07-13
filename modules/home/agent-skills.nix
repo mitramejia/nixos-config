@@ -20,8 +20,9 @@
   ];
 
   expoSkills = [
-    "expo/upgrading-expo"
-    "expo/expo-deployment"
+    "expo/expo-upgrade"
+    "expo/eas-app-stores"
+    "expo/eas-hosting"
   ];
 in {
   imports = [inputs.agent-skills.homeManagerModules.default];
@@ -67,6 +68,18 @@ in {
         subdir = "draft-mobile-platform-update";
         filter.maxDepth = 1;
       };
+
+      commit-staged = {
+        path = ../../skills;
+        subdir = "commit-staged";
+        filter.maxDepth = 1;
+      };
+
+      linear-issue-from-diff = {
+        path = ../../skills;
+        subdir = "linear-issue-from-diff";
+        filter.maxDepth = 1;
+      };
     };
 
     skills.enable = cursorTeamKitSkills ++ expoSkills;
@@ -76,6 +89,8 @@ in {
       "mattpocock-engineering"
       "gh-open-pr-template"
       "draft-mobile-platform-update"
+      "commit-staged"
+      "linear-issue-from-diff"
     ];
 
     targets = {

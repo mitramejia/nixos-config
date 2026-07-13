@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mobile Platform Update"
+  short_description: "Draft weekly mobile platform status updates"
+  default_prompt: "Use $draft-mobile-platform-update to draft the weekly Comun mobile platform project update."
