@@ -31,6 +31,11 @@
       conform-nvim = {
         enable = true;
         settings = {
+          formatters.prettier = {
+            command = "yarn";
+            prepend_args = ["prettier"];
+          };
+
           formatters_by_ft = {
             nix = ["alejandra"];
             lua = ["stylua"];
@@ -68,7 +73,6 @@
         multimarkdown
         clang-tools
         prettierd
-        prettier
         stylua
         shfmt
         alejandra
