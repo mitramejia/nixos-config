@@ -54,6 +54,7 @@ in {
 
     # Development tools for code, system, and infrastructure
     claudeCode
+    opencode
     alejandra
     statix
     lazydocker

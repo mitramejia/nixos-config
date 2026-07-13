@@ -11,19 +11,19 @@
 }:
 python3Packages.buildPythonApplication rec {
   pname = "headroom-ai";
-  version = "0.27.0";
+  version = "0.30.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-059AC105XH6BOnHvQjC3EueUL3Z6t1fD29fHqHkkmX0=";
+    hash = "sha256-BxZq6UzmLae7eNrE7iUuunM3hRM4E41i4j6LsKFyFdk=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit src;
-    hash = "sha256-gd5eh1gL2wJTjKMQN2DSjSGFfDiUzC+jIJVjBYU+mJ8=";
+    hash = "sha256-cXvIbFaX008BvYLBWVvrj5pnF8CM8qOdbdg0kKAZ9uY=";
   };
 
   nativeBuildInputs = [
@@ -79,7 +79,7 @@ python3Packages.buildPythonApplication rec {
     "ast-grep-cli"
   ];
 
-  # Headroom 0.27.0 asks for litellm >= 1.86.2, while nixos-26.05 currently
+  # Headroom asks for litellm >= 1.86.2, while nixos-26.05 currently
   # carries 1.83.14. Headroom imports litellm lazily for non-core providers.
   pythonRelaxDeps = [
     "litellm"
