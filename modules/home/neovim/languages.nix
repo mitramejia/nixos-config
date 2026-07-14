@@ -19,7 +19,18 @@
           clangd.enable = true;
           zls.enable = true;
           marksman.enable = true;
-          ruby_lsp.enable = true;
+          ruby_lsp = {
+            enable = true;
+            # Ruby LSP must not inherit Nixvim's immutable GEM_HOME: it creates
+            # a composed bundle and installs the Bundler version from Gemfile.lock.
+            package = null;
+            cmd = [
+              "env"
+              "-u"
+              "GEM_HOME"
+              "ruby-lsp"
+            ];
+          };
         };
         keymaps = {
           diagnostic = {
@@ -73,7 +84,9 @@
         marksman
         multimarkdown
         clang-tools
-        rubyPackages.ruby-lsp
+        (ruby_3_3.withPackages (ps: [ps.ruby-lsp]))
+        stdenv.cc
+        gnumake
         prettierd
         stylua
         shfmt
