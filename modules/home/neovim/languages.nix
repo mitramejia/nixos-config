@@ -19,6 +19,7 @@
           clangd.enable = true;
           zls.enable = true;
           marksman.enable = true;
+          ruby_lsp.enable = true;
         };
         keymaps = {
           diagnostic = {
@@ -72,6 +73,7 @@
         marksman
         multimarkdown
         clang-tools
+        rubyPackages.ruby-lsp
         prettierd
         stylua
         shfmt
