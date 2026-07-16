@@ -104,6 +104,9 @@ in {
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
 
+  # Compressed in-memory swap gives the desktop breathing room under memory pressure.
+  zramSwap.enable = true;
+
   # Security / Polkit
   security = {
     rtkit.enable = true;
