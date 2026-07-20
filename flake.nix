@@ -1,22 +1,22 @@
 {
-  # Meta description for this Nix flake, appears in tooling and documentation
-  description = "Mitra's NixOS configuration";
+  description = "Mitra's NixOS and macOS configuration";
 
-  # Inputs defines all external dependencies and optional modules.
   inputs = {
-    # Main NixOS package source
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
-    # Kernel-only pin for Linux 7.0.10, which includes the MediaTek btmtk Bluetooth fix.
+    # Linux-only pin for the MediaTek btmtk Bluetooth fix.
     nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
 
-    # Hyprland main branch, used while nixpkgs lags fixes for the NixOS cap_sys_nice wrapper.
+    # Keep Hyprland's nixpkgs independent: its master package set provides the
+    # guiutils override used by the NixOS desktop configuration.
     hyprland.url = "github:hyprwm/Hyprland";
 
-    # Visual theming via Stylix module.
-    stylix.url = "github:danth/stylix/release-26.05";
+    stylix = {
+      url = "github:danth/stylix/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # Noctalia v4 shell. Keep its nixpkgs independent because it needs recent Quickshell.
+    # Keep Noctalia's nixpkgs independent because it needs recent Quickshell.
     noctalia.url = "github:noctalia-dev/noctalia-shell";
 
     nixvim = {
@@ -24,22 +24,43 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+
     agent-skills = {
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
     mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;
     };
-
     cursor-plugins = {
       url = "github:cursor/plugins";
       flake = false;
     };
-
     expo-skills = {
       url = "github:expo/skills";
       flake = false;
@@ -47,19 +68,17 @@
 
     claude-code = {
       url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
-    codex-skills = {
-      url = "path:/home/mitra/.codex/skills";
-      flake = false;
+    codex-cli-nix = {
+      url = "github:sadjow/codex-cli-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Home Manager as a flake input, for user-level package and dotfile configuration.
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -67,73 +86,100 @@
         home-manager.follows = "home-manager";
       };
     };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      # Ensures Home Manager uses the same nixpkgs as the rest of the system to avoid version mismatches.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  # Outputs expose the 'nixosConfigurations' for deployment
-  outputs = {nixpkgs, ...} @ inputs: let
-    # System architecture to target (e.g., 'x86_64-linux', 'aarch64-linux', etc.)
-    system = "x86_64-linux";
-    # Name of this host, used for per-host configurations and imports
-    host = "nixos";
-    # Current user's username, used for user-level configuration imports
-    username = "mitra";
-    kernelPkgs = import inputs.nixpkgs-kernel {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    hyprlandInputPkgs = inputs.hyprland.packages.${system};
-    patchedHyprlandGuiutils =
-      inputs.hyprland.inputs.hyprland-guiutils.packages.${system}.hyprland-guiutils.overrideAttrs
-      (old: {
-        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.pkg-config];
-        buildInputs = (old.buildInputs or []) ++ [pkgs.pango];
-        preConfigure =
-          (old.preConfigure or "")
-          + ''
-            export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE $(pkg-config --cflags pango)"
-          '';
-      });
-    hyprlandPkgs =
-      hyprlandInputPkgs
-      // {
-        hyprland = hyprlandInputPkgs.hyprland.override {
-          hyprland-guiutils = patchedHyprlandGuiutils;
-        };
+  outputs = inputs @ {
+    darwin,
+    nixpkgs,
+    ...
+  }: let
+    hosts = {
+      nixos = {
+        key = "nixos";
+        platform = "nixos";
+        system = "x86_64-linux";
+        hostname = "nixos";
+        username = "mitra";
+        homeDirectory = "/home/mitra";
+        systemStateVersion = "24.11";
+        homeStateVersion = "23.11";
       };
-  in {
-    packages.${system} = rec {
-      headroom-ai = pkgs.callPackage ./packages/headroom-ai.nix {};
-      default = headroom-ai;
+      macbook = {
+        key = "macbook";
+        platform = "darwin";
+        system = "aarch64-darwin";
+        hostname = "MitraMacBook";
+        username = "mitramejia";
+        homeDirectory = "/Users/mitramejia";
+        systemStateVersion = 4;
+        homeStateVersion = "23.11";
+      };
     };
 
-    nixosConfigurations = {
-      # Define a NixOS system configuration for the specified host
-      "${host}" = nixpkgs.lib.nixosSystem {
-        # Pass arguments to all loaded modules for easier customization and DRY configurations
-        specialArgs = {
-          inherit system; # Target system architecture
-          inherit inputs; # All flake inputs (dependencies)
-          inherit username; # Current user
-          inherit host; # Hostname
-          inherit kernelPkgs; # Kernel packages pinned separately from the system channel
-          inherit hyprlandPkgs; # Hyprland packages pinned to the Hyprland input
+    mkNixos = host: let
+      pkgs = import nixpkgs {
+        system = host.system;
+        config.allowUnfree = true;
+      };
+      kernelPkgs = import inputs.nixpkgs-kernel {
+        system = host.system;
+        config.allowUnfree = true;
+      };
+      hyprlandInputPkgs = inputs.hyprland.packages.${host.system};
+      patchedHyprlandGuiutils =
+        inputs.hyprland.inputs.hyprland-guiutils.packages.${host.system}.hyprland-guiutils.overrideAttrs
+        (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.pkg-config];
+          buildInputs = (old.buildInputs or []) ++ [pkgs.pango];
+          preConfigure =
+            (old.preConfigure or "")
+            + ''
+              export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE $(pkg-config --cflags pango)"
+            '';
+        });
+      hyprlandPkgs =
+        hyprlandInputPkgs
+        // {
+          hyprland = hyprlandInputPkgs.hyprland.override {
+            hyprland-guiutils = patchedHyprlandGuiutils;
+          };
         };
-
-        # List of modules to configure the system
+    in
+      nixpkgs.lib.nixosSystem {
+        system = host.system;
+        specialArgs = {
+          inherit inputs host kernelPkgs hyprlandPkgs;
+        };
         modules = [
-          ./modules/core # Host-specific system settings
+          ./hosts/nixos
+          ./modules/nixos
         ];
       };
+  in {
+    packages.${hosts.nixos.system} = let
+      pkgs = import nixpkgs {
+        system = hosts.nixos.system;
+        config.allowUnfree = true;
+      };
+    in {
+      headroom-ai = pkgs.callPackage ./packages/headroom-ai.nix {};
+      default = pkgs.callPackage ./packages/headroom-ai.nix {};
+    };
+
+    nixosConfigurations.nixos = mkNixos hosts.nixos;
+
+    darwinConfigurations.macbook = darwin.lib.darwinSystem {
+      system = hosts.macbook.system;
+      specialArgs = {
+        host = hosts.macbook;
+        inherit inputs;
+      };
+      modules = [
+        inputs.home-manager.darwinModules.home-manager
+        inputs.nix-homebrew.darwinModules.nix-homebrew
+        ./hosts/macos
+        ./modules/darwin
+      ];
     };
   };
 }

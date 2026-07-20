@@ -1,0 +1,15 @@
+[
+  "visual-studio-code"
+  "jetbrains-toolbox"
+  "insomnia"
+  "figma"
+  "linear-linear"
+  "notion-calendar"
+  "twingate"
+  "discord"
+  "slack"
+  "obsidian"
+  "iterm2"
+  "raycast"
+  "google-chrome"
+]
