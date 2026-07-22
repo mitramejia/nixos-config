@@ -8,6 +8,7 @@
   python3Packages,
   rustPlatform,
   scc,
+  stdenv,
 }:
 python3Packages.buildPythonApplication rec {
   pname = "headroom-ai";
@@ -85,20 +86,29 @@ python3Packages.buildPythonApplication rec {
     "litellm"
   ];
 
-  makeWrapperArgs = [
-    "--prefix"
-    "PATH"
-    ":"
-    (lib.makeBinPath [
-      ast-grep
-      difftastic
-      scc
-    ])
-    "--prefix"
-    "LD_LIBRARY_PATH"
-    ":"
-    "${onnxruntime}/lib"
-  ];
+  makeWrapperArgs =
+    [
+      "--prefix"
+      "PATH"
+      ":"
+      (lib.makeBinPath [
+        ast-grep
+        difftastic
+        scc
+      ])
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      "--prefix"
+      "LD_LIBRARY_PATH"
+      ":"
+      (lib.makeLibraryPath [onnxruntime])
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      "--prefix"
+      "DYLD_LIBRARY_PATH"
+      ":"
+      (lib.makeLibraryPath [onnxruntime])
+    ];
 
   doCheck = false;
 
@@ -113,6 +123,6 @@ python3Packages.buildPythonApplication rec {
     homepage = "https://github.com/headroomlabs-ai/headroom";
     license = lib.licenses.asl20;
     mainProgram = "headroom";
-    platforms = lib.platforms.linux;
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
   };
 }

@@ -34,8 +34,6 @@ in {
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [inputs.claude-code.overlays.default];
-
   fonts.packages = with pkgs; [
     inter
     noto-fonts-color-emoji

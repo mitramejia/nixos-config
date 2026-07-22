@@ -1,7 +1,6 @@
 {
   host,
   inputs,
-  pkgs,
   ...
 }: {
   imports = [
@@ -13,36 +12,13 @@
 
   # Determinate Nix owns the Nix installation and daemon on this host.
   nix.enable = false;
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      trusted-users = ["@admin" host.username];
-      substituters = ["https://nix-community.cachix.org" "https://cache.nixos.org"];
-    };
-    gc = {
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      auto-optimise-store = true
-    '';
-  };
 
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
       allowInsecure = false;
-      allowUnsupportedSystem = true;
     };
     overlays = [
-      inputs.claude-code.overlays.default
-      inputs.codex-cli-nix.overlays.default
       (final: prev: {
         direnv = prev.direnv.overrideAttrs (_: {
           doCheck = false;

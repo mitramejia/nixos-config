@@ -118,11 +118,11 @@
 
     mkNixos = host: let
       pkgs = import nixpkgs {
-        system = host.system;
+        inherit (host) system;
         config.allowUnfree = true;
       };
       kernelPkgs = import inputs.nixpkgs-kernel {
-        system = host.system;
+        inherit (host) system;
         config.allowUnfree = true;
       };
       hyprlandInputPkgs = inputs.hyprland.packages.${host.system};
@@ -146,7 +146,7 @@
         };
     in
       nixpkgs.lib.nixosSystem {
-        system = host.system;
+        inherit (host) system;
         specialArgs = {
           inherit inputs host kernelPkgs hyprlandPkgs;
         };
@@ -161,9 +161,10 @@
         system = hosts.nixos.system;
         config.allowUnfree = true;
       };
+      headroomAi = pkgs.callPackage ./packages/headroom-ai.nix {};
     in {
-      headroom-ai = pkgs.callPackage ./packages/headroom-ai.nix {};
-      default = pkgs.callPackage ./packages/headroom-ai.nix {};
+      headroom-ai = headroomAi;
+      default = headroomAi;
     };
 
     nixosConfigurations.nixos = mkNixos hosts.nixos;

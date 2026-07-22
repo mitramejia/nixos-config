@@ -23,8 +23,7 @@ in {
         ../home/nixos
       ];
       home = {
-        username = host.username;
-        homeDirectory = host.homeDirectory;
+        inherit (host) username homeDirectory;
         stateVersion = host.homeStateVersion;
       };
     };
