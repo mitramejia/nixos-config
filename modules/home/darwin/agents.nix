@@ -1,16 +1,4 @@
-{lib, ...}: {
-  home.activation.linkOpencodeSkills = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    skills_source="$HOME/.codex/skills"
-    skills_target="$HOME/.config/opencode/skills"
-
-    mkdir -p "$(dirname "$skills_target")"
-
-    if [[ -d "$skills_source" ]]; then
-      rm -rf "$skills_target"
-      ln -s "$skills_source" "$skills_target"
-    fi
-  '';
-
+_: {
   programs = {
     mcp.servers = {
       linear = {

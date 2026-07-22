@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.nixvim = {
     plugins = {
       lsp = {
@@ -68,35 +64,30 @@
       };
     };
 
-    extraPackages =
-      (with pkgs; [
-        ripgrep
-        fd
-        bat
-        lazygit
-        nil
-        typescript-language-server
-        typescript
-        vscode-langservers-extracted
-        pyright
-        lua-language-server
-        zls
-        marksman
-        multimarkdown
-        clang-tools
-        (ruby_3_3.withPackages (ps: [ps.ruby-lsp]))
-        stdenv.cc
-        gnumake
-        prettierd
-        stylua
-        shfmt
-        alejandra
-        figlet
-        toilet
-      ])
-      ++ lib.optionals pkgs.stdenv.isLinux [
-        pkgs."wl-clipboard"
-        pkgs.hyprls
-      ];
+    extraPackages = with pkgs; [
+      ripgrep
+      fd
+      bat
+      lazygit
+      nil
+      typescript-language-server
+      typescript
+      vscode-langservers-extracted
+      pyright
+      lua-language-server
+      zls
+      marksman
+      multimarkdown
+      clang-tools
+      (ruby_3_3.withPackages (ps: [ps.ruby-lsp]))
+      stdenv.cc
+      gnumake
+      prettierd
+      stylua
+      shfmt
+      alejandra
+      figlet
+      toilet
+    ];
   };
 }

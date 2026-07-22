@@ -24,7 +24,6 @@
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.composer/vendor/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH
-      export ANDROID_HOME=$HOME/Library/Android/sdk
       export PNPM_HOME=~/.pnpm-packages
       export PATH="$HOME/.local/bin:$HOME/.pyenv/versions/3.12.7/bin/:$PATH"
       export HISTIGNORE="pwd:ls:cd"

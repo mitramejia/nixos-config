@@ -1,24 +1,25 @@
 {...}: {
   imports = [
-    ./android.nix
-    ./btop.nix
-    ./clipboard.nix
-    ./fzf.nix
-    ./ghostty.nix
     ./hyprland
-    ./kitty.nix
-    ./lazygit.nix
+    ./clipboard.nix
+    ./neovim.nix
+    ./android.nix
+    ./packages.nix
     ./noctalia.nix
     ./noctalia-clipboard.nix
-    ./packages.nix
-    ./qt.nix
-    ./stylix.nix
-    ./swapy.nix
-    ./tmux.nix
+    ./zen-browser.nix
     ./virtualisation.nix
+    ./kitty.nix
+    ./ghostty.nix
+    ./stylix.nix
+    ./qt.nix
+    ./swapy.nix
+    ./btop.nix
     ./xdg.nix
     ./yazi.nix
-    ./zen-browser.nix
+    ./fzf.nix
+    ./lazygit.nix
+    ./tmux.nix
     ./zsh.nix
   ];
 

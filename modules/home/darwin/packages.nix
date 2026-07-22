@@ -1,11 +1,14 @@
-{pkgs, ...}: let
-  headroomAi = pkgs.callPackage ../../../packages/headroom-ai.nix {};
-in {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     devenv
     nil
     gcc
     android-tools
+    btop
+    fzf
+    yazi
+    aspell
+    aspellDicts.en
     zoxide
     flyctl
     go
@@ -61,6 +64,5 @@ in {
     xz
     zlib
     idb-companion
-    headroomAi
   ];
 }

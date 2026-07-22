@@ -1,4 +1,4 @@
-{home}: {
+{
   linear = {
     url = "https://mcp.linear.app/mcp";
     tools = {
@@ -25,6 +25,14 @@
     args = ["mcp"];
   };
 
+  appium-mcp = {
+    command = "npx";
+    args = [
+      "-y"
+      "appium-mcp@1.84.0"
+    ];
+  };
+
   browserstack = {
     command = "npx";
     args = [
@@ -35,14 +43,5 @@
       "BROWSERSTACK_USERNAME"
       "BROWSERSTACK_ACCESS_KEY"
     ];
-  };
-
-  appium-mcp = {
-    command = "npx";
-    args = [
-      "-y"
-      "appium-mcp@1.84.0"
-    ];
-    env.ANDROID_HOME = "${home}/Android/Sdk";
   };
 }

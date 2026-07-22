@@ -1,6 +1,7 @@
 {host, ...}: {
   imports = [
     ./agents.nix
+    ./codex.nix
     ./git.nix
     ./packages.nix
     ./shell.nix
@@ -11,8 +12,7 @@
 
   home = {
     enableNixpkgsReleaseCheck = false;
-    username = host.username;
-    homeDirectory = host.homeDirectory;
+    inherit (host) username homeDirectory;
     stateVersion = host.homeStateVersion;
   };
 }

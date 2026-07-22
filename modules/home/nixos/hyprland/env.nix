@@ -13,7 +13,7 @@ _: {
     "QT_AUTO_SCREEN_SCALE_FACTOR,1"
     "SDL_VIDEODRIVER,wayland"
     "MOZ_ENABLE_WAYLAND,1"
-    # Use stable udev aliases from modules/core/hardware.nix. AQ_DRM_DEVICES is
+    # Use stable udev aliases from hosts/nixos/hardware.nix. AQ_DRM_DEVICES is
     # colon-separated, so raw by-path PCI names cannot be used because they
     # contain ':'.
     "AQ_DRM_DEVICES,/dev/dri/amd-rx9070:/dev/dri/amd-igpu"
