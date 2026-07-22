@@ -19,6 +19,8 @@ in {
     inputs.zen-browser.homeModules.beta
   ];
 
+  stylix.targets.zen-browser.profileNames = ["default"];
+
   home.file = {
     ".local/share/catppuccin-zen-browser/mocha/blue/zen-logo.svg".source = "${catppuccinMoz}/zen-logo.svg";
   };

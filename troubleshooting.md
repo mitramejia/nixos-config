@@ -99,7 +99,7 @@ parm: disable_aspm:disable PCI ASPM support (bool)
 
 ### Current test configured
 
-ASPM disable is configured in `modules/core/boot.nix` for the MT7922 driver:
+ASPM disable is configured in `modules/nixos/boot.nix` for the MT7922 driver:
 
 ```nix
 boot.extraModprobeConfig = ''

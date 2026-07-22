@@ -3,19 +3,22 @@
 Guidance for automated agents working in this Nix config. Keep changes small, declarative, and aligned with the repo layout.
 
 ## Repository map
-- `flake.nix`: entry point; defines inputs, `nixosConfigurations`, and `specialArgs` (including `unstable-pkgs`).
-- `modules/core`: NixOS system configuration (boot, hardware, services, packages).
-- `modules/home`: Home Manager configuration (user programs, dotfiles, scripts).
-- `modules/variables.nix`: shared values (username, git, defaults, wallpaper, keyboard).
+- `flake.nix`: entry point; defines the two host records, outputs, and shared `specialArgs`.
+- `hosts/nixos`: NixOS hardware and machine-only state.
+- `hosts/macos`: macOS hostname, state, and machine-only application exceptions.
+- `modules/nixos`: reusable NixOS system configuration.
+- `modules/darwin`: reusable nix-darwin and Homebrew configuration.
+- `modules/home/common`, `modules/home/nixos`, and `modules/home/darwin`: portable, Linux, and macOS Home Manager layers.
+- `modules/variables.nix`: shared Git, wallpaper, and keyboard values.
 - `assets/`: static assets (wallpapers, etc).
 
 ## Best practices
-- Prefer declarative Nix over imperative scripts; if a script is required, add it under `modules/home/scripts`.
-- Keep NixOS concerns in `modules/core` and user-level preferences in `modules/home`.
+- Prefer declarative Nix over imperative scripts; if a script is required, add it under the matching Home Manager platform layer.
+- Keep NixOS and Darwin system concerns in their respective platform modules; put user preferences in the appropriate Home Manager layer.
 - Reuse `modules/variables.nix` for shared values instead of duplicating literals.
 - Avoid changing `system.stateVersion` or Home Manager `home.stateVersion` unless explicitly requested.
 - Keep `nixpkgs.config.allowUnfree = true;` consistent; do not add per-package unfree toggles unless required.
-- Use `unstable-pkgs` only when a package is missing/too old in stable; document why in the module.
+- Use a separately pinned package set only when a package is missing or too old in stable; document why in the module.
 - Preserve module imports ordering unless there is a clear dependency reason to change it.
 
 ## Formatting
@@ -29,16 +32,16 @@ Guidance for automated agents working in this Nix config. Keep changes small, de
 - Write only one sentence for the first part, and two or three sentences at most for the detailed explanation.
 
 ## Adding software
-- System-wide packages: `modules/core/packages.nix` under `environment.systemPackages`.
-- User-only packages: `modules/home/*.nix` or `modules/home/default.nix` (prefer specific module when one exists).
-- Home Manager program options: add to the relevant file in `modules/home` and import it in `modules/home/default.nix` if new.
+- NixOS system packages: `modules/nixos/packages.nix` under `environment.systemPackages`.
+- Portable user packages: `modules/home/common`; platform-specific user packages: `modules/home/nixos` or `modules/home/darwin`.
+- Home Manager program options: add a focused module and import it from the matching Home Manager layer.
 
 ## Home Manager integration
-- Home Manager is wired in `modules/core/user.nix` with `extraSpecialArgs` and imports `modules/home`.
+- Home Manager is wired in `modules/nixos/user.nix` and `modules/darwin/home-manager.nix`; both receive the checked-in host record through `extraSpecialArgs`.
 - If you need new shared args, add them in `flake.nix` `specialArgs` and pass through to Home Manager.
 
 ## Deployment and checks
-- Local rebuilds are typically done with `nh` (see `modules/core/nh.nix`) or `nixos-rebuild` with the flake.
+- Deploy with `nh os switch . -H nixos` on Linux or `nh darwin switch . -H macbook` on macOS.
 - For quick validation, at least run `nix flake check` when feasible.
 
 ## Safety
