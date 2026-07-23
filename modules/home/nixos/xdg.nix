@@ -72,6 +72,7 @@ in {
         "hyprland"
         "gtk"
       ];
+      # Portal discovery must use the same 0.56 package as the compositor.
       configPackages = [hyprlandPkgs.hyprland];
     };
   };

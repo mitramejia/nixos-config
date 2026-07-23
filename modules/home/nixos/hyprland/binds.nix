@@ -5,7 +5,107 @@
     terminal
     ;
 
+  lua = lib.generators.mkLuaInline;
   mk = key: description: binding: {inherit key description binding;};
+  exec = command: lua "hl.dsp.exec_cmd(${builtins.toJSON command})";
+
+  directionFor = direction:
+    {
+      l = "left";
+      r = "right";
+      u = "up";
+      d = "down";
+    }.${
+      direction
+    } or (throw "Unsupported Hyprland direction: ${direction}");
+
+  renderKey = modifiers: key: let
+    modifierNames = lib.filter (modifier: modifier != "") (lib.splitString " " (lib.strings.trim modifiers));
+    modifiersWithPlus = lib.concatStringsSep " + " modifierNames;
+  in
+    if modifiersWithPlus == ""
+    then builtins.toJSON key
+    else if lib.hasPrefix "$modifier" modifiersWithPlus
+    then "mod .. ${builtins.toJSON "${lib.removePrefix "$modifier" modifiersWithPlus} + ${key}"}"
+    else builtins.toJSON "${modifiersWithPlus} + ${key}";
+
+  nativeAction = action: let
+    parts = map lib.strings.trim (lib.splitString "," action);
+    dispatcher = builtins.head parts;
+    arguments = lib.tail parts;
+    argument =
+      if arguments == []
+      then null
+      else builtins.head arguments;
+    requireArgument =
+      if argument == null
+      then throw "Hyprland action `${action}` requires an argument"
+      else argument;
+  in
+    # Hyprland 0.56 dispatchers are Lua values. Keep the familiar action
+    # notation as Nix input, but compile it directly instead of spawning the
+    # removed legacy `hyprctl dispatch <name> <args>` interface.
+    if action == "cycleandbringtotop"
+    then
+      lua ''
+        function()
+          hl.dispatch(hl.dsp.window.cycle_next())
+          hl.dispatch(hl.dsp.window.bring_to_top())
+        end
+      ''
+    else if dispatcher == "cyclenext"
+    then
+      if argument == null
+      then lua "hl.dsp.window.cycle_next()"
+      else if requireArgument == "prev"
+      then lua "hl.dsp.window.cycle_next({ next = false })"
+      else throw "Unsupported cyclenext argument: ${requireArgument}"
+    else if dispatcher == "bringactivetotop"
+    then lua "hl.dsp.window.bring_to_top()"
+    else if dispatcher == "killactive"
+    then lua "hl.dsp.window.close()"
+    else if dispatcher == "pseudo"
+    then lua "hl.dsp.window.pseudo()"
+    else if dispatcher == "layoutmsg"
+    then lua "hl.dsp.layout(${builtins.toJSON requireArgument})"
+    else if dispatcher == "fullscreen"
+    then lua ''hl.dsp.window.fullscreen({ action = "toggle" })''
+    else if dispatcher == "togglefloating"
+    then lua ''hl.dsp.window.float({ action = "toggle" })''
+    else if dispatcher == "exit"
+    then lua "hl.dsp.exit()"
+    else if dispatcher == "movewindow"
+    then
+      if argument == null
+      then lua "hl.dsp.window.drag()"
+      else lua ''hl.dsp.window.move({ direction = "${directionFor requireArgument}" })''
+    else if dispatcher == "resizewindow"
+    then lua "hl.dsp.window.resize()"
+    else if dispatcher == "movefocus"
+    then lua ''hl.dsp.focus({ direction = "${directionFor requireArgument}" })''
+    else if dispatcher == "workspace"
+    then lua "hl.dsp.focus({ workspace = ${builtins.toJSON requireArgument} })"
+    else if dispatcher == "movetoworkspace"
+    then lua "hl.dsp.window.move({ workspace = ${builtins.toJSON requireArgument} })"
+    else throw "Unsupported Hyprland action: ${action}";
+
+  bindingToLua = mouse: binding: let
+    parts = lib.splitString "," binding;
+    modifiers = builtins.elemAt parts 0;
+    key = lib.strings.trim (builtins.elemAt parts 1);
+    action = lib.removeSuffix "," (lib.strings.trim (lib.concatStringsSep "," (lib.drop 2 parts)));
+    actionDispatcher =
+      if lib.hasPrefix "exec," action
+      then exec (lib.strings.trim (lib.removePrefix "exec," action))
+      else nativeAction action;
+  in {
+    _args =
+      [
+        (lua (renderKey modifiers key))
+        actionDispatcher
+      ]
+      ++ lib.optional mouse {mouse = true;};
+  };
 
   workspaceKeys = (map builtins.toString (lib.range 1 9)) ++ ["0"];
   workspaceNumbers = (map builtins.toString (lib.range 1 9)) ++ ["10"];
@@ -38,8 +138,7 @@
       (mk "Super+Space" "Toggle Noctalia launcher" "$modifier,SPACE,exec,noctalia msg panel-toggle launcher")
       (mk "Super+Shift+W" "Toggle web search" "$modifier SHIFT,W,exec,noctalia msg plugin:web-search toggle")
       (mk "Super+Alt+F" "Toggle file search" "$modifier ALT,F,exec,noctalia msg plugin:file-search toggle")
-      (mk "Super+Tab" "Cycle next window" "$modifier,TAB,cyclenext")
-      (mk "Super+Tab" "Bring cycled window to top" "$modifier,TAB,bringactivetotop")
+      (mk "Super+Tab" "Cycle next window and bring it to top" "$modifier,TAB,cycleandbringtotop")
       (mk "Super+Ctrl+R" "Toggle screen recorder" "$modifier CTRL,R,exec,noctalia msg plugin:screen-recorder toggle")
       (mk "Super+Alt+T" "Toggle timer" "$modifier ALT,T,exec,noctalia msg plugin:timer toggle")
       (mk "Super+Ctrl+L" "Lock session" "$modifier CTRL,L,exec,noctalia msg session lock")
@@ -53,7 +152,7 @@
       (mk "Super+G" "Open GIMP" "$modifier,G,exec,gimp")
       (mk "Super+Shift+G" "Open Godot" "$modifier SHIFT,G,exec,godot4")
       (mk "Super+T" "Open Yazi" "$modifier,T,exec,${terminal} -e yazi")
-      (mk "Super+Q" "Kill active window" "$modifier,Q,killactive")
+      (mk "Super+Q" "Close active window" "$modifier,Q,killactive")
       (mk "Super+P" "Toggle pseudo tiling" "$modifier,P,pseudo,")
       (mk "Super+Shift+I" "Toggle split" "$modifier SHIFT,I,layoutmsg,togglesplit")
       (mk "Super+F" "Toggle fullscreen" "$modifier,F,fullscreen,")
@@ -82,21 +181,18 @@
       (mk "Super+Ctrl+Left" "Previous workspace" "$modifier CONTROL,left,workspace,e-1")
       (mk "Super+MouseDown" "Next workspace" "$modifier,mouse_down,workspace, e+1")
       (mk "Super+MouseUp" "Previous workspace" "$modifier,mouse_up,workspace, e-1")
-      (mk "Super+Tab" "Previous workspace" "$modifier, Tab, workspace,previous")
-      (mk "Alt+Tab" "Cycle next window" "ALT, Tab, cyclenext")
-      (mk "Alt+Tab" "Bring cycled window to top" "ALT, Tab, bringactivetotop")
+      (mk "Alt+Tab" "Cycle next window and bring it to top" "ALT, Tab, cycleandbringtotop")
       (mk "Shift+Alt+Tab" "Cycle previous window" "SHIFT ALT, Tab, cyclenext, prev")
     ]
     ++ mediaBindings;
 in {
-  wayland.windowManager.hyprland.settings = {
-    bind = map (binding: binding.binding) keybindings;
-
-    bindm = [
+  # Home Manager renders this Nix list as hl.bind calls for Hyprland 0.56.
+  wayland.windowManager.hyprland.settings.bind =
+    map (binding: bindingToLua false binding.binding) keybindings
+    ++ map (binding: bindingToLua true binding) [
       "$modifier, mouse:272, movewindow"
       "$modifier, mouse:273, resizewindow"
     ];
-  };
 
   home.file.".config/hypr/keybindings.md".text =
     ''

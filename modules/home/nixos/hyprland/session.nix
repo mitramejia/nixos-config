@@ -15,9 +15,10 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    # 26.05 Home Manager flipped configType default "hyprlang" -> "lua". This
-    # config is hyprlang, so pin it to keep behavior.
-    configType = "hyprlang";
+    # Hyprland 0.56 uses Lua internally. Home Manager renders this Nix
+    # attribute tree to ~/.config/hypr/hyprland.lua; no Lua source file is
+    # maintained by hand.
+    configType = "lua";
     package = hyprlandPkgs.hyprland;
     portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
@@ -26,7 +27,5 @@
       enableXdgAutostart = true;
       variables = ["--all"];
     };
-
-    settings."$modifier" = "SUPER";
   };
 }

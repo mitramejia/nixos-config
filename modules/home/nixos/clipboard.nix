@@ -1,6 +1,16 @@
-{pkgs, ...}: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  lua = lib.generators.mkLuaInline;
+  modKey = key: lua ''mod .. " + ${key}"'';
+  exec = command: lua "hl.dsp.exec_cmd(${builtins.toJSON command})";
   clipboardPaste = pkgs.writeShellScriptBin "clipboard-paste" ''
-    ${pkgs.hyprland}/bin/hyprctl dispatch sendshortcut "SHIFT, Insert, activewindow"
+    # This runs after the external Noctalia picker returns, so use Hyprland's
+    # Lua IPC entry point rather than the removed legacy dispatcher syntax.
+    ${config.wayland.windowManager.hyprland.package}/bin/hyprctl eval 'hl.dispatch(hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert" }))'
   '';
 
   mkCliphistWatcher = type: description: {
@@ -25,9 +35,24 @@ in {
   ];
 
   wayland.windowManager.hyprland.settings.bind = [
-    "$modifier,C,sendshortcut,CTRL,Insert,activewindow"
-    "$modifier,V,exec,clipboard-paste"
-    "$modifier,X,sendshortcut,CTRL,X,activewindow"
+    {
+      _args = [
+        (modKey "C")
+        (lua ''hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" })'')
+      ];
+    }
+    {
+      _args = [
+        (modKey "V")
+        (exec "clipboard-paste")
+      ];
+    }
+    {
+      _args = [
+        (modKey "X")
+        (lua ''hl.dsp.send_shortcut({ mods = "CTRL", key = "X" })'')
+      ];
+    }
   ];
 
   systemd.user.services = {

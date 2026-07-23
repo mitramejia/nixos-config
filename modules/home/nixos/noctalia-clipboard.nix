@@ -1,4 +1,11 @@
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
+  lua = lib.generators.mkLuaInline;
+  modKey = key: lua ''mod .. " + ${key}"'';
+  exec = command: lua "hl.dsp.exec_cmd(${builtins.toJSON command})";
   noctaliaDmenuSelect = pkgs.writeShellScriptBin "noctalia-dmenu-select" ''
     set -euo pipefail
 
@@ -94,7 +101,17 @@ in {
   ];
 
   wayland.windowManager.hyprland.settings.bind = [
-    "$modifier CTRL,V,exec,cliphist-noctalia-paste"
-    "$modifier SHIFT CTRL,V,exec,cliphist-noctalia-clear"
+    {
+      _args = [
+        (modKey "CTRL + V")
+        (exec "cliphist-noctalia-paste")
+      ];
+    }
+    {
+      _args = [
+        (modKey "SHIFT + CTRL + V")
+        (exec "cliphist-noctalia-clear")
+      ];
+    }
   ];
 }

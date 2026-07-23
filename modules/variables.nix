@@ -7,12 +7,23 @@
 
   # Hyprland Settings
   # Configure monitor settings like resolution, orientation, etc.
-  # Documentation: https://github.com/larkery/Hyprland
-  # To see monitor ID's i.e DP-1, run in terminal:  hyprctl monitors all
-  extraMonitorSettings = ''
-    monitor=DP-1,preferred,auto,1.33
-    monitor=DP-2,preferred,auto,1.33,transform,3
-  '';
+  # To see monitor IDs such as DP-1, run: hyprctl monitors all
+  # Home Manager renders each Nix attrset as one hl.monitor call.
+  extraMonitorSettings = [
+    {
+      output = "DP-1";
+      mode = "preferred";
+      position = "auto";
+      scale = 1.33;
+    }
+    {
+      output = "DP-2";
+      mode = "preferred";
+      position = "auto";
+      scale = 1.33;
+      transform = 3;
+    }
+  ];
 
   stylixImage = ../assets/wallpapers/pexels.jpg;
 

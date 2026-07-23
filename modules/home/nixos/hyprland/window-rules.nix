@@ -1,67 +1,94 @@
-_: {
-  wayland.windowManager.hyprland.settings.windowrule = [
-    "match:title ^()$, match:class ^(steam)$, stay_focused on"
-    "match:title ^()$, match:class ^(steam)$, min_size 1 1"
-    "match:class ^(.*jetbrains.*)$, match:title ^(win.*)$, focus_on_activate on"
-    "match:float true, match:class ^(.*jetbrains.*)$, focus_on_activate on"
-    "match:class ^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$, tag +file-manager"
-    "match:class ^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$, tag +terminal"
-    "match:class ^(Brave-browser(-beta|-dev|-unstable)?)$, tag +browser"
-    "match:class ^(brave)$, tag +browser"
-    "match:class ^(zen|zen-beta)$, tag +browser"
-    "match:class ^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$, tag +browser"
-    "match:class ^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$, tag +browser"
-    "match:class ^([Tt]horium-browser|[Cc]achy-browser)$, tag +browser"
-    "match:class ^(.*jetbrains.*)$, tag +projects"
-    "match:class ^(codium|codium-url-handler|VSCodium)$, tag +projects"
-    "match:class ^(VSCode|code-url-handler)$, tag +projects"
-    "match:class ^([Dd]iscord|[Ww]ebCord|[Vv]esktop|[Ss]lack)$, tag +im"
-    "match:class ^([Ww]hatsapp-for-linux|zapzap|com[.]rtosta[.]zapzap)$, tag +im"
-    "match:class ^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$, tag +im"
-    "match:class ^(gamescope)$, tag +games"
-    "match:class ^(steam_app_\\d+)$, tag +games"
-    "match:class ^([Ss]team)$, tag +gamestore"
-    "match:title ^([Ll]utris)$, tag +gamestore"
-    "match:class ^(gnome-disks|wihotspot(-gui)?)$, tag +settings"
-    "match:class ^(file-roller|org.gnome.FileRoller)$, tag +settings"
-    "match:class ^(nm-applet|nm-connection-editor|blueman-manager)$, tag +settings"
-    "match:class ^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$, tag +settings"
-    "match:class ^(nwg-look|qt5ct|qt6ct|[Yy]ad)$, tag +settings"
-    "match:class (xdg-desktop-portal-gtk), tag +settings"
-    "match:class (.blueman-manager-wrapped), tag +settings"
-    "match:class (nwg-displays), tag +settings"
-    "match:title ^(Picture-in-Picture)$, move 72% 7%"
-    "match:class ^([Ff]erdium)$, center on"
-    "match:class ^([Ww]aypaper)$, float on"
-    "match:class ^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$, center on"
-    "match:class ([Tt]hunar), match:title negative:(.*[Tt]hunar.*), center on"
-    "match:title ^(Authentication Required)$, center on"
-    "match:class ^.*$, idle_inhibit fullscreen"
-    "match:title ^.*$, idle_inhibit fullscreen"
-    "match:fullscreen 1, idle_inhibit fullscreen"
-    "match:tag settings*, float on"
-    "match:class ^([Ff]erdium)$, float on"
-    "match:title ^(Picture-in-Picture)$, float on"
-    "match:class ^(mpv|com.github.rafostar.Clapper)$, float on"
-    "match:title ^(Authentication Required)$, float on"
-    "match:class (codium|codium-url-handler|VSCodium), match:title negative:(.*codium.*|.*VSCodium.*), float on"
-    "match:class ^([Ss]team)$, match:title negative:^([Ss]team)$, float on"
-    "match:class ([Tt]hunar), match:title negative:(.*[Tt]hunar.*), float on"
-    "match:initial_title (Add Folder to Workspace), float on"
-    "match:initial_title (Open Files), float on"
-    "match:initial_title (wants to save), float on"
-    "match:initial_title (Open Files), size 70% 60%"
-    "match:initial_title (Add Folder to Workspace), size 70% 60%"
-    "match:tag settings*, size 70% 70%"
-    "match:class ^([Ff]erdium)$, size 60% 70%"
-    "match:title ^(Picture-in-Picture)$, pin on"
-    "match:title ^(Picture-in-Picture)$, keep_aspect_ratio on"
-    "match:tag games*, no_blur on"
-    "match:tag games*, fullscreen on"
-    "match:tag browser*, workspace 1"
-    "match:tag im*, workspace 5"
-    "match:tag games*, workspace 8"
-    "match:class ^(obsidian)$, workspace 6"
-    "match:class ^(Cider)$, workspace 7"
+_: let
+  rule = match: effects: {inherit match;} // effects;
+in {
+  # Typed Nix tables become hl.window_rule calls in the 0.56 Lua backend.
+  wayland.windowManager.hyprland.settings.window_rule = [
+    (rule {
+      title = "^()$";
+      class = "^(steam)$";
+    } {stay_focused = true;})
+    (rule {
+      title = "^()$";
+      class = "^(steam)$";
+    } {min_size = [1 1];})
+    (rule {
+      class = "^(.*jetbrains.*)$";
+      title = "^(win.*)$";
+    } {focus_on_activate = true;})
+    (rule {
+      float = true;
+      class = "^(.*jetbrains.*)$";
+    } {focus_on_activate = true;})
+    (rule {class = "^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$";} {tag = "+file-manager";})
+    (rule {class = "^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$";} {tag = "+terminal";})
+    (rule {class = "^(Brave-browser(-beta|-dev|-unstable)?)$";} {tag = "+browser";})
+    (rule {class = "^(brave)$";} {tag = "+browser";})
+    (rule {class = "^(zen|zen-beta)$";} {tag = "+browser";})
+    (rule {class = "^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$";} {tag = "+browser";})
+    (rule {class = "^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$";} {tag = "+browser";})
+    (rule {class = "^([Tt]horium-browser|[Cc]achy-browser)$";} {tag = "+browser";})
+    (rule {class = "^(.*jetbrains.*)$";} {tag = "+projects";})
+    (rule {class = "^(codium|codium-url-handler|VSCodium)$";} {tag = "+projects";})
+    (rule {class = "^(VSCode|code-url-handler)$";} {tag = "+projects";})
+    (rule {class = "^([Dd]iscord|[Ww]ebCord|[Vv]esktop|[Ss]lack)$";} {tag = "+im";})
+    (rule {class = "^([Ww]hatsapp-for-linux|zapzap|com[.]rtosta[.]zapzap)$";} {tag = "+im";})
+    (rule {class = "^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$";} {tag = "+im";})
+    (rule {class = "^(gamescope)$";} {tag = "+games";})
+    (rule {class = "^(steam_app_\\d+)$";} {tag = "+games";})
+    (rule {class = "^([Ss]team)$";} {tag = "+gamestore";})
+    (rule {title = "^([Ll]utris)$";} {tag = "+gamestore";})
+    (rule {class = "^(gnome-disks|wihotspot(-gui)?)$";} {tag = "+settings";})
+    (rule {class = "^(file-roller|org.gnome.FileRoller)$";} {tag = "+settings";})
+    (rule {class = "^(nm-applet|nm-connection-editor|blueman-manager)$";} {tag = "+settings";})
+    (rule {class = "^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$";} {tag = "+settings";})
+    (rule {class = "^(nwg-look|qt5ct|qt6ct|[Yy]ad)$";} {tag = "+settings";})
+    (rule {class = "(xdg-desktop-portal-gtk)";} {tag = "+settings";})
+    (rule {class = "(.blueman-manager-wrapped)";} {tag = "+settings";})
+    (rule {class = "(nwg-displays)";} {tag = "+settings";})
+    (rule {title = "^(Picture-in-Picture)$";} {move = ["72%" "7%"];})
+    (rule {class = "^([Ff]erdium)$";} {center = true;})
+    (rule {class = "^([Ww]aypaper)$";} {float = true;})
+    (rule {class = "^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$";} {center = true;})
+    (rule {
+      class = "([Tt]hunar)";
+      title = "negative:(.*[Tt]hunar.*)";
+    } {center = true;})
+    (rule {title = "^(Authentication Required)$";} {center = true;})
+    (rule {class = "^.*$";} {idle_inhibit = "fullscreen";})
+    (rule {title = "^.*$";} {idle_inhibit = "fullscreen";})
+    (rule {fullscreen = 1;} {idle_inhibit = "fullscreen";})
+    (rule {tag = "settings*";} {float = true;})
+    (rule {class = "^([Ff]erdium)$";} {float = true;})
+    (rule {title = "^(Picture-in-Picture)$";} {float = true;})
+    (rule {class = "^(mpv|com.github.rafostar.Clapper)$";} {float = true;})
+    (rule {title = "^(Authentication Required)$";} {float = true;})
+    (rule {
+      class = "(codium|codium-url-handler|VSCodium)";
+      title = "negative:(.*codium.*|.*VSCodium.*)";
+    } {float = true;})
+    (rule {
+      class = "^([Ss]team)$";
+      title = "negative:^([Ss]team)$";
+    } {float = true;})
+    (rule {
+      class = "([Tt]hunar)";
+      title = "negative:(.*[Tt]hunar.*)";
+    } {float = true;})
+    (rule {initial_title = "(Add Folder to Workspace)";} {float = true;})
+    (rule {initial_title = "(Open Files)";} {float = true;})
+    (rule {initial_title = "(wants to save)";} {float = true;})
+    (rule {initial_title = "(Open Files)";} {size = ["70%" "60%"];})
+    (rule {initial_title = "(Add Folder to Workspace)";} {size = ["70%" "60%"];})
+    (rule {tag = "settings*";} {size = ["70%" "70%"];})
+    (rule {class = "^([Ff]erdium)$";} {size = ["60%" "70%"];})
+    (rule {title = "^(Picture-in-Picture)$";} {pin = true;})
+    (rule {title = "^(Picture-in-Picture)$";} {keep_aspect_ratio = true;})
+    (rule {tag = "games*";} {no_blur = true;})
+    (rule {tag = "games*";} {fullscreen = true;})
+    (rule {tag = "browser*";} {workspace = "1";})
+    (rule {tag = "im*";} {workspace = "5";})
+    (rule {tag = "games*";} {workspace = "8";})
+    (rule {class = "^(obsidian)$";} {workspace = "6";})
+    (rule {class = "^(Cider)$";} {workspace = "7";})
   ];
 }
