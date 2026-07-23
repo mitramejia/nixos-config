@@ -13,6 +13,10 @@
     firefox.enable = false; # Firefox is not installed by default
     hyprland = {
       enable = true; # someone forgot to set this so desktop file is created
+      # UWSM keeps graphical-session.target active so user services inherit
+      # the Wayland session lifecycle and environment.
+      withUWSM = true;
+      # Use the same current 0.56 Hyprland package Home Manager renders for.
       package = hyprlandPkgs.hyprland;
       portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     };
@@ -52,7 +56,7 @@
     libvirt # Virtualization API
     lxqt.lxqt-policykit # PolicyKit authentication agent
     lm_sensors # Hardware monitoring utilities
-    unzip # ZIP file extraction
+    unzip # ZIP file extraction utility
     unrar # RAR file extraction
     v4l-utils # Video4Linux utilities
     ydotool # X11 automation tool
@@ -76,7 +80,7 @@
     yad # Dialog display utility
     inxi # System information tool
     playerctl # Media player controller
-    nixfmt # Nix code formatter (nixfmt-rfc-style is now an alias of nixfmt in 26.05)
+    nixfmt # Nix formatter
     libvirt # Virtualization API
     grim # Screenshot utility
     slurp # Region selector

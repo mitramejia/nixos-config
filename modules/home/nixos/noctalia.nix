@@ -96,7 +96,9 @@ in {
 
   programs.noctalia = {
     enable = true;
-    systemd.enable = false;
+    # Let Noctalia follow the Wayland session target and restart on failure
+    # instead of relying on an unobserved Hyprland exec-once process.
+    systemd.enable = true;
     package = noctaliaPackage;
     # Declarative baseline. Noctalia UI changes are still written to
     # ~/.local/state/noctalia/settings.toml and override this at runtime.
