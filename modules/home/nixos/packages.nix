@@ -3,7 +3,6 @@
     zapzap
     slack
     zoom-us
-    discord
     thunderbird
     localsend
     virtualbox

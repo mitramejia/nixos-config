@@ -6,7 +6,6 @@
   "linear-linear"
   "notion-calendar"
   "twingate"
-  "discord"
   "slack"
   "obsidian"
   "iterm2"
