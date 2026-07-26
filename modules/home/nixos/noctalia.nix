@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  lib,
   pkgs,
   ...
 }: let
@@ -73,7 +72,6 @@
   persistNoctaliaSettings = pkgs.writeShellScriptBin "persist-noctalia-settings" ''
     set -euo pipefail
 
-    source_file="''${XDG_STATE_HOME:-$HOME/.local/state}/noctalia/settings.toml"
     target_file="''${1:-}"
 
     if [ -z "$target_file" ]; then
@@ -81,13 +79,12 @@
       exit 2
     fi
 
-    if [ ! -f "$source_file" ]; then
-      echo "persist-noctalia-settings: $source_file does not exist" >&2
-      exit 1
-    fi
+    temporary_file="$(${pkgs.coreutils}/bin/mktemp)"
+    trap '${pkgs.coreutils}/bin/rm -f "$temporary_file"' EXIT
 
-    ${pkgs.coreutils}/bin/install -D -m 0644 "$source_file" "$target_file"
-    echo "Saved Noctalia UI settings to $target_file"
+    ${noctaliaPackage}/bin/noctalia config export merged > "$temporary_file"
+    ${pkgs.coreutils}/bin/install -D -m 0644 "$temporary_file" "$target_file"
+    echo "Saved effective Noctalia settings to $target_file"
   '';
 in {
   imports = [
@@ -100,13 +97,10 @@ in {
     # instead of relying on an unobserved Hyprland exec-once process.
     systemd.enable = true;
     package = noctaliaPackage;
-    # Declarative baseline. Noctalia UI changes are still written to
-    # ~/.local/state/noctalia/settings.toml and override this at runtime.
+    # Declarative baseline. Noctalia owns the higher-precedence UI state at
+    # ~/.local/state/noctalia/settings.toml; never seed that file on activation.
     settings = ./noctalia-settings.toml;
   };
-  home.activation.noctaliaSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.coreutils}/bin/install -Dm0600 ${./noctalia-settings.toml} "${config.xdg.stateHome}/noctalia/settings.toml"
-  '';
 
   home.packages = [
     persistNoctaliaSettings
