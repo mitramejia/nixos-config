@@ -1,6 +1,5 @@
 {
   pkgs,
-  host,
   inputs,
   options,
   ...
@@ -49,10 +48,6 @@ in {
         layout = keyboardLayout;
         variant = "";
       };
-    };
-    displayManager.autoLogin = {
-      enable = true;
-      user = host.username;
     };
     smartd = {
       enable = false;

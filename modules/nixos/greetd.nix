@@ -1,24 +1,24 @@
 {
-  pkgs,
+  inputs,
   config,
-  host,
   ...
 }: let
-  sessionWrapper = pkgs.writeShellScript "session-log-wrapper" ''
-    exec "$@" > /tmp/session.log 2>&1
-  '';
-  hyprlandUWSMCommand = "${pkgs.uwsm}/bin/uwsm start -e -D Hyprland hyprland.desktop";
+  inherit (import ../variables.nix) keyboardLayout;
 in {
-  services.greetd = {
+  imports = [inputs.noctalia-greeter.nixosModules.default];
+
+  programs.noctalia-greeter = {
     enable = true;
     settings = {
-      default_session = {
-        user = host.username;
-        # UWSM activates the graphical user-systemd session that Noctalia uses.
-        # Let its Hyprland desktop entry load Home Manager's Nix-generated
-        # configuration through the normal start-hyprland path.
-        # Do not remember the old direct Hyprland session as tuigreet's default.
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd '${hyprlandUWSMCommand}' --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --session-wrapper '${sessionWrapper}'";
+      # UWSM owns the graphical user-systemd lifecycle that starts Noctalia.
+      session.default = "Hyprland (uwsm-managed)";
+      cursor = {
+        theme = config.stylix.cursor.name;
+        size = config.stylix.cursor.size;
+        path = "${config.stylix.cursor.package}/share/icons";
+      };
+      keyboard = {
+        layout = keyboardLayout;
       };
     };
   };

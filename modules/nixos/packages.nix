@@ -89,7 +89,6 @@
     mpv # Media player
     tree # Directory listing tool
     fastfetch # System info display (neofetch removed in 26.05, unmaintained upstream)
-    tuigreet # TUI greeter
     gearlever # Distrobox manager
     pavucontrol # PulseAudio volume control
     nwg-displays # configure monitor configs via GUI
