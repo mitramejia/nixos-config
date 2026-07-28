@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  host,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -41,6 +45,8 @@
       fi
     '';
     shellAliases = {
+      fr = "nh darwin switch --hostname ${host.key} ${host.nixConfig}";
+      fu = "nh darwin switch --hostname ${host.key} --update ${host.nixConfig}";
       v = "nvim";
       cat = "bat";
       ls = lib.mkForce "eza --icons";

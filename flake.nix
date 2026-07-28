@@ -106,6 +106,7 @@
         hostname = "nixos";
         username = "mitra";
         homeDirectory = "/home/mitra";
+        nixConfig = "/home/mitra/nix-config";
         systemStateVersion = "24.11";
         homeStateVersion = "23.11";
       };
@@ -116,6 +117,7 @@
         hostname = "MitraMacBook";
         username = "mitramejia";
         homeDirectory = "/Users/mitramejia";
+        nixConfig = "/Users/mitramejia/nix-config";
         systemStateVersion = 4;
         homeStateVersion = "23.11";
       };

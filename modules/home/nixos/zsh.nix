@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  host,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     dotDir = config.home.homeDirectory;
@@ -25,6 +29,6 @@
         eval "$(scmpuff init -s)"
       fi
     '';
-    shellAliases = import ./shell-aliases.nix;
+    shellAliases = import ./shell-aliases.nix {inherit host;};
   };
 }
