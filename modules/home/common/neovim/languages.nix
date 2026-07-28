@@ -82,6 +82,7 @@
       (ruby_3_3.withPackages (ps: [ps.ruby-lsp]))
       stdenv.cc
       gnumake
+      imagemagick
       prettierd
       stylua
       shfmt

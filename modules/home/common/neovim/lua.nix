@@ -117,6 +117,14 @@
             input = {
               enabled = true,
             },
+            image = {
+              enabled = true,
+              doc = {
+                enabled = true,
+                inline = true,
+                float = true,
+              },
+            },
             picker = {
               enabled = true,
             },
@@ -128,6 +136,10 @@
 
         local ok_wk, wk = pcall(require, "which-key")
         if ok_wk then
+          vim.keymap.set("n", "<leader>?", function()
+            wk.show({ global = false })
+          end, { desc = "Buffer local keymaps" })
+
           wk.add({
             { "<leader>a", group = "Actions" },
             { "<leader>d", group = "Diagnostics" },
