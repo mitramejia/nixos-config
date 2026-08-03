@@ -24,7 +24,6 @@ in {
     packages = [
       codexPackage
       pkgs.nodejs
-      pkgs.maestro
     ];
 
     file = {

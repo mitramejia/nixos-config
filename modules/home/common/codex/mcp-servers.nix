@@ -20,11 +20,6 @@
   openaiDeveloperDocs.url = "https://developers.openai.com/mcp";
   statsig.url = "https://api.statsig.com/v1/mcp";
 
-  maestro = {
-    command = "maestro";
-    args = ["mcp"];
-  };
-
   appium-mcp = {
     command = "npx";
     args = [
