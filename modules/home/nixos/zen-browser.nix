@@ -42,6 +42,7 @@ in {
         reduxdevtools
         ublock-origin
         vimium
+        web-clipper-obsidian
       ];
 
       userChrome = catppuccinUserChrome;
