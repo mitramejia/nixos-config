@@ -31,7 +31,7 @@ in {
         kb_options = "grp:alt_caps_toggle,caps:super";
         follow_mouse = 1;
         float_switch_override_focus = 2;
-        scroll_factor = 3;
+        scroll_factor = 2;
         touchpad = {
           natural_scroll = true;
           disable_while_typing = true;
