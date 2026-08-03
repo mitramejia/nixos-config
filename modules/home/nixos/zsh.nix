@@ -24,6 +24,8 @@
       theme = "";
     };
     initContent = ''
+      export PATH="/home/mitra/.local/bin:$PATH"
+
       if command -v scmpuff 2>&1 >/dev/null
       then
         eval "$(scmpuff init -s)"
