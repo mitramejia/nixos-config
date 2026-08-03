@@ -138,7 +138,7 @@
       (mk "Super+Space" "Toggle Noctalia launcher" "$modifier,SPACE,exec,noctalia msg panel-toggle launcher")
       (mk "Super+Shift+W" "Toggle web search" "$modifier SHIFT,W,exec,noctalia msg plugin:web-search toggle")
       (mk "Super+Alt+F" "Toggle file search" "$modifier ALT,F,exec,noctalia msg plugin:file-search toggle")
-      (mk "Super+Tab" "Cycle next window and bring it to top" "$modifier,TAB,cycleandbringtotop")
+      (mk "Super+Tab" "Switch to previous workspace" "$modifier,TAB,workspace,previous")
       (mk "Super+Ctrl+R" "Toggle screen recorder" "$modifier CTRL,R,exec,noctalia msg plugin:screen-recorder toggle")
       (mk "Super+Alt+T" "Toggle timer" "$modifier ALT,T,exec,noctalia msg plugin:timer toggle")
       (mk "Super+Ctrl+L" "Lock session" "$modifier CTRL,L,exec,noctalia msg session lock")
@@ -181,8 +181,6 @@
       (mk "Super+Ctrl+Left" "Previous workspace" "$modifier CONTROL,left,workspace,e-1")
       (mk "Super+MouseDown" "Next workspace" "$modifier,mouse_down,workspace, e+1")
       (mk "Super+MouseUp" "Previous workspace" "$modifier,mouse_up,workspace, e-1")
-      (mk "Alt+Tab" "Cycle next window and bring it to top" "ALT, Tab, cycleandbringtotop")
-      (mk "Shift+Alt+Tab" "Cycle previous window" "SHIFT ALT, Tab, cyclenext, prev")
     ]
     ++ mediaBindings;
 in {
