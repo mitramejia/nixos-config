@@ -32,7 +32,7 @@ in {
       ".codex/gpt-oss.config.toml".source = toml.generate "codex-gpt-oss-config.toml" profiles.gptOss;
     };
 
-    # Keep the main Codex config mutable so tools like Headroom can inject
+    # Keep the main Codex config mutable so external tools can inject
     # provider and MCP blocks. The generated TOML is used only to seed the file.
     activation.ensureMutableCodexConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
       config_dir="${home}/.codex"

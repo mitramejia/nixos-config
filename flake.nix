@@ -163,17 +163,6 @@
         ];
       };
   in {
-    packages.${hosts.nixos.system} = let
-      pkgs = import nixpkgs {
-        system = hosts.nixos.system;
-        config.allowUnfree = true;
-      };
-      headroomAi = pkgs.callPackage ./packages/headroom-ai.nix {};
-    in {
-      headroom-ai = headroomAi;
-      default = headroomAi;
-    };
-
     nixosConfigurations.nixos = mkNixos hosts.nixos;
 
     darwinConfigurations.macbook = darwin.lib.darwinSystem {
