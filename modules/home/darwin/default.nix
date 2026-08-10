@@ -6,7 +6,6 @@
     ./packages.nix
     ./shell.nix
     ./ssh.nix
-    ./terminal.nix
     ./tmux.nix
   ];
 

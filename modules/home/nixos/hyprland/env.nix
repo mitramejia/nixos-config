@@ -1,4 +1,6 @@
-_: {
+let
+  inherit (import ../../../variables.nix) terminal;
+in {
   wayland.windowManager.hyprland.settings.env = [
     {_args = ["NIXOS_OZONE_WL" "1"];}
     {_args = ["NIXPKGS_ALLOW_UNFREE" "1"];}
@@ -19,7 +21,7 @@ _: {
     {_args = ["AQ_DRM_DEVICES" "/dev/dri/amd-rx9070:/dev/dri/amd-igpu"];}
     {_args = ["GDK_SCALE" "1"];}
     {_args = ["QT_SCALE_FACTOR" "1"];}
-    {_args = ["TERMINAL" "ghostty"];}
+    {_args = ["TERMINAL" terminal];}
     {_args = ["EDITOR" "nvim"];}
   ];
 }

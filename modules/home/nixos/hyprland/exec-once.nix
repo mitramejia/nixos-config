@@ -43,7 +43,7 @@
     }
     {
       workspace = 9;
-      command = "ghostty";
+      command = terminal;
     }
   ];
 

@@ -7,7 +7,9 @@
     ./eza.nix
     ./gh.nix
     ./git.nix
+    ./herdr.nix
     ./ideavim
+    ./kitty.nix
     ./neovim.nix
     ./packages.nix
     ./starship.nix

@@ -30,7 +30,7 @@
   # Program Options
   # Set default applications for the system.
   browser = "zen-beta"; # Default web browser (e.g. google-chrome-stable for Google Chrome)
-  terminal = "ghostty"; # Default terminal emulator
+  terminal = "kitty"; # Default terminal emulator
   keyboardLayout = "us"; # Keyboard layout configuration
 
   # Extra MIME defaults merged into modules/home/xdg.nix.

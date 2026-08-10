@@ -7,7 +7,7 @@
     {path = "/Applications/1Password.app/";}
     {path = "/System/Applications/Messages.app/";}
     {path = "/System/Applications/FaceTime.app/";}
-    {path = "/Applications/iTerm.app/";}
+    {path = "${host.homeDirectory}/Applications/Home Manager Apps/kitty.app";}
     {path = "/System/Applications/Notes.app/";}
     {path = "/Applications/WhatsApp.app/";}
     {path = "/Applications/Obsidian.app/";}
