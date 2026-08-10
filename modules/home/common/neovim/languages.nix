@@ -1,10 +1,19 @@
-{pkgs, ...}: {
+{
+  host,
+  pkgs,
+  ...
+}: let
+  flake = "builtins.getFlake \"git+file://${host.nixConfig}\"";
+  configuration =
+    if host.platform == "nixos"
+    then "nixosConfigurations.${host.key}"
+    else "darwinConfigurations.${host.key}";
+in {
   programs.nixvim = {
     plugins = {
       lsp = {
         enable = true;
         servers = {
-          nil_ls.enable = true;
           lua_ls.enable = true;
           pyright.enable = true;
           ts_ls.enable = true;
@@ -12,6 +21,7 @@
           html.enable = true;
           cssls.enable = true;
           jsonls.enable = true;
+          yamlls.enable = true;
           clangd.enable = true;
           zls.enable = true;
           marksman.enable = true;
@@ -64,12 +74,21 @@
       };
     };
 
+    lsp.servers.nixd.enable = true;
+    lsp.servers.nixd.config.settings.nixd = {
+      nixpkgs.expr = "import (${flake}).inputs.nixpkgs { system = \"${host.system}\"; config.allowUnfree = true; }";
+      options = {
+        ${host.platform}.expr = "(${flake}).${configuration}.options";
+        home-manager.expr = "(${flake}).${configuration}.options.\"home-manager\".users.type.getSubOptions []";
+      };
+    };
+
     extraPackages = with pkgs; [
       ripgrep
       fd
       bat
       lazygit
-      nil
+      nixd
       typescript-language-server
       typescript
       vscode-langservers-extracted

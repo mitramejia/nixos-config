@@ -136,7 +136,7 @@
       markdown-preview.enable = true;
       schemastore = {
         enable = true;
-        yaml.enable = false;
+        yaml.enable = true;
       };
 
       blink-cmp = {

@@ -1,6 +1,7 @@
 {
   hyprlandPkgs,
   pkgs,
+  unstablePkgs,
   ...
 }: {
   programs = {
@@ -48,7 +49,6 @@
     vim # Text editor
     wget # File download utility
     killall # Process termination utility
-    android-tools # adb/fastboot CLI (programs.adb removed in 26.05; systemd 258 handles uaccess)
     eza # Modern replacement for ls
     git # Version control system
     cmatrix # Terminal matrix effect

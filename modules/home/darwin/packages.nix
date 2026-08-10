@@ -3,7 +3,6 @@
     devenv
     nil
     gcc
-    android-tools
     btop
     fzf
     yazi

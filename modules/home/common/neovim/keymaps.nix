@@ -243,6 +243,18 @@
       options.desc = "Git log";
     }
     {
+      key = "<leader>gr";
+      mode = ["n"];
+      action.__raw = "function() _G.copy_repo_relative_file_path() end";
+      options.desc = "Copy relative file path";
+    }
+    {
+      key = "<leader>gy";
+      mode = ["n"];
+      action.__raw = "function() _G.copy_github_file_url() end";
+      options.desc = "Copy GitHub file URL";
+    }
+    {
       key = "<leader>gH";
       mode = ["n"];
       action = "<cmd>DiffviewFileHistory %<CR>";

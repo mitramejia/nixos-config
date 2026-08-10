@@ -1,5 +1,82 @@
 {
   programs.nixvim.extraConfigLua = ''
+    local function git_output(directory, args)
+      local command = { "git", "-C", directory }
+      vim.list_extend(command, args)
+      local output = vim.fn.systemlist(command)
+      return vim.v.shell_error == 0 and output[1] or nil
+    end
+
+    local function current_file_context()
+      local file = vim.api.nvim_buf_get_name(0)
+      if file == "" then
+        vim.notify("Current buffer does not have a file", vim.log.levels.WARN)
+        return nil
+      end
+
+      local root = git_output(vim.fs.dirname(file), { "rev-parse", "--show-toplevel" })
+      if not root then
+        vim.notify("Current file is not in a Git repository", vim.log.levels.WARN)
+        return nil
+      end
+
+      return file, root, file:sub(#root + 2)
+    end
+
+local function copy_to_clipboard(value, label)
+  vim.fn.setreg("+", value)
+  vim.notify(label .. ": " .. value)
+end
+
+local function github_url_path(value)
+  return (value:gsub("([^%w%-%._~/])", function(character)
+    return string.format("%%%02X", string.byte(character))
+  end))
+end
+
+_G.copy_repo_relative_file_path = function()
+      local _, _, relative_path = current_file_context()
+      if relative_path then
+        copy_to_clipboard(relative_path, "Copied relative path")
+      end
+    end
+
+    _G.copy_github_file_url = function()
+      local _, root, relative_path = current_file_context()
+      if not relative_path then
+        return
+      end
+
+  local upstream = git_output(root, { "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}" })
+  local remote_name
+  local revision
+
+  if upstream then
+    remote_name, revision = upstream:match("^([^/]+)/(.+)$")
+  end
+
+  local remote = git_output(root, { "remote", "get-url", remote_name or "origin" })
+  revision = revision or git_output(root, { "rev-parse", "HEAD" })
+      if not remote or not revision then
+        vim.notify("Could not determine the GitHub repository", vim.log.levels.WARN)
+        return
+      end
+
+      local repository = remote:gsub("^git@github%.com:", "https://github.com/")
+      repository = repository:gsub("^ssh://git@github%.com/", "https://github.com/")
+      repository = repository:gsub("%.git$", "")
+      if not vim.startswith(repository, "https://github.com/") then
+        vim.notify("Origin remote is not hosted on GitHub", vim.log.levels.WARN)
+        return
+      end
+
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+  copy_to_clipboard(
+    string.format("%s/blob/%s/%s#L%d", repository, github_url_path(revision), github_url_path(relative_path), line),
+    upstream and "Copied GitHub URL" or "Copied GitHub URL for current commit (push it if needed)"
+  )
+end
+
     vim.diagnostic.config({
       virtual_text = { prefix = "●", spacing = 2 },
       update_in_insert = true,
@@ -58,13 +135,7 @@
               and telescope_builtin.lsp_dynamic_workspace_symbols
               or telescope_builtin.lsp_document_symbols
 
-            if #lsp_clients_supporting(bufnr, method) == 0 then
-              vim.wait(2000, function()
-                return #lsp_clients_supporting(bufnr, method) > 0
-              end, 100)
-            end
-
-            local symbol_clients = lsp_clients_supporting(bufnr, method)
+    local symbol_clients = lsp_clients_supporting(bufnr, method)
             if #symbol_clients == 0 then
               local attached_clients = vim.iter(vim.lsp.get_clients({ bufnr = bufnr }))
                 :map(function(client)
@@ -124,9 +195,6 @@
                 inline = true,
                 float = true,
               },
-            },
-            picker = {
-              enabled = true,
             },
             terminal = {
               enabled = true,
