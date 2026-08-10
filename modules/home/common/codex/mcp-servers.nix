@@ -24,7 +24,7 @@
     command = "npx";
     args = [
       "-y"
-      "appium-mcp@1.84.0"
+      "appium-mcp@1.92.0"
     ];
   };
 
@@ -32,7 +32,7 @@
     command = "npx";
     args = [
       "-y"
-      "@browserstack/mcp-server@1.2.20"
+      "@browserstack/mcp-server@1.2.34"
     ];
     env_vars = [
       "BROWSERSTACK_USERNAME"
