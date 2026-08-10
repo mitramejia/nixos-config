@@ -31,13 +31,13 @@ herdr tab rename "$tab_id" "$(basename "$current_dir")" >/dev/null
 # Keep a small terminal below and the agent on the right of the editor.
 herdr pane split "$editor_pane" \
   --direction down \
-  --ratio 0.15 \
+  --ratio 0.20 \
   --cwd "$current_dir" \
   --no-focus >/dev/null
 
 agent_split="$(herdr pane split "$editor_pane" \
   --direction right \
-  --ratio 0.30 \
+  --ratio 0.20 \
   --cwd "$current_dir" \
   --no-focus)"
 agent_pane="$(printf '%s\n' "$agent_split" | jq -er '.result.pane.pane_id')"

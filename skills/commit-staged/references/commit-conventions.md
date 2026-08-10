@@ -1,5 +1,6 @@
-# Commit Conventions (from Agents.md)
+# Commit Conventions
 
-- Commit prefix format: `[ISSUE-123] Message`
-- The issue key is uppercase letters + dash + digits (example: `ISSUE-123`).
-- The summary should be concise and action-oriented.
+Read the active repository's `AGENTS.md`, `CONTRIBUTING.md`, and commit history
+for its convention. A ticket prefix is required only when those sources require
+one. Otherwise, use a concise Conventional Commit message with an
+action-oriented summary.

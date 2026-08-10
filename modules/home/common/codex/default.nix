@@ -27,6 +27,7 @@ in {
     ];
 
     file = {
+      ".codex/agents/commit-staged.toml".source = ./agents/commit-staged.toml;
       ".codex/ollama-launch.config.toml".source = toml.generate "codex-ollama-launch-config.toml" profiles.ollamaLaunch;
       ".codex/gpt-oss.config.toml".source = toml.generate "codex-gpt-oss-config.toml" profiles.gptOss;
     };
