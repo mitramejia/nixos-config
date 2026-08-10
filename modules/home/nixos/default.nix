@@ -9,7 +9,6 @@
     ./noctalia-clipboard.nix
     ./zen-browser.nix
     ./virtualisation.nix
-    ./ghostty.nix
     ./stylix.nix
     ./qt.nix
     ./swapy.nix

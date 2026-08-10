@@ -7,6 +7,7 @@
     ./eza.nix
     ./gh.nix
     ./git.nix
+    ./ghostty.nix
     ./herdr.nix
     ./ideavim
     ./kitty.nix
