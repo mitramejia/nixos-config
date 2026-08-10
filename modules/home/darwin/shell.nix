@@ -48,23 +48,14 @@
       fr = "nh darwin switch --hostname ${host.key} ${host.nixConfig}";
       fu = "nh darwin switch --hostname ${host.key} --update ${host.nixConfig}";
       v = "nvim";
-      cat = "bat";
       ls = lib.mkForce "eza --icons";
       ll = lib.mkForce "eza -lh --icons --grid --group-directories-first";
       la = lib.mkForce "eza -lah --icons --grid --group-directories-first";
-      ".." = "cd ..";
-      gp = "git push origin";
       gpf = "git push --force-with-lease origin";
-      gash = "git stash";
-      gasha = "git stash apply";
-      gplo = "git pull origin";
-      open-pr = "gh pr create";
-      p = "pnpm";
       pa = "pnpm add";
       y = "yarn";
       vim = "nvim";
       codex-oss = "codex -p gpt-oss-20b-lmstudio --oss";
-      codex = "headroom wrap codex";
     };
   };
 }

@@ -12,6 +12,7 @@
     ./kitty.nix
     ./neovim.nix
     ./packages.nix
+    ./shell-aliases.nix
     ./starship.nix
   ];
 
