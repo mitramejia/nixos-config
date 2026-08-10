@@ -11,6 +11,7 @@
     ./virtualisation.nix
     ./kitty.nix
     ./ghostty.nix
+    ./herdr.nix
     ./stylix.nix
     ./qt.nix
     ./swapy.nix

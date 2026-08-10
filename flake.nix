@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # Linux-only pin for the MediaTek btmtk Bluetooth fix.
     nixpkgs-kernel.url = "github:nixos/nixpkgs/c67afa6adaf99e9b3af8f3432e6c084ffdfc252d";
@@ -132,6 +133,10 @@
         inherit (host) system;
         config.allowUnfree = true;
       };
+      unstablePkgs = import inputs.nixpkgs-unstable {
+        inherit (host) system;
+        config.allowUnfree = true;
+      };
       hyprlandInputPkgs = inputs.hyprland.packages.${host.system};
       patchedHyprlandGuiutils =
         inputs.hyprland.inputs.hyprland-guiutils.packages.${host.system}.hyprland-guiutils.overrideAttrs
@@ -155,7 +160,7 @@
       nixpkgs.lib.nixosSystem {
         inherit (host) system;
         specialArgs = {
-          inherit inputs host kernelPkgs hyprlandPkgs;
+          inherit inputs host kernelPkgs hyprlandPkgs unstablePkgs;
         };
         modules = [
           ./hosts/nixos

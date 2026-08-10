@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   hyprlandPkgs,
+  unstablePkgs,
   host,
   ...
 }: let
@@ -15,7 +16,7 @@ in {
     backupFileExtension = "backup";
     overwriteBackup = true;
     extraSpecialArgs = {
-      inherit inputs host hyprlandPkgs;
+      inherit inputs host hyprlandPkgs unstablePkgs;
     };
     users.${host.username} = {
       imports = [
