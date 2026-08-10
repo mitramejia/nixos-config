@@ -16,4 +16,7 @@
   open-pr = "gh pr create";
   copy = "wl-copy";
   p = "pnpm";
+  headroom-update = ''uv tool update --python 3.13 "headroom-ai[all]"'';
+  codex = "headroom wrap codex";
+  claude = "headroom wrap claude";
 }
