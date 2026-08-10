@@ -1,9 +1,19 @@
 {
   lib,
   pkgs,
-  unstablePkgs,
+  inputs,
   ...
 }: let
+  herdrPackage = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hdl = pkgs.writeShellApplication {
+    name = "hdl";
+    runtimeInputs = [
+      herdrPackage
+      pkgs.coreutils
+      pkgs.jq
+    ];
+    text = builtins.readFile ./scripts/hdl;
+  };
   vimHerdrNavigation = pkgs.fetchFromGitHub {
     owner = "paulbkim-dev";
     repo = "vim-herdr-navigation";
@@ -17,9 +27,8 @@ in {
   programs.herdr = {
     enable = true;
 
-    # nixpkgs 26.05 does not package Herdr. Reuse repository's existing
-    # unstable pin focused exception.
-    package = unstablePkgs.herdr;
+    # Build the latest stable upstream release from its own flake.
+    package = herdrPackage;
 
     settings = {
       onboarding = false;
@@ -38,11 +47,15 @@ in {
         confirm_close = false;
         prompt_new_tab_name = false;
         pane_borders = true;
+        pane_scrollbars = false;
         pane_gaps = false;
+        hide_tab_bar_when_single_tab = false;
+        tab_bar_position = "bottom";
       };
 
       keys = {
         prefix = "ctrl+space";
+        detach = "prefix+d";
         new_tab = "prefix+c";
         split_horizontal = "prefix+minus";
         split_vertical = "prefix+|";
@@ -92,11 +105,14 @@ in {
     };
   };
 
-  home.packages = [pkgs.jq];
+  home.packages = [
+    hdl
+    pkgs.jq
+  ];
   home.sessionVariables.HERDR_NAV_PASSTHROUGH_RE = "^(lazygit)$";
 
   home.activation.linkVimHerdrNavigation = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${lib.getExe unstablePkgs.herdr} plugin link ${vimHerdrNavigation}
+    run ${lib.getExe herdrPackage} plugin link ${vimHerdrNavigation}
   '';
 
   programs.nixvim.extraConfigLuaPost = ''

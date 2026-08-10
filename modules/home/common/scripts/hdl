@@ -1,0 +1,55 @@
+# Create Herdr Dev Layout with editor, agent, and terminal.
+# Usage: hdl [agent] [second_agent]
+
+set -euo pipefail
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "Usage: hdl [agent] [second_agent]"
+  echo "Defaults to codex on the right and \$EDITOR on the left."
+  exit 0
+fi
+
+if [ "$#" -gt 2 ]; then
+  echo "Usage: hdl [agent] [second_agent]" >&2
+  exit 1
+fi
+
+if [ "${HERDR_ENV:-}" != 1 ]; then
+  echo "hdl: start Herdr before creating the layout." >&2
+  exit 1
+fi
+
+current_dir="$PWD"
+editor_command="${EDITOR:-nvim} ."
+agent_command="${1:-codex}"
+second_agent_command="${2:-}"
+editor_pane="${HERDR_PANE_ID:?hdl: HERDR_PANE_ID is not set}"
+tab_id="${HERDR_TAB_ID:?hdl: HERDR_TAB_ID is not set}"
+
+herdr tab rename "$tab_id" "$(basename "$current_dir")" >/dev/null
+
+# Keep a small terminal below and the agent on the right of the editor.
+herdr pane split "$editor_pane" \
+  --direction down \
+  --ratio 0.15 \
+  --cwd "$current_dir" \
+  --no-focus >/dev/null
+
+agent_split="$(herdr pane split "$editor_pane" \
+  --direction right \
+  --ratio 0.30 \
+  --cwd "$current_dir" \
+  --no-focus)"
+agent_pane="$(printf '%s\n' "$agent_split" | jq -er '.result.pane.pane_id')"
+
+if [ -n "$second_agent_command" ]; then
+  second_agent_split="$(herdr pane split "$agent_pane" \
+    --direction down \
+    --cwd "$current_dir" \
+    --no-focus)"
+  second_agent_pane="$(printf '%s\n' "$second_agent_split" | jq -er '.result.pane.pane_id')"
+  herdr pane run "$second_agent_pane" "$second_agent_command" >/dev/null
+fi
+
+herdr pane run "$agent_pane" "$agent_command" >/dev/null
+herdr pane run "$editor_pane" "$editor_command" >/dev/null
