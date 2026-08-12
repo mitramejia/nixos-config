@@ -6,11 +6,26 @@
 }: let
   lua = lib.generators.mkLuaInline;
   modKey = key: lua ''mod .. " + ${key}"'';
-  exec = command: lua "hl.dsp.exec_cmd(${builtins.toJSON command})";
+  terminalClasses = [
+    "com.mitchellh.ghostty"
+    "kitty"
+    "kitty-dropterm"
+  ];
+  forwardShortcut = key:
+    lua ''
+      function()
+        local window = hl.get_active_window()
+        local modifiers = "CTRL"
+        if window ~= nil and (${lib.concatMapStringsSep " or " (class: "tostring(window.class) == ${builtins.toJSON class}") terminalClasses}) then
+          modifiers = "SUPER"
+        end
+        hl.dispatch(hl.dsp.send_shortcut({ mods = modifiers, key = ${builtins.toJSON key} }))
+      end
+    '';
   clipboardPaste = pkgs.writeShellScriptBin "clipboard-paste" ''
-    # This runs after the external Noctalia picker returns, so use Hyprland's
-    # Lua IPC entry point rather than the removed legacy dispatcher syntax.
-    ${config.wayland.windowManager.hyprland.package}/bin/hyprctl eval 'hl.dispatch(hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert" }))'
+    # This runs after Noctalia's external picker returns, so paste through
+    # Hyprland's Lua IPC entry point.
+    ${config.wayland.windowManager.hyprland.package}/bin/hyprctl eval 'hl.dispatch(hl.dsp.send_shortcut({ mods = "CTRL", key = "V" }))'
   '';
 
   mkCliphistWatcher = type: description: {
@@ -38,19 +53,19 @@ in {
     {
       _args = [
         (modKey "C")
-        (lua ''hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" })'')
+        (forwardShortcut "C")
       ];
     }
     {
       _args = [
         (modKey "V")
-        (exec "clipboard-paste")
+        (forwardShortcut "V")
       ];
     }
     {
       _args = [
         (modKey "X")
-        (lua ''hl.dsp.send_shortcut({ mods = "CTRL", key = "X" })'')
+        (forwardShortcut "X")
       ];
     }
   ];

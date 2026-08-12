@@ -36,7 +36,7 @@ in {
       set-option -g set-clipboard on
       set-option -g allow-passthrough on
       set-window-option -g pane-base-index 1
-      set -ga update-environment " KITTY_LISTEN_ON KITTY_WINDOW_ID"
+      set -ga update-environment " KITTY_WINDOW_ID"
 
       # truecolor (RGB) support with tmux-256color
       set -ga terminal-overrides ",tmux-256color:RGB"
@@ -56,10 +56,15 @@ in {
       bind -r J resize-pane -D 5
       bind -r K resize-pane -U 5
       bind -r L resize-pane -R 5
-      bind u run-shell -b "${pkgs.kitty}/bin/kitty @ action open_url_with_hints"
-
-      # reload tmux configuration
-      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
+      # resize mode and reload tmux configuration
+      bind r switch-client -T resize
+      bind -r -T resize h resize-pane -L 5 \; switch-client -T resize
+      bind -r -T resize j resize-pane -D 5 \; switch-client -T resize
+      bind -r -T resize k resize-pane -U 5 \; switch-client -T resize
+      bind -r -T resize l resize-pane -R 5 \; switch-client -T resize
+      bind -T resize Escape switch-client -T root
+      bind -T resize q switch-client -T root
+      bind R source-file ~/.config/tmux/tmux.conf \; display-message "Tmux config reloaded"
 
       # renumber when window is closed
       set -g renumber-windows on

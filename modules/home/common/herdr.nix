@@ -64,8 +64,8 @@ in {
         focus_pane_up = "prefix+k";
         focus_pane_right = "prefix+l";
         copy_mode = "prefix+[";
-        reload_config = "prefix+r";
-        resize_mode = "prefix+shift+r";
+        reload_config = "prefix+shift+r";
+        resize_mode = "prefix+r";
         command = [
           {
             key = "ctrl+h";

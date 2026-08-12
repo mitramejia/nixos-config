@@ -2,6 +2,7 @@
   imports = [
     ./hyprland
     ./clipboard.nix
+    ./terminal-shortcuts.nix
     ./neovim.nix
     ./android.nix
     ./packages.nix

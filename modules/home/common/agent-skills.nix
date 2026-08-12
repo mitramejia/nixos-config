@@ -57,6 +57,12 @@ in {
         filter.maxDepth = 1;
       };
 
+      herdr = {
+        input = "herdr";
+        subdir = "skills";
+        filter.maxDepth = 1;
+      };
+
       gh-open-pr-template = {
         path = ../../../skills;
         subdir = "gh-open-pr-template";
@@ -82,7 +88,7 @@ in {
       };
     };
 
-    skills.enable = cursorTeamKitSkills ++ expoSkills;
+    skills.enable = cursorTeamKitSkills ++ expoSkills ++ ["herdr"];
 
     skills.enableAll = [
       "mattpocock-productivity"

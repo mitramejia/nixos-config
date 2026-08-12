@@ -19,11 +19,11 @@
     }
     {
       workspace = 2;
-      command = "${terminal} -e tmux new-session -A -s 2";
+      command = "${terminal} -e herdr --session 2";
     }
     {
       workspace = 3;
-      command = "${terminal} -e tmux new-session -A -s 3";
+      command = "${terminal} -e herdr --session 3";
     }
     {
       workspace = 5;

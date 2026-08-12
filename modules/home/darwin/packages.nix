@@ -44,7 +44,6 @@
     jpegoptim
     pngquant
     font-awesome
-    nerd-fonts.jetbrains-mono
     unrar
     unzip
     zip

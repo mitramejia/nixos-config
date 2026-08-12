@@ -1,5 +1,6 @@
 {
   stylix.targets = {
+    kitty.enable = false;
     waybar.enable = false;
     hyprland.enable = false;
     noctalia-shell.enable = false;

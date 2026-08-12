@@ -2,35 +2,30 @@
   programs.kitty = {
     enable = true;
     package = pkgs.kitty;
+    font = {
+      package = pkgs.nerd-fonts.jetbrains-mono;
+      name = "JetBrainsMono Nerd Font Mono";
+      size = 11.5;
+    };
     shellIntegration.enableZshIntegration = true;
     settings = {
-      font_size = 11.5;
-      scrollback_lines = 2000;
-      wheel_scroll_min_lines = 1;
+      scrollback_lines = 10000;
+      scrollback_pager_history_size = 32;
+      modify_font = "cell_width 102%";
       window_padding_width = 14;
-      confirm_os_window_close = 0;
-      allow_remote_control = "socket-only";
-      listen_on = "unix:@kitty";
+      confirm_os_window_close = "-1 count-background";
+      notify_on_cmd_finish = "invisible 15.0";
       enable_audio_bell = false;
-      mouse_hide_wait = 60;
-      tab_fade = 1;
       active_tab_font_style = "bold";
-      inactive_tab_font_style = "bold";
+      inactive_tab_font_style = "normal";
       tab_bar_edge = "top";
-      tab_bar_margin_width = 0;
       tab_bar_style = "powerline";
       enabled_layouts = "splits";
     };
     themeFile = "Catppuccin-Mocha";
-    extraConfig = ''
-      # Clipboard
-      map ctrl+shift+v        paste_from_clipboard
-      map ctrl+insert         copy_to_clipboard
-      map shift+insert        paste_from_clipboard
-      # Miscellaneous
-      map ctrl+shift+up      increase_font_size
-      map ctrl+shift+down    decrease_font_size
-      map ctrl+shift+backspace restore_font_size
-    '';
+    keybindings = {
+      "ctrl+insert" = "copy_to_clipboard";
+      "shift+insert" = "paste_from_clipboard";
+    };
   };
 }

@@ -4,7 +4,7 @@
   options,
   ...
 }: let
-  inherit (import ../variables.nix) keyboardLayout;
+  inherit (import ../variables.nix) keyboardLayout terminal;
 in {
   imports = [
     ./packages.nix
@@ -33,6 +33,10 @@ in {
   };
 
   nixpkgs.config.allowUnfree = true;
+  xdg.terminal-exec = {
+    enable = true;
+    settings.default = ["${terminal}.desktop"];
+  };
   fonts.packages = with pkgs; [
     inter
     noto-fonts-color-emoji
@@ -70,6 +74,7 @@ in {
       pulse.enable = true;
       wireplumber.enable = true;
     };
+    udev.packages = [pkgs.yubikey-personalization];
     upower.enable = true;
     power-profiles-daemon.enable = true;
     rpcbind.enable = false;

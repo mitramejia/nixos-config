@@ -10,7 +10,7 @@
     open-pr = "gh pr create";
     p = "pnpm";
     headroom-update = ''uv tool update --python 3.13 "headroom-ai[all]"'';
-    codex = "headroom wrap codex";
+    codex = "HERDR_AGENT=codex headroom wrap codex";
     claude = "headroom wrap claude";
     h = "herdr";
     ha = "herdr agent";
