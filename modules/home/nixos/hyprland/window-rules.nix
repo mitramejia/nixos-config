@@ -20,7 +20,7 @@ in {
       class = "^(.*jetbrains.*)$";
     } {focus_on_activate = true;})
     (rule {class = "^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$";} {tag = "+file-manager";})
-    (rule {class = "^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$";} {tag = "+terminal";})
+    (rule {class = "^(org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$";} {tag = "+terminal";})
     (rule {class = "^(Brave-browser(-beta|-dev|-unstable)?)$";} {tag = "+browser";})
     (rule {class = "^(brave)$";} {tag = "+browser";})
     (rule {class = "^(zen|zen-beta)$";} {tag = "+browser";})

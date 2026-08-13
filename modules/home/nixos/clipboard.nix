@@ -7,7 +7,6 @@
   lua = lib.generators.mkLuaInline;
   modKey = key: lua ''mod .. " + ${key}"'';
   terminalClasses = [
-    "com.mitchellh.ghostty"
     "kitty"
     "kitty-dropterm"
   ];
