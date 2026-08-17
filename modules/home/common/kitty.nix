@@ -5,7 +5,10 @@
     font = {
       package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font Mono";
-      size = 11.5;
+      size =
+        if pkgs.stdenv.isDarwin
+        then 14
+        else 11.5;
     };
     shellIntegration.enableZshIntegration = true;
     settings = {

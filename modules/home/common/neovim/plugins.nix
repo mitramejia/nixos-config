@@ -133,7 +133,15 @@
       };
 
       trouble.enable = true;
-      markdown-preview.enable = true;
+      markdown-preview = {
+        enable = true;
+        package = pkgs.vimPlugins.markdown-preview-nvim.overrideAttrs {
+          # Node 24 keeps imported handles alive after the package prints its version.
+          installCheckPhase = ''
+            node -e "process.argv[2] = '--version'; require('$out/app/index.js'); process.exit(0)"
+          '';
+        };
+      };
       schemastore = {
         enable = true;
         yaml.enable = true;

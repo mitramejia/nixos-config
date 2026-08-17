@@ -1,4 +1,7 @@
 {
+  config,
+  androidHome,
+}: {
   linear = {
     url = "https://mcp.linear.app/mcp";
     tools = {
@@ -21,11 +24,18 @@
   statsig.url = "https://api.statsig.com/v1/mcp";
 
   appium-mcp = {
-    command = "npx";
+    # Use the Home Manager profile because Codex launched from the macOS GUI
+    # does not inherit the interactive shell's PATH.
+    command = "${config.home.profileDirectory}/bin/npx";
     args = [
       "-y"
-      "appium-mcp@1.92.0"
+      "appium-mcp@1.92.2"
     ];
+    startup_timeout_sec = 60.0;
+    env = {
+      ANDROID_HOME = androidHome;
+      PATH = "${androidHome}/platform-tools:${config.home.profileDirectory}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    };
   };
 
   browserstack = {

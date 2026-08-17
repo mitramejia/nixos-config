@@ -31,6 +31,15 @@
       + ''
         substituteInPlace internal/cmd/inits/data/status_shortcuts.sh internal/cmd/inits/data/status_shortcuts.fish \
           --replace-fail /usr/bin/env ${pkgs.coreutils}/bin/env
+      ''
+      + pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+        # Keep nix-darwin's global zshenv from replacing the test sandbox PATH.
+        for testFile in internal/cmd/testdata/script/*.txtar; do
+          if grep -q "exec zsh -c" "$testFile"; then
+            substituteInPlace "$testFile" \
+              --replace-fail "exec zsh -c" "exec zsh -f -c"
+          fi
+        done
       '';
   });
 in {

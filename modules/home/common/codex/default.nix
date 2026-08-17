@@ -15,7 +15,10 @@
     // {
       model_providers = import ./model-providers.nix;
       projects = import ./trusted-projects.nix {inherit home;};
-      mcp_servers = import ./mcp-servers.nix;
+      mcp_servers = import ./mcp-servers.nix {
+        inherit config;
+        androidHome = config.home.sessionVariables.ANDROID_HOME;
+      };
       desktop = import ./desktop-theme.nix;
     }
   );
