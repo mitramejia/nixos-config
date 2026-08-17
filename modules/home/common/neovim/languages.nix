@@ -24,7 +24,10 @@ in {
           yamlls.enable = true;
           clangd.enable = true;
           zls.enable = true;
-          marksman.enable = true;
+          markdown_oxide = {
+            enable = true;
+            package = pkgs.markdown-oxide;
+          };
           ruby_lsp = {
             enable = true;
             # Ruby LSP must not inherit Nixvim's immutable GEM_HOME: it creates
@@ -95,7 +98,7 @@ in {
       pyright
       lua-language-server
       zls
-      marksman
+      markdown-oxide
       multimarkdown
       clang-tools
       (ruby_3_3.withPackages (ps: [ps.ruby-lsp]))
