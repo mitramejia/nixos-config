@@ -8,6 +8,7 @@
   opencodeConfig = json.generate "opencode.json" {
     "$schema" = "https://opencode.ai/config.json";
     model = "gpt-5.4";
+    permission = "allow";
   };
 in {
   programs = {
