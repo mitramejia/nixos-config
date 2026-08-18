@@ -52,7 +52,6 @@ in {
     uv
 
     claudeCode
-    opencode
     alejandra
     statix
     lazydocker

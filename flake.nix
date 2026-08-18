@@ -134,6 +134,12 @@
       };
     };
 
+    mkUnstablePkgs = system:
+      import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
     mkNixos = host: let
       pkgs = import nixpkgs {
         inherit (host) system;
@@ -143,10 +149,7 @@
         inherit (host) system;
         config.allowUnfree = true;
       };
-      unstablePkgs = import inputs.nixpkgs-unstable {
-        inherit (host) system;
-        config.allowUnfree = true;
-      };
+      unstablePkgs = mkUnstablePkgs host.system;
       hyprlandInputPkgs = inputs.hyprland.packages.${host.system};
       patchedHyprlandGuiutils =
         inputs.hyprland.inputs.hyprland-guiutils.packages.${host.system}.hyprland-guiutils.overrideAttrs
@@ -184,6 +187,7 @@
       system = hosts.macbook.system;
       specialArgs = {
         host = hosts.macbook;
+        unstablePkgs = mkUnstablePkgs hosts.macbook.system;
         inherit inputs;
       };
       modules = [

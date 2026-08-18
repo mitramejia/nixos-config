@@ -11,6 +11,7 @@
     ./ideavim
     ./kitty.nix
     ./neovim.nix
+    ./opencode.nix
     ./packages.nix
     ./shell-aliases.nix
     ./starship.nix

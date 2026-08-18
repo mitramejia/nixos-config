@@ -1,6 +1,7 @@
 {
   host,
   inputs,
+  unstablePkgs,
   ...
 }: {
   home-manager = {
@@ -8,7 +9,7 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     extraSpecialArgs = {
-      inherit host inputs;
+      inherit host inputs unstablePkgs;
     };
     users.${host.username}.imports = [
       ../home/common
