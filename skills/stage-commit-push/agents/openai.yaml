@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stage, Commit, Push"
+  short_description: "Stage files, commit safely, and push"
+  default_prompt: "Use $stage-commit-push to stage the intended files, commit them, and push the branch."

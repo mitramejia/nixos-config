@@ -75,9 +75,9 @@ in {
         filter.maxDepth = 1;
       };
 
-      commit-staged = {
+      stage-commit-push = {
         path = ../../../skills;
-        subdir = "commit-staged";
+        subdir = "stage-commit-push";
         filter.maxDepth = 1;
       };
 
@@ -95,7 +95,7 @@ in {
       "mattpocock-engineering"
       "gh-open-pr-template"
       "draft-mobile-platform-update"
-      "commit-staged"
+      "stage-commit-push"
       "linear-issue-from-diff"
     ];
 
