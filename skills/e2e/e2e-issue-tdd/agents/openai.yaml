@@ -1,0 +1,4 @@
+interface:
+  display_name: "E2E Issue TDD"
+  short_description: "Deliver or resume issues with TDD and device evidence"
+  default_prompt: "Use $e2e-issue-tdd to implement and validate MPLT-123 on the Comun debug app."

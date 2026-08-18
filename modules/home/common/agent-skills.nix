@@ -57,6 +57,13 @@ in {
         filter.maxDepth = 1;
       };
 
+      e2e = {
+        path = ../../../skills;
+        subdir = "e2e";
+        idPrefix = "e2e";
+        filter.maxDepth = 1;
+      };
+
       herdr = {
         input = "herdr";
         subdir = "skills";
@@ -93,6 +100,7 @@ in {
     skills.enableAll = [
       "mattpocock-productivity"
       "mattpocock-engineering"
+      "e2e"
       "gh-open-pr-template"
       "draft-mobile-platform-update"
       "stage-commit-push"
