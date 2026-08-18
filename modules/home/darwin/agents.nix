@@ -6,13 +6,10 @@
 }: let
   json = pkgs.formats.json {};
 
-  # The vim plugin is configured in tui.json, per its documentation, so that is
-  # the only place Nix declares it.
+  # vimcode is configured in tui.json, per its documentation, so that is the
+  # only place Nix declares it.
   tuiPlugins = [
-    [
-      "@leohenon/opencode-vim-plugin"
-      {enabled = true;}
-    ]
+    "vimcode@git+https://github.com/oribarilan/vimcode.git#v0.15.3"
   ];
 
   opencodePlugins = ["opencode-claude-auth@latest"];
@@ -37,9 +34,9 @@
 
   # OpenCode rewrites both files at runtime: Headroom edits opencode.json, and
   # the vim mode toggle persists to tui.json. Nix seeds a missing file, then
-  # only ever adds absent plugins and MCP servers. It never reconciles options
-  # or reclaims ownership, so anything edited or disabled by hand stays
-  # untouched.
+  # only ever adds absent plugins and MCP servers, except for explicit plugin
+  # migrations. It never reconciles options or reclaims ownership, so anything
+  # edited or disabled by hand stays untouched.
   mutableConfigs = [
     {
       name = "opencode.json";
@@ -55,19 +52,23 @@
     {
       name = "tui.json";
       plugins = tuiPlugins;
-      seed = {plugin = tuiPlugins;};
+      removePlugins = ["@leohenon/opencode-vim-plugin"];
+      seed = {
+        plugin = tuiPlugins;
+        keybinds.leader = "space";
+      };
     }
   ];
 
   ensureCall = entry: ''
-    ensure_mutable_config ${lib.escapeShellArg entry.name} ${json.generate "opencode-seed-${entry.name}" entry.seed} ${json.generate "opencode-plugins-${entry.name}" entry.plugins}
+    ensure_mutable_config ${lib.escapeShellArg entry.name} ${json.generate "opencode-seed-${entry.name}" entry.seed} ${json.generate "opencode-plugins-${entry.name}" entry.plugins} ${json.generate "opencode-removed-plugins-${entry.name}" (entry.removePlugins or [])}
   '';
 in {
   home.activation.ensureMutableOpenCodeConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
     config_dir="${config.xdg.configHome}/opencode"
 
     ensure_mutable_config() {
-      local name="$1" seed="$2" plugins="$3"
+      local name="$1" seed="$2" plugins="$3" removed_plugins="$4"
       local config_file="$config_dir/$name"
       local link_target
 
@@ -92,17 +93,19 @@ in {
       else
         run ${pkgs.nodejs}/bin/node -e '
           const fs = require("fs");
-          const [configPath, seedPath, pluginsPath] = process.argv.slice(1);
+          const [configPath, seedPath, pluginsPath, removedPluginsPath] = process.argv.slice(1);
           const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
           const seed = JSON.parse(fs.readFileSync(seedPath, "utf8"));
           const desired = JSON.parse(fs.readFileSync(pluginsPath, "utf8"));
+          const removed = new Set(JSON.parse(fs.readFileSync(removedPluginsPath, "utf8")));
           const current = Array.isArray(config.plugin) ? config.plugin : [];
           const nameOf = (entry) => (Array.isArray(entry) ? entry[0] : entry);
-          const present = new Set(current.map(nameOf));
+          const retained = current.filter((entry) => !removed.has(nameOf(entry)));
+          const present = new Set(retained.map(nameOf));
           const currentMcp = config.mcp ?? {};
           const desiredMcp = seed.mcp ?? {};
 
-          config.plugin = [...current, ...desired.filter((entry) => !present.has(nameOf(entry)))];
+          config.plugin = [...retained, ...desired.filter((entry) => !present.has(nameOf(entry)))];
           config.mcp = {...desiredMcp, ...currentMcp};
           for (const [name, server] of Object.entries(desiredMcp)) {
             if (server.type === "local" && currentMcp[name]?.type == null) {
@@ -110,7 +113,7 @@ in {
             }
           }
           fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
-        ' "$config_file" "$seed" "$plugins"
+        ' "$config_file" "$seed" "$plugins" "$removed_plugins"
       fi
     }
 
