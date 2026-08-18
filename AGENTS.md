@@ -47,3 +47,17 @@ Guidance for automated agents working in this Nix config. Keep changes small, de
 ## Safety
 - Never delete or rewrite large sections without explicit instruction.
 - Keep secrets out of the repo; prefer external secret managers or environment-based injection.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs are local Markdown files under `.scratch/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The default five canonical triage labels are used. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repository. See `docs/agents/domain.md`.
