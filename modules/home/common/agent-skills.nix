@@ -66,7 +66,7 @@ in {
         path = ../../../skills;
         subdir = "e2e";
         idPrefix = "e2e";
-        filter.maxDepth = 1;
+        filter.maxDepth = 2;
       };
 
       herdr = {
