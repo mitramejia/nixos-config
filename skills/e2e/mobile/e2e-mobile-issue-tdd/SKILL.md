@@ -1,13 +1,13 @@
 ---
-name: e2e-issue-tdd
+name: e2e-mobile-issue-tdd
 description:
-  "Deliver or resume a Comun Linear issue with red-green-refactor TDD and manual
-  iOS or Android Comun Debug-app validation through Appium MCP. Use for
-  ticket-driven features and bug fixes that need focused automated tests,
-  permission-state coverage, device acceptance checks, and Linear evidence."
+  "Deliver or resume a Comun mobile Linear issue with red-green-refactor TDD,
+  focused WDIO/Appium proof, and Appium MCP-assisted iOS or Android Debug-app
+  acceptance. Use for ticket-driven device journeys, permission coverage, and
+  Linear evidence."
 ---
 
-# E2E Issue TDD
+# Mobile E2E Issue TDD
 
 Implement one Linear issue at a time. Use the issue as product intent, a focused
 automated test as behavior proof, and the Comun Debug app as the final
@@ -69,7 +69,8 @@ outcome, device provenance, or Linear evidence.
 
 Read `e2e/AGENTS.md` and `e2e/README.md` before changing E2E code. Use the `tdd`
 skill for test design. Route a pre-existing WDIO/Appium failure through
-`e2e-test-troubleshooter` before changing selectors, waits, or capabilities.
+`e2e-mobile-test-troubleshooter` before changing selectors, waits, or
+capabilities.
 
 ## Red, green, refactor
 
@@ -88,6 +89,10 @@ its absence instead of undoing the implementation to manufacture one.
 Prefer focused Jest tests for app behavior. Add or change WDIO/Appium specs only
 when the requirement is a device journey. Keep assertions independent of the
 implementation and preserve their behavioral demand.
+
+For a required device journey, capture a focused WDIO/Appium runner result.
+Appium MCP manual acceptance supplements that automated proof; it never replaces
+it.
 
 ## Prepare device validation
 
@@ -113,17 +118,20 @@ implementation and preserve their behavioral demand.
 ## Validate the customer outcome
 
 1. Normalize the development client into the product surface, then inspect a
-   screenshot and hierarchy before acting.
-2. Create or reuse only a matching Appium session. Prefer accessibility IDs, app
-   IDs, and native selectors in that order; use the documented screenshot
-   fallback only for system-owned UI absent from the hierarchy.
+   screenshot and hierarchy before acting. When Appium MCP is exposed for an
+   active native session, use it as the preferred live evidence and manual
+   acceptance path; otherwise use a matching Appium session.
+2. Prefer accessibility IDs, app IDs, and native selectors in that order; use
+   the documented screenshot fallback only for system-owned UI absent from the
+   hierarchy.
 3. Reset the fixture account and app session to the recorded preconditions.
    Replay every applicable row in the acceptance matrix and confirm both the
    control state and visible result. Appium command success is supporting
    evidence, not the customer outcome.
 4. On failure, capture screenshot, page source, and server/device logs. Classify
    app, environment, or harness failure. Allow one bounded Appium reattach after
-   restoring transport; route a repeated failure to `e2e-test-troubleshooter`.
+   restoring transport; route a repeated failure to
+   `e2e-mobile-test-troubleshooter`.
 5. Record the actual surface tested and provenance. Mark unexecuted required
    rows pending with a concrete blocker; mark platform-inapplicable states
    `N/A`.

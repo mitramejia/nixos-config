@@ -1,7 +1,7 @@
 ---
-name: e2e-test-troubleshooter
+name: e2e-mobile-test-troubleshooter
 description:
-  "Diagnose and fix Comun Appium E2E failures in e2e/specs, including
+  "Diagnose and fix Comun mobile WDIO/Appium E2E failures in e2e/specs, including
   UiAutomator2 instrumentation death, Expo dev-client or Android Metro transport
   state, local simulator failures, BrowserStack RCA/logs, native permission
   prompts, selector misses, timeout flakes, app upload or capability drift, and
@@ -10,7 +10,7 @@ description:
   Jest/unit tests or app logic debugging unless E2E artifacts prove an app bug."
 ---
 
-# E2E Test Troubleshooter
+# Mobile E2E Test Troubleshooter
 
 Use this skill to debug Appium failures without guessing. Treat stack traces,
 BrowserStack RCA labels, and timeout messages as leads, not conclusions.
@@ -23,6 +23,9 @@ changing production code.
 
 - Prove the current app/device state from artifacts, logs, RCA, video, or a live
   Appium session before changing selectors or waits.
+- When Appium MCP is exposed for an active native session, prefer it for live
+  screenshot and hierarchy evidence and manual acceptance. It supplements, and
+  never replaces, WDIO/Appium or BrowserStack runner evidence.
 - Prefer narrow fixes in `e2e/helpers`, `e2e/screen-objects`, specs, or WDIO
   config. Change app code only when artifacts prove the app is wrong.
 - Do not add `browser.pause`, implicit waits, committed `browser.debug`,
@@ -37,7 +40,7 @@ changing production code.
    artifacts".
 2. Inspect the failing spec, related Screen Objects, helper functions, WDIO
    config, and any imported app `testIds.ts` modules.
-3. If `appium-mcp` is available and a session exists, use it to inspect the
+3. If Appium MCP is exposed and a session exists, use it first to inspect the
    current hierarchy and element availability. Otherwise rely on captured
    artifacts and logs.
 4. Record whether the visible surface is the Expo development client, product

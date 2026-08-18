@@ -1,4 +1,4 @@
-# Linear device evidence
+# Linear mobile device evidence
 
 Use this branch whenever recording, uploading, or commenting on device
 validation.

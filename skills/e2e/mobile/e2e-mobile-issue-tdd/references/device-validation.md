@@ -12,7 +12,7 @@ the acceptance matrix. Choose iOS simulator versus physical device explicitly.
 Run the read-only helper from the repository root:
 
 ```bash
-.agents/skills/e2e/e2e-issue-tdd/scripts/device-preflight.sh \
+.agents/skills/e2e/mobile/e2e-mobile-issue-tdd/scripts/device-preflight.sh \
   --platform android \
   --device emulator-5554 \
   --app-id app.comun.mobile.debug \
@@ -71,7 +71,7 @@ light and reduce idle blocking:
 If `DeadObjectException`, instrumentation loss, or a dead UiAutomation binder
 appears, save server log and logcat, restore Metro transport, and reattach once.
 A second occurrence is a harness failure to route through
-`e2e-test-troubleshooter`, not a product failure.
+`e2e-mobile-test-troubleshooter`, not a product failure.
 
 ## System-owned UI
 

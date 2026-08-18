@@ -46,7 +46,7 @@ Use a unique no-space label such as `MPLT596Fixture` and the helper rather than
 assuming `content insert` prints an ID:
 
 ```bash
-fixture=.agents/skills/e2e/e2e-issue-tdd/scripts/android-contact-fixture.sh
+fixture=.agents/skills/e2e/mobile/e2e-mobile-issue-tdd/scripts/android-contact-fixture.sh
 
 raw_id="$($fixture add \
   --serial emulator-5554 \

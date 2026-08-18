@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mobile E2E Test Troubleshooter"
+  short_description: "Debug mobile Appium E2E failures from evidence"
+  default_prompt: "Use $e2e-mobile-test-troubleshooter to diagnose a failing Appium E2E test and propose a narrow evidence-backed fix."
