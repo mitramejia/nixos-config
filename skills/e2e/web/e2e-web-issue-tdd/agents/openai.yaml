@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web E2E Issue TDD"
+  short_description: "Deliver web issues with Playwright TDD evidence"
+  default_prompt: "Use $e2e-web-issue-tdd to implement and validate a focused web journey."

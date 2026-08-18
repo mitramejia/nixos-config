@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web E2E Test Troubleshooter"
+  short_description: "Debug Playwright E2E failures from live and runner evidence"
+  default_prompt: "Use $e2e-web-test-troubleshooter to diagnose a failing Playwright E2E test and propose a narrow evidence-backed fix."
