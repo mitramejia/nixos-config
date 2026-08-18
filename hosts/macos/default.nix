@@ -1,4 +1,8 @@
-{host, ...}: {
+{
+  host,
+  pkgs,
+  ...
+}: {
   networking.hostName = host.hostname;
   system.stateVersion = host.systemStateVersion;
 
@@ -7,7 +11,7 @@
     {path = "/Applications/1Password.app/";}
     {path = "/System/Applications/Messages.app/";}
     {path = "/System/Applications/FaceTime.app/";}
-    {path = "${host.homeDirectory}/Applications/Home Manager Apps/kitty.app";}
+    {path = "${pkgs.kitty}/Applications/kitty.app";}
     {path = "/System/Applications/Notes.app/";}
     {path = "/Applications/WhatsApp.app/";}
     {path = "/Applications/Obsidian.app/";}

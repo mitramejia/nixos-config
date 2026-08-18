@@ -75,7 +75,13 @@ in {
         set -eu
         ${validateEntries}
         dock_state="$(${pkgs.coreutils}/bin/mktemp -d -t dock-state.XXXXXX)"
-        trap '${pkgs.coreutils}/bin/rm -rf "$dock_state"' EXIT
+        dock_was_running=false
+        trap '
+          if [ "$dock_was_running" = true ]; then
+            /usr/bin/killall -CONT Dock >/dev/null 2>&1 || true
+          fi
+          ${pkgs.coreutils}/bin/rm -rf "$dock_state"
+        ' EXIT
 
         if ! ${dockutil}/bin/dockutil --list > "$dock_state/list"; then
           echo >&2 "Cannot read the Dock; leaving it unchanged."
@@ -93,10 +99,14 @@ in {
           fi
 
           echo >&2 "Resetting Dock."
+          if /usr/bin/pgrep -x Dock >/dev/null; then
+            dock_was_running=true
+            /usr/bin/killall -STOP Dock || true
+          fi
           ${dockutil}/bin/dockutil --no-restart --remove all
           ${createEntries}
-          if /usr/bin/pgrep -x Dock >/dev/null; then
-            /usr/bin/killall Dock
+          if [ "$dock_was_running" = true ]; then
+            /usr/bin/killall -KILL Dock || true
           else
             echo >&2 "Dock was not running; skipping restart."
           fi
