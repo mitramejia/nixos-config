@@ -180,8 +180,184 @@
           ./modules/nixos
         ];
       };
+
+    nixosHost = mkNixos hosts.nixos;
+    hyprlandWorkspaceConfig = nixosHost.config.home-manager.users.${hosts.nixos.username}.wayland.windowManager.hyprland;
+    hyprlandWorkspaceSettings = hyprlandWorkspaceConfig.settings;
+    hyprlandWorkspaceIntentCheck = let
+      inherit (nixpkgs.lib) assertMsg drop;
+
+      monitorDefinitions = hyprlandWorkspaceSettings.monitor;
+      workspaceRules = hyprlandWorkspaceSettings.workspace_rule;
+      windowRules = hyprlandWorkspaceSettings.window_rule;
+      startupLua = (builtins.elemAt hyprlandWorkspaceSettings.on._args 1).expr;
+      startupLuaLines = nixpkgs.lib.strings.splitString "\n" startupLua;
+      generatedWorkspaceStartup =
+        builtins.filter (command: command != null)
+        (map (
+            line: let
+              matched =
+                builtins.match
+                ''.*hl\.exec_cmd\("([^\"]+)", \{ workspace = "([^\"]+)" \}\)''
+                line;
+            in
+              if matched == null
+              then null
+              else {
+                command = builtins.elemAt matched 0;
+                workspace = builtins.elemAt matched 1;
+              }
+          )
+          startupLuaLines);
+
+      expectedMonitors = [
+        {
+          mode = "preferred";
+          output = "DP-1";
+          position = "auto";
+          scale = 1.33;
+        }
+        {
+          mode = "preferred";
+          output = "DP-2";
+          position = "auto";
+          scale = 1.33;
+          transform = 3;
+        }
+      ];
+
+      expectedWorkspaceRules = [
+        {
+          workspace = "1";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "2";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "3";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "4";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "5";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "6";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "7";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "8";
+          monitor = "DP-1";
+          default = true;
+        }
+        {
+          workspace = "9";
+          monitor = "DP-2";
+          default = true;
+        }
+        {
+          workspace = "10";
+          monitor = "DP-2";
+          default = true;
+        }
+      ];
+
+      expectedRoutingRules = [
+        {
+          match = {tag = "browser*";};
+          workspace = "1";
+        }
+        {
+          match = {tag = "im*";};
+          workspace = "5";
+        }
+        {
+          match = {tag = "games*";};
+          workspace = "8";
+        }
+        {
+          match = {class = "^(obsidian)$";};
+          workspace = "6";
+        }
+        {
+          match = {class = "^(Cider)$";};
+          workspace = "7";
+        }
+      ];
+
+      expectedWorkspaceStartupCommands = [
+        {
+          workspace = "1";
+          command = "zen-beta";
+        }
+        {
+          workspace = "2";
+          command = "kitty -e herdr --session 2";
+        }
+        {
+          workspace = "3";
+          command = "kitty -e herdr --session 3";
+        }
+        {
+          workspace = "5";
+          command = "slack";
+        }
+        {
+          workspace = "5";
+          command = "zapzap";
+        }
+        {
+          workspace = "6";
+          command = "obsidian";
+        }
+        {
+          workspace = "7";
+          command = "cider-appimage";
+        }
+        {
+          workspace = "9";
+          command = "kitty";
+        }
+      ];
+
+      routingRuleSuffix =
+        if builtins.length windowRules >= builtins.length expectedRoutingRules
+        then drop (builtins.length windowRules - builtins.length expectedRoutingRules) windowRules
+        else [];
+    in
+      assert (assertMsg (builtins.length monitorDefinitions == 2) "Expected two monitor definitions in generated Hyprland settings.");
+      assert (assertMsg (monitorDefinitions == expectedMonitors) "Generated monitor definitions no longer match workspace-intent.");
+      assert (assertMsg (builtins.length workspaceRules == 10) "Expected 10 workspace rules/mappings from workspace intent.");
+      assert (assertMsg (workspaceRules == expectedWorkspaceRules) "Generated workspace rules no longer match workspace intent.");
+      assert (assertMsg (builtins.length windowRules >= builtins.length expectedRoutingRules) "Expected at least workspace-targeted routing rules to exist.");
+      assert (assertMsg (routingRuleSuffix == expectedRoutingRules) "Workspace-targeted routing rules must remain last and in current order.");
+      assert (assertMsg (generatedWorkspaceStartup == expectedWorkspaceStartupCommands) "Workspace-targeted startup commands are not rendered in the expected order.");
+        nixpkgs.legacyPackages.${hosts.nixos.system}.runCommand "hyprland-workspace-intent-generated-settings" {} ''
+          mkdir -p "$out"
+        '';
   in {
-    nixosConfigurations.nixos = mkNixos hosts.nixos;
+    nixosConfigurations.nixos = nixosHost;
+
+    checks.${hosts.nixos.system} = {
+      hyprland-workspace-intent-generated-settings = hyprlandWorkspaceIntentCheck;
+    };
 
     darwinConfigurations.macbook = darwin.lib.darwinSystem {
       system = hosts.macbook.system;

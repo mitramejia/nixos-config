@@ -1,9 +1,8 @@
-{lib, ...}: let
-  inherit
-    (import ../../../variables.nix)
-    browser
-    terminal
-    ;
+{
+  config,
+  lib,
+  ...
+}: let
   startupCommands = [
     "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
@@ -12,46 +11,13 @@
     "lxqt-policykit-agent"
   ];
 
-  workspaceStartupCommands = [
-    {
-      workspace = 1;
-      command = browser;
-    }
-    {
-      workspace = 2;
-      command = "${terminal} -e herdr --session 2";
-    }
-    {
-      workspace = 3;
-      command = "${terminal} -e herdr --session 3";
-    }
-    {
-      workspace = 5;
-      command = "slack";
-    }
-    {
-      workspace = 5;
-      command = "zapzap";
-    }
-    {
-      workspace = 6;
-      command = "obsidian";
-    }
-    {
-      workspace = 7;
-      command = "cider-appimage";
-    }
-    {
-      workspace = 9;
-      command = terminal;
-    }
-  ];
+  workspaceStartupCommands = config.private.hyprlandWorkspaceIntent.startupCommands or [];
 
   startupCommand = command: "  hl.exec_cmd(${builtins.toJSON command})\n";
   workspaceStartupCommand = {
     workspace,
     command,
-  }: "  hl.exec_cmd(${builtins.toJSON command}, { workspace = ${builtins.toJSON (toString workspace)} })\n";
+  }: "  hl.exec_cmd(${builtins.toJSON command}, { workspace = ${builtins.toJSON workspace} })\n";
 in {
   # Noctalia is deliberately absent: its Home Manager user service owns its
   # startup, restart, and Wayland-session lifecycle under UWSM.

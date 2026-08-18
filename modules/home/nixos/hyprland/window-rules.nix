@@ -1,4 +1,4 @@
-_: let
+{...}: let
   rule = match: effects: {inherit match;} // effects;
 in {
   # Typed Nix tables become hl.window_rule calls in the 0.56 Lua backend.
@@ -85,10 +85,5 @@ in {
     (rule {title = "^(Picture-in-Picture)$";} {keep_aspect_ratio = true;})
     (rule {tag = "games*";} {no_blur = true;})
     (rule {tag = "games*";} {fullscreen = true;})
-    (rule {tag = "browser*";} {workspace = "1";})
-    (rule {tag = "im*";} {workspace = "5";})
-    (rule {tag = "games*";} {workspace = "8";})
-    (rule {class = "^(obsidian)$";} {workspace = "6";})
-    (rule {class = "^(Cider)$";} {workspace = "7";})
   ];
 }
