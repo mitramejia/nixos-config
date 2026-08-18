@@ -17,10 +17,29 @@
 
   opencodePlugins = ["opencode-claude-auth@latest"];
 
+  opencodeMcpServers = let
+    servers =
+      (import ../common/mcp-servers.nix {
+        inherit config;
+        androidHome = null;
+      }).opencode;
+  in
+    lib.mapAttrs (_: server:
+      if server ? url
+      then server
+      else
+        (builtins.removeAttrs server ["args"])
+        // {
+          type = "local";
+          command = [server.command] ++ server.args;
+        })
+    servers;
+
   # OpenCode rewrites both files at runtime: Headroom edits opencode.json, and
   # the vim mode toggle persists to tui.json. Nix seeds a missing file, then
-  # only ever adds absent plugins. It never reconciles options or reclaims
-  # ownership, so anything edited or disabled by hand stays untouched.
+  # only ever adds absent plugins and MCP servers. It never reconciles options
+  # or reclaims ownership, so anything edited or disabled by hand stays
+  # untouched.
   mutableConfigs = [
     {
       name = "opencode.json";
@@ -30,6 +49,7 @@
         model = "gpt-5.4";
         permission = "allow";
         plugin = opencodePlugins;
+        mcp = opencodeMcpServers;
       };
     }
     {
@@ -47,7 +67,7 @@ in {
     config_dir="${config.xdg.configHome}/opencode"
 
     ensure_mutable_config() {
-      local name="$1" seed="$2" desired="$3"
+      local name="$1" seed="$2" plugins="$3"
       local config_file="$config_dir/$name"
       local link_target
 
@@ -72,16 +92,25 @@ in {
       else
         run ${pkgs.nodejs}/bin/node -e '
           const fs = require("fs");
-          const [configPath, pluginsPath] = process.argv.slice(1);
+          const [configPath, seedPath, pluginsPath] = process.argv.slice(1);
           const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+          const seed = JSON.parse(fs.readFileSync(seedPath, "utf8"));
           const desired = JSON.parse(fs.readFileSync(pluginsPath, "utf8"));
           const current = Array.isArray(config.plugin) ? config.plugin : [];
           const nameOf = (entry) => (Array.isArray(entry) ? entry[0] : entry);
           const present = new Set(current.map(nameOf));
+          const currentMcp = config.mcp ?? {};
+          const desiredMcp = seed.mcp ?? {};
 
           config.plugin = [...current, ...desired.filter((entry) => !present.has(nameOf(entry)))];
+          config.mcp = {...desiredMcp, ...currentMcp};
+          for (const [name, server] of Object.entries(desiredMcp)) {
+            if (server.type === "local" && currentMcp[name]?.type == null) {
+              config.mcp[name] = server;
+            }
+          }
           fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
-        ' "$config_file" "$desired"
+        ' "$config_file" "$seed" "$plugins"
       fi
     }
 

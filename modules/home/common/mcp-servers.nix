@@ -23,6 +23,10 @@
     expo.url = "https://mcp.expo.dev/mcp";
     openaiDeveloperDocs.url = "https://developers.openai.com/mcp";
     statsig.url = "https://api.statsig.com/v1/mcp";
+    context7 = {
+      url = "https://mcp.context7.com/mcp";
+      env_http_headers.CONTEXT7_API_KEY = "CONTEXT7_API_KEY";
+    };
 
     appium-mcp = {
       # Use the Home Manager profile because Codex launched from the macOS GUI
@@ -104,6 +108,12 @@
       type = "remote";
       url = "https://api.statsig.com/v1/mcp";
       enabled = true;
+    };
+    context7 = {
+      type = "remote";
+      url = "https://mcp.context7.com/mcp";
+      enabled = true;
+      headers.CONTEXT7_API_KEY = "{env:CONTEXT7_API_KEY}";
     };
     sequential-thinking = {
       command = "npx";
