@@ -3,8 +3,7 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   herdrPackage = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
   hdl = pkgs.writeShellApplication {
     name = "hdl";
@@ -21,10 +20,9 @@ let
     rev = "820d48f5d9c9a7dece6a4bebfa3982ec30bbfbb7";
     hash = "sha256-qn69GDH3kCSYm9x/it3EyJqZiwQoK3pnwdfATeSwJ38=";
   };
-in
-{
+in {
   # Backport upstream module until Home Manager 26.05 contains it.
-  imports = [ ./herdr-module.nix ];
+  imports = [./herdr-module.nix];
 
   programs.herdr = {
     enable = true;
@@ -95,6 +93,12 @@ in
             command = "vim-herdr-navigation.right";
             description = "Navigate right across Vim and Herdr panes";
           }
+          {
+            key = "prefix+shift+v";
+            type = "plugin_action";
+            command = "persiyanov.reviewr.toggle";
+            description = "Toggle the Reviewr pane";
+          }
         ];
       };
 
@@ -115,7 +119,7 @@ in
   ];
   home.sessionVariables.HERDR_NAV_PASSTHROUGH_RE = "^(lazygit)$";
 
-  home.activation.linkVimHerdrNavigation = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.linkVimHerdrNavigation = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run ${lib.getExe herdrPackage} plugin link ${vimHerdrNavigation}
   '';
 
