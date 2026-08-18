@@ -1,4 +1,9 @@
-{inputs, ...}: let
+{
+  config,
+  inputs,
+  lib,
+  ...
+}: let
   cursorTeamKitSkills = [
     "cursor-team-kit/check-compiler-errors"
     "cursor-team-kit/control-cli"
@@ -113,4 +118,11 @@ in {
       claude.enable = true;
     };
   };
+
+  programs.mcp.servers =
+    lib.mkForce
+    (import ./mcp-servers.nix {
+      inherit config;
+      androidHome = config.home.sessionVariables.ANDROID_HOME;
+    }).opencode;
 }
