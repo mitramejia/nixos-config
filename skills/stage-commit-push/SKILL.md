@@ -6,7 +6,7 @@ description: Stage selected repository changes, create a convention-compliant co
 # Stage, Commit, Push
 
 Spawn exactly one `worker` agent with `fork_turns: "none"`, model
-`gpt-5.6-luna`, and reasoning effort `high`. The worker owns all Git changes
+`openai/gpt-5.3-codex-spark`, and reasoning effort `high`. The worker owns all Git changes
 for this workflow. Tell it that it is not alone in the codebase and must not
 revert others' work.
 
