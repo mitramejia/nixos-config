@@ -5,10 +5,12 @@
   unstablePkgs,
   host,
   ...
-}: let
+}:
+let
   inherit (import ../variables.nix) gitUsername;
-in {
-  imports = [inputs.home-manager.nixosModules.home-manager];
+in
+{
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   home-manager = {
     useUserPackages = true;
@@ -16,7 +18,12 @@ in {
     backupFileExtension = "backup";
     overwriteBackup = true;
     extraSpecialArgs = {
-      inherit inputs host hyprlandPkgs unstablePkgs;
+      inherit
+        inputs
+        host
+        hyprlandPkgs
+        unstablePkgs
+        ;
     };
     users.${host.username} = {
       imports = [
@@ -30,7 +37,7 @@ in {
     };
   };
 
-  nix.settings.allowed-users = [host.username];
+  nix.settings.allowed-users = [ host.username ];
 
   users.mutableUsers = true;
   users.users.${host.username} = {
@@ -39,6 +46,7 @@ in {
     extraGroups = [
       "adbusers"
       "docker"
+      "kvm"
       "libvirtd"
       "lp"
       "networkmanager"
