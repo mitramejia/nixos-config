@@ -1,8 +1,8 @@
 {host, ...}: {
   imports = [
-    ./agents.nix
     ./codex.nix
     ./git.nix
+    ./opencode.nix
     ./packages.nix
     ./shell.nix
     ./ssh.nix

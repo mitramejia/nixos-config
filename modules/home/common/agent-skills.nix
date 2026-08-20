@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   lib,
   ...
@@ -32,97 +31,96 @@
 in {
   imports = [inputs.agent-skills.homeManagerModules.default];
 
-  programs.agent-skills = {
-    enable = true;
+  config = {
+    programs.agent-skills = {
+      enable = true;
 
-    sources = {
-      mattpocock-productivity = {
-        input = "mattpocock-skills";
-        subdir = "skills/productivity";
-        filter.maxDepth = 1;
+      sources = {
+        mattpocock-productivity = {
+          input = "mattpocock-skills";
+          subdir = "skills/productivity";
+          filter.maxDepth = 1;
+        };
+
+        mattpocock-engineering = {
+          input = "mattpocock-skills";
+          subdir = "skills/engineering";
+          filter.maxDepth = 1;
+        };
+
+        cursor-team-kit = {
+          input = "cursor-plugins";
+          subdir = "cursor-team-kit/skills";
+          idPrefix = "cursor-team-kit";
+          filter.maxDepth = 1;
+        };
+
+        expo = {
+          input = "expo-skills";
+          subdir = "plugins/expo/skills";
+          idPrefix = "expo";
+          filter.maxDepth = 1;
+        };
+
+        e2e = {
+          path = ../../../skills;
+          subdir = "e2e";
+          idPrefix = "e2e";
+          filter.maxDepth = 2;
+        };
+
+        herdr = {
+          input = "herdr";
+          subdir = "skills";
+          filter.maxDepth = 1;
+        };
+
+        gh-open-pr-template = {
+          path = ../../../skills;
+          subdir = "gh-open-pr-template";
+          filter.maxDepth = 1;
+        };
+
+        draft-mobile-platform-update = {
+          path = ../../../skills;
+          subdir = "draft-mobile-platform-update";
+          filter.maxDepth = 1;
+        };
+
+        stage-commit-push = {
+          path = ../../../skills;
+          subdir = "stage-commit-push";
+          filter.maxDepth = 1;
+        };
+
+        linear-issue-from-diff = {
+          path = ../../../skills;
+          subdir = "linear-issue-from-diff";
+          filter.maxDepth = 1;
+        };
       };
 
-      mattpocock-engineering = {
-        input = "mattpocock-skills";
-        subdir = "skills/engineering";
-        filter.maxDepth = 1;
-      };
+      skills.enable = cursorTeamKitSkills ++ expoSkills ++ ["herdr"];
 
-      cursor-team-kit = {
-        input = "cursor-plugins";
-        subdir = "cursor-team-kit/skills";
-        idPrefix = "cursor-team-kit";
-        filter.maxDepth = 1;
-      };
+      skills.enableAll = [
+        "mattpocock-productivity"
+        "mattpocock-engineering"
+        "e2e"
+        "gh-open-pr-template"
+        "draft-mobile-platform-update"
+        "stage-commit-push"
+        "linear-issue-from-diff"
+      ];
 
-      expo = {
-        input = "expo-skills";
-        subdir = "plugins/expo/skills";
-        idPrefix = "expo";
-        filter.maxDepth = 1;
-      };
-
-      e2e = {
-        path = ../../../skills;
-        subdir = "e2e";
-        idPrefix = "e2e";
-        filter.maxDepth = 2;
-      };
-
-      herdr = {
-        input = "herdr";
-        subdir = "skills";
-        filter.maxDepth = 1;
-      };
-
-      gh-open-pr-template = {
-        path = ../../../skills;
-        subdir = "gh-open-pr-template";
-        filter.maxDepth = 1;
-      };
-
-      draft-mobile-platform-update = {
-        path = ../../../skills;
-        subdir = "draft-mobile-platform-update";
-        filter.maxDepth = 1;
-      };
-
-      stage-commit-push = {
-        path = ../../../skills;
-        subdir = "stage-commit-push";
-        filter.maxDepth = 1;
-      };
-
-      linear-issue-from-diff = {
-        path = ../../../skills;
-        subdir = "linear-issue-from-diff";
-        filter.maxDepth = 1;
+      targets = {
+        codex.enable = true;
+        opencode.enable = true;
+        claude.enable = true;
       };
     };
 
-    skills.enable = cursorTeamKitSkills ++ expoSkills ++ ["herdr"];
-
-    skills.enableAll = [
-      "mattpocock-productivity"
-      "mattpocock-engineering"
-      "e2e"
-      "gh-open-pr-template"
-      "draft-mobile-platform-update"
-      "stage-commit-push"
-      "linear-issue-from-diff"
-    ];
-
-    targets = {
-      codex.enable = true;
-      opencode.enable = true;
-      claude.enable = true;
-    };
+    programs.mcp.servers =
+      lib.mkForce
+      (import ./opencode-mcp-servers.nix {inherit lib;}).homeManager;
   };
-
-  programs.mcp.servers =
-    lib.mkForce
-    (import ./mcp-servers.nix {
-      inherit config;
-      androidHome = config.home.sessionVariables.ANDROID_HOME;
-    }).opencode;
 }
