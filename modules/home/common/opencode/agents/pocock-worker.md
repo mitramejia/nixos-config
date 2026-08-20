@@ -1,8 +1,8 @@
 ---
 description: Implements one focused React Native, Expo, or TypeScript task
 mode: subagent
-model: openai/gpt-5.3-codex-spark
-reasoningEffort: high
+model: openai/gpt-5.6-terra
+reasoningEffort: medium
 textVerbosity: low
 temperature: 0.1
 permission:

@@ -3,8 +3,9 @@
   lib,
   pkgs,
   ...
-}: let
-  json = pkgs.formats.json {};
+}:
+let
+  json = pkgs.formats.json { };
 
   # vimcode is configured in tui.json, per its documentation, so that is the
   # only place Nix declares it.
@@ -12,25 +13,12 @@
     "vimcode@git+https://github.com/oribarilan/vimcode.git#v0.15.3"
   ];
 
-  opencodePlugins = ["opencode-claude-auth@latest"];
+  opencodePlugins = [ "opencode-claude-auth@latest" ];
 
-  opencodeMcpServers = let
-    servers =
-      (import ../common/mcp-servers.nix {
-        inherit config;
-        androidHome = null;
-      }).opencode;
-  in
-    lib.mapAttrs (_: server:
-      if server ? url
-      then server
-      else
-        (builtins.removeAttrs server ["args"])
-        // {
-          type = "local";
-          command = [server.command] ++ server.args;
-        })
-    servers;
+  opencodeMcpServers = import ../common/opencode-mcp-servers.nix {
+    inherit config lib;
+    androidHome = null;
+  };
 
   # OpenCode rewrites both files at runtime: Headroom edits opencode.json, and
   # the vim mode toggle persists to tui.json. Nix seeds a missing file, then
@@ -52,7 +40,7 @@
     {
       name = "tui.json";
       plugins = tuiPlugins;
-      removePlugins = ["@leohenon/opencode-vim-plugin"];
+      removePlugins = [ "@leohenon/opencode-vim-plugin" ];
       seed = {
         plugin = tuiPlugins;
         keybinds.leader = "space";
@@ -61,10 +49,13 @@
   ];
 
   ensureCall = entry: ''
-    ensure_mutable_config ${lib.escapeShellArg entry.name} ${json.generate "opencode-seed-${entry.name}" entry.seed} ${json.generate "opencode-plugins-${entry.name}" entry.plugins} ${json.generate "opencode-removed-plugins-${entry.name}" (entry.removePlugins or [])}
+    ensure_mutable_config ${lib.escapeShellArg entry.name} ${json.generate "opencode-seed-${entry.name}" entry.seed} ${json.generate "opencode-plugins-${entry.name}" entry.plugins} ${
+      json.generate "opencode-removed-plugins-${entry.name}" (entry.removePlugins or [ ])
+    }
   '';
-in {
-  home.activation.ensureMutableOpenCodeConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+in
+{
+  home.activation.ensureMutableOpenCodeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     config_dir="${config.xdg.configHome}/opencode"
 
     ensure_mutable_config() {
