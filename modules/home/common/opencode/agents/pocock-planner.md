@@ -1,7 +1,8 @@
 ---
 description: Plans implementation work and delegates bounded investigations
 mode: primary
-model: anthropic/claude-opus-5
+model: openai/gpt-5.6-sol
+reasoningEffort: high
 temperature: 0.1
 permission:
   edit: deny
