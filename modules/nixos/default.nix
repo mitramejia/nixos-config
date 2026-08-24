@@ -62,6 +62,7 @@ in {
     gvfs.enable = true;
     openssh.enable = true;
     flatpak.enable = true;
+    expanso.enable = true;
     avahi = {
       enable = true;
       nssmdns4 = true;
