@@ -260,6 +260,7 @@ in {
         "agents/pocock-triage.md" = ./opencode/agents/pocock-triage.md;
         "agents/mobile-reviewer.md" = ./opencode/agents/mobile-reviewer.md;
         "agents/mobile-release-safety.md" = ./opencode/agents/mobile-release-safety.md;
+        "agents/appium-test-engineer.md" = ./opencode/agents/appium-test-engineer.md;
         "commands/mobile-implement.md" = ./opencode/commands/mobile-implement.md;
         "commands/mobile-plan.md" = ./opencode/commands/mobile-plan.md;
         "commands/mobile-review.md" = ./opencode/commands/mobile-review.md;
