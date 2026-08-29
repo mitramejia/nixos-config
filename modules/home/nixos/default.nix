@@ -26,4 +26,6 @@
     source = ../../../assets/wallpapers;
     recursive = true;
   };
+
+  services.espanso.enable = true;
 }

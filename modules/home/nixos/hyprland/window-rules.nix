@@ -15,6 +15,10 @@ in {
       class = "^(.*jetbrains.*)$";
       title = "^(win.*)$";
     } {focus_on_activate = true;})
+    (rule {class = "^dev.noctalia.Noctalia$";} {
+      float = true;
+      size = [1080 920];
+    })
     (rule {
       float = true;
       class = "^(.*jetbrains.*)$";
@@ -85,5 +89,17 @@ in {
     (rule {title = "^(Picture-in-Picture)$";} {keep_aspect_ratio = true;})
     (rule {tag = "games*";} {no_blur = true;})
     (rule {tag = "games*";} {fullscreen = true;})
+  ];
+
+  # Let Noctalia animate its own layers while Hyprland supplies the backdrop blur.
+  wayland.windowManager.hyprland.settings.layer_rule = [
+    {
+      name = "noctalia";
+      match.namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$";
+      no_anim = true;
+      ignore_alpha = 0.5;
+      blur = true;
+      blur_popups = true;
+    }
   ];
 }

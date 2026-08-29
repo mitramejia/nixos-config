@@ -145,6 +145,7 @@
       }: {
         inherit workspace monitor;
         default = true;
+        persistent = true;
       })
       declarations;
     routingRules =
@@ -249,11 +250,13 @@
           workspace = "1";
           monitor = "DP-1";
           default = true;
+          persistent = true;
         }
         {
           workspace = "9";
           monitor = "DP-2";
           default = true;
+          persistent = true;
         }
       ]) "Workspace declarations must derive monitor assignments.";
     assert assertMsg (representativeWorkspace.routingRules

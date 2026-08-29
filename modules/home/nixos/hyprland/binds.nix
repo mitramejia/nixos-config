@@ -165,21 +165,23 @@
     workspaceKeys);
 
   mediaBindings = [
-    (mk "XF86AudioRaiseVolume" "Raise volume" {exec = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";})
-    (mk "XF86AudioLowerVolume" "Lower volume" {exec = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";})
-    (mk "XF86AudioMute" "Toggle mute" {exec = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";})
+    (mk "XF86AudioRaiseVolume" "Raise volume" {exec = "noctalia msg volume-up";})
+    (mk "XF86AudioLowerVolume" "Lower volume" {exec = "noctalia msg volume-down";})
+    (mk "XF86AudioMute" "Toggle mute" {exec = "noctalia msg volume-mute";})
     (mk "XF86AudioPlay" "Play or pause" {exec = "playerctl play-pause";})
     (mk "XF86AudioPause" "Play or pause" {exec = "playerctl play-pause";})
     (mk "XF86AudioNext" "Next track" {exec = "playerctl next";})
     (mk "XF86AudioPrev" "Previous track" {exec = "playerctl previous";})
-    (mk "XF86MonBrightnessDown" "Lower brightness" {exec = "brightnessctl set 5%-";})
-    (mk "XF86MonBrightnessUp" "Raise brightness" {exec = "brightnessctl set +5%";})
+    (mk "XF86MonBrightnessDown" "Lower brightness" {exec = "noctalia msg brightness-down";})
+    (mk "XF86MonBrightnessUp" "Raise brightness" {exec = "noctalia msg brightness-up";})
   ];
 
   keybindings =
     [
       (mk "Super+Return" "Open terminal" {exec = terminal;})
       ((mk "Super+SPACE" "Toggle Noctalia launcher" {exec = "noctalia msg panel-toggle launcher";}) // {documentationKey = "Super+Space";})
+      ((mk "Super+comma" "Toggle Noctalia settings" {exec = "noctalia msg settings-toggle";}) // {documentationKey = "Super+Comma";})
+      ((mk "Alt+Tab" "Toggle Noctalia window switcher" {exec = "noctalia msg window-switcher";}) // {documentationKey = "Alt+Tab";})
       (mk "Super+Shift+W" "Toggle web search" {exec = "noctalia msg plugin:web-search toggle";})
       (mk "Super+Alt+F" "Toggle file search" {exec = "noctalia msg plugin:file-search toggle";})
       ((mk "Super+TAB" "Switch to previous workspace" {workspace = "previous";}) // {documentationKey = "Super+Tab";})
@@ -212,8 +214,8 @@
       ((mk "Super+Shift+j" "Move window down" {moveWindow = "d";}) // {documentationKey = "Super+Shift+J";})
       ((mk "Super+left" "Focus left" {focus = "l";}) // {documentationKey = "Super+Left";})
       ((mk "Super+right" "Focus right" {focus = "r";}) // {documentationKey = "Super+Right";})
-      ((mk "Super+up" "Raise volume" {exec = "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+";}) // {documentationKey = "Super+Up";})
-      ((mk "Super+down" "Lower volume" {exec = "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-";}) // {documentationKey = "Super+Down";})
+      ((mk "Super+up" "Raise volume" {exec = "noctalia msg volume-up";}) // {documentationKey = "Super+Up";})
+      ((mk "Super+down" "Lower volume" {exec = "noctalia msg volume-down";}) // {documentationKey = "Super+Down";})
       ((mk "Super+h" "Focus left" {focus = "l";}) // {documentationKey = "Super+H";})
       ((mk "Super+l" "Focus right" {focus = "r";}) // {documentationKey = "Super+L";})
       ((mk "Super+k" "Focus up" {focus = "u";}) // {documentationKey = "Super+K";})
@@ -246,7 +248,7 @@
   representativeBindings = [
     (mk "Super+Return" "Open terminal" {exec = terminal;})
     (mk "Super+1" "Switch to workspace 1" {workspace = "1";})
-    (mk "XF86AudioRaiseVolume" "Raise volume" {exec = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";})
+    (mk "XF86AudioRaiseVolume" "Raise volume" {exec = "noctalia msg volume-up";})
     (mkMouse "Super+mouse:272" {moveWindow = null;})
   ];
   caseSensitiveBindings = [
@@ -277,7 +279,7 @@
       {
         _args = [
           (lua ''"XF86AudioRaiseVolume"'')
-          (lua ''hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")'')
+          (lua ''hl.dsp.exec_cmd("noctalia msg volume-up")'')
         ];
       }
       {

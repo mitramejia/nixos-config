@@ -62,7 +62,7 @@ in {
     rtk
     just
     docker-compose
-
+    lmstudio
     detekt
     gradle
     just-lsp

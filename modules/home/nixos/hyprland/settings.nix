@@ -43,8 +43,8 @@ in {
 
       general = {
         layout = "dwindle";
-        gaps_in = 6;
-        gaps_out = 8;
+        gaps_in = 5;
+        gaps_out = 10;
         border_size = 2;
         resize_on_border = true;
         col = {
@@ -60,16 +60,18 @@ in {
       };
 
       decoration = {
-        rounding = 10;
+        rounding = 20;
+        rounding_power = 2;
         blur = {
           enabled = true;
-          size = 4;
-          passes = 1;
+          size = 3;
+          passes = 2;
+          vibrancy = 0.1696;
           ignore_opacity = true;
           new_optimizations = true;
         };
         shadow = {
-          enabled = false;
+          enabled = true;
           range = 4;
           render_power = 3;
           color = "rgba(1a1a1aee)";
