@@ -511,11 +511,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1788031143,
-        "narHash": "sha256-xNperGjThLKOOhPK68AgDbQ73C5CNtnxXGwoEDCI58E=",
+        "lastModified": 1788031576,
+        "narHash": "sha256-aKOeAct5XZbu/ihljMK/JIiLlKzVTbCPSa7fkGEiayI=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "fd11ec9c65d25599557841adc123d9b134693459",
+        "rev": "f2207fa7eee0ddfda7d4ab8710c6d3d3d615916d",
         "type": "github"
       },
       "original": {
@@ -959,11 +959,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1787360063,
-        "narHash": "sha256-95aJfHyQTLWslCXFVNB0odgmVkpdmDezQwTg9mhqV1E=",
-        "rev": "2c423e03bbafcff28bfadc6781a4a8257f205cb5",
+        "lastModified": 1786599213,
+        "narHash": "sha256-yjGG65gA1jORt0hWxjzrnw3AYkIn8EWolp8vezwXZ3I=",
+        "rev": "0e251e24a4f24e036a084b6b4b2d2491af4167f4",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1059570.2c423e03bbaf/nixexprs.tar.zst"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1053317.0e251e24a4f2/nixexprs.tar.zst"
       },
       "original": {
         "type": "tarball",
@@ -998,11 +998,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1788012673,
-        "narHash": "sha256-Qzdrf8phPKo31TTqVdDv6vVv9EwQRWnf5HPKUoDDdPM=",
+        "lastModified": 1787160176,
+        "narHash": "sha256-uqDHCNgaB0l0UYN5rXksMwkaFOYgkZv2nZ1imPtlK5I=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "29dab93fdf9091f83f9eec20a20e72e11fc4e6c4",
+        "rev": "a4575781d7e9c432a58832b04e0cda310bd22b71",
         "type": "github"
       },
       "original": {

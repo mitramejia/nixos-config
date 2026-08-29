@@ -24,6 +24,11 @@
     mouse = true;
     document = false;
   };
+  mkRelease = key: description: action:
+    (mk key description action)
+    // {
+      documentationKey = "${key} (release)";
+    };
 
   normalizeModifier = modifier:
     {
@@ -150,7 +155,8 @@
         (lua (renderKey (parseKey binding.key)))
         (actionToLua binding.action)
       ]
-      ++ lib.optional binding.mouse {mouse = true;};
+      ++ lib.optional binding.mouse {mouse = true;}
+      ++ lib.optional (binding.release or false) {release = true;};
   };
 
   workspaceKeys = (map builtins.toString (lib.range 1 9)) ++ ["0"];
@@ -192,7 +198,7 @@
       (mk "Super+W" "Open browser" {exec = browser;})
       (mk "Super+M" "Open Cider" {exec = "cider-appimage";})
       (mk "Super+S" "Take region screenshot" {exec = "sh -lc 'mkdir -p \"$HOME/Pictures/Screenshots\" && hyprshot -m region -o \"$HOME/Pictures/Screenshots\"'";})
-      (mk "Super+D" "Open Discord" {exec = "discord";})
+      (mk "Super+D" "Start push-to-talk recording" {exec = "voxtype record start";})
       (mk "Super+O" "Open OBS" {exec = "obs";})
       (mk "Super+E" "Pick color" {exec = "hyprpicker -a";})
       (mk "Super+G" "Open GIMP" {exec = "gimp";})
@@ -230,12 +236,17 @@
     ]
     ++ mediaBindings;
 
+  releaseBindings = [
+    (mkRelease "Super+D" "Stop push-to-talk recording" {exec = "voxtype record stop";})
+  ];
+
   mouseBindings = [
     (mkMouse "Super+mouse:272" {moveWindow = null;})
     (mkMouse "Super+mouse:273" {resizeWindow = true;})
   ];
 
   luaBindings = map renderBinding (keybindings ++ mouseBindings);
+  luaReleaseBindings = map (binding: renderBinding (binding // {release = true;})) releaseBindings;
   documentation =
     ''
       # Hyprland Keybindings
@@ -243,7 +254,7 @@
       Generated from `modules/home/nixos/hyprland/binds.nix`.
 
     ''
-    + lib.concatMapStrings (binding: "- `${binding.documentationKey or binding.key}`: ${binding.description}\n") (lib.filter (binding: binding.document) keybindings);
+    + lib.concatMapStrings (binding: "- `${binding.documentationKey or binding.key}`: ${binding.description}\n") (lib.filter (binding: binding.document) (keybindings ++ releaseBindings));
 
   representativeBindings = [
     (mk "Super+Return" "Open terminal" {exec = terminal;})
@@ -327,6 +338,7 @@
       ]) "Hyprland keybinding intent must preserve case-sensitive key names in Lua.";
     assert assertMsg (!invalidAction.success) "Hyprland keybinding intent must reject invalid actions.";
     assert assertMsg (take (builtins.length luaBindings) finalBindings == luaBindings) "Hyprland keybinding intent must render the Hyprland Lua bindings before later binding adapters.";
+    assert assertMsg (take (builtins.length luaReleaseBindings) (lib.drop (builtins.length luaBindings) finalBindings) == luaReleaseBindings) "Hyprland keybinding intent must render release bindings with the Lua release flag.";
     assert assertMsg (config.home.file.".config/hypr/keybindings.md".text == documentation) "Hyprland keybinding intent must render the keybinding documentation.";
       pkgs.runCommand "hyprland-keybinding-intent" {} "mkdir -p $out";
 in {
@@ -356,8 +368,8 @@ in {
       check = keybindingCheck;
     };
 
-    # Home Manager renders this Nix list as hl.bind calls for Hyprland 0.56.
-    wayland.windowManager.hyprland.settings.bind = luaBindings;
+    # Hyprland 0.56 represents release bindings as a flag on hl.bind.
+    wayland.windowManager.hyprland.settings.bind = luaBindings ++ luaReleaseBindings;
     home.file.".config/hypr/keybindings.md".text = documentation;
   };
 }

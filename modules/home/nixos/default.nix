@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./hyprland
     ./clipboard.nix
@@ -20,6 +20,7 @@
     ./lazygit.nix
     ./tmux.nix
     ./zsh.nix
+    ./voxtype.nix
   ];
 
   home.file."Pictures/Wallpapers" = {
@@ -28,4 +29,18 @@
   };
 
   services.espanso.enable = true;
+
+  services.voxtype = {
+    enable = true;
+    package = pkgs.voxtype-vulkan;
+    loadModels = ["large-v3-turbo"];
+    wayland.display = "wayland-1";
+    settings = {
+      hotkey.enabled = false;
+      whisper = {
+        model = "large-v3-turbo";
+        language = "en";
+      };
+    };
+  };
 }
