@@ -14,8 +14,8 @@
     '';
 
     # Kernel
-    # Use 7.0.10 for the upstream MediaTek btmtk Bluetooth fix.
-    kernelPackages = kernelPkgs.linuxPackages_7_0;
+    # Track the latest kernel to retain the upstream MediaTek btmtk Bluetooth fix.
+    kernelPackages = pkgs.linuxPackages_latest;
 
     # Needed For Some Steam Games
     kernel.sysctl = {
