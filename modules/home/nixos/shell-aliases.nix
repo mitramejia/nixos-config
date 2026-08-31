@@ -1,5 +1,6 @@
 {host, ...}: {
   sv = "sudo nvim";
+  open = "xdg-open";
   fr = "nh os switch --hostname ${host.key} ${host.nixConfig}";
   # A full flake update can replace systemd and re-exec the user manager.
   # Activate it at the next boot instead of interrupting Hyprland live.

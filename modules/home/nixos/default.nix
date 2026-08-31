@@ -32,7 +32,7 @@
 
   services.voxtype = {
     enable = true;
-    package = pkgs.voxtype-vulkan;
+    package = pkgs.voxtype.override {vulkanSupport = true;};
     loadModels = ["large-v3-turbo"];
     wayland.display = "wayland-1";
     settings = {

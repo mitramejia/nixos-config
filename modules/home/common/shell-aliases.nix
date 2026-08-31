@@ -2,7 +2,6 @@
   programs.zsh.shellAliases = {
     cat = "bat";
     v = "vim";
-    open = "xdg-open";
     man = "batman";
     ".." = "cd ..";
     gp = "git push origin";

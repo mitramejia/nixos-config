@@ -29,7 +29,7 @@ in {
         # Lua accepts one keyboard-options value; comma-separating preserves
         # both previous options.
         kb_options = "grp:alt_caps_toggle,caps:super";
-        follow_mouse = 1;
+        follow_mouse = 2;
         float_switch_override_focus = 2;
         scroll_factor = 2;
         touchpad = {
@@ -60,7 +60,7 @@ in {
       };
 
       decoration = {
-        rounding = 20;
+        rounding = 8;
         rounding_power = 2;
         blur = {
           enabled = true;
