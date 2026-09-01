@@ -107,9 +107,6 @@ in {
       advanced.scrollback_limit_bytes = 100 * 1000 * 1000;
 
       session.resume_agents_on_restore = true;
-
-      # Preserve Kitty-image capability used by the existing Yazi setup.
-      experimental.kitty_graphics = true;
     };
   };
 
