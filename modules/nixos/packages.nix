@@ -76,6 +76,7 @@
       hyprpicker # Color picker for Hyprland
       ninja # Build system
       brightnessctl # Brightness control
+      chromium # Web browser
       virt-viewer # Virtual machine viewer
       swappy # Screenshot editor
       appimage-run # AppImage runner
