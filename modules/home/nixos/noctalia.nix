@@ -3,7 +3,8 @@
   inputs,
   pkgs,
   ...
-}: let
+}:
+let
   wallpaperImg = "${config.home.homeDirectory}/Pictures/Wallpapers/pexels.jpg";
   wallpaperImgVertical = "${config.home.homeDirectory}/Pictures/Wallpapers/pexels-vertical.jpg";
 
@@ -86,7 +87,8 @@
     ${pkgs.coreutils}/bin/install -D -m 0644 "$temporary_file" "$target_file"
     echo "Saved effective Noctalia settings to $target_file"
   '';
-in {
+in
+{
   imports = [
     inputs.noctalia.homeModules.default
   ];
@@ -116,7 +118,11 @@ in {
       exec = "${pkgs.slack}/bin/slack -s %U";
       icon = "${pkgs.slack}/share/icons/hicolor/512x512/apps/slack.png";
       terminal = false;
-      categories = ["Network" "InstantMessaging"];
+      categories = [
+        "Network"
+        "InstantMessaging"
+      ];
+      mimeType = [ "x-scheme-handler/slack" ];
     };
 
     media-play-pause = {
@@ -126,7 +132,7 @@ in {
       exec = "${pkgs.playerctl}/bin/playerctl play-pause";
       icon = "media-playback-start";
       terminal = false;
-      categories = ["AudioVideo"];
+      categories = [ "AudioVideo" ];
     };
 
     media-next = {
@@ -136,7 +142,7 @@ in {
       exec = "${pkgs.playerctl}/bin/playerctl next";
       icon = "media-skip-forward";
       terminal = false;
-      categories = ["AudioVideo"];
+      categories = [ "AudioVideo" ];
     };
 
     media-previous = {
@@ -146,7 +152,7 @@ in {
       exec = "${pkgs.playerctl}/bin/playerctl previous";
       icon = "media-skip-backward";
       terminal = false;
-      categories = ["AudioVideo"];
+      categories = [ "AudioVideo" ];
     };
   };
 }
