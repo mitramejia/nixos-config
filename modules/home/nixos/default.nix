@@ -1,9 +1,10 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./hyprland
     ./clipboard.nix
     ./terminal-shortcuts.nix
     ./neovim.nix
+    ./neomutt.nix
     ./android.nix
     ./packages.nix
     ./noctalia.nix
@@ -32,8 +33,8 @@
 
   services.voxtype = {
     enable = true;
-    package = pkgs.voxtype.override {vulkanSupport = true;};
-    loadModels = ["large-v3-turbo"];
+    package = pkgs.voxtype.override { vulkanSupport = true; };
+    loadModels = [ "large-v3-turbo" ];
     wayland.display = "wayland-1";
     settings = {
       hotkey.enabled = false;

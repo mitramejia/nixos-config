@@ -1,11 +1,13 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.nixvim = {
     plugins = {
       web-devicons.enable = true;
       lualine = {
         enable = true;
         settings = {
-          options = {theme = "auto";};
+          options = {
+            theme = "auto";
+          };
         };
       };
       bufferline.enable = true;
@@ -122,14 +124,23 @@
           fast_wrap = {
             enable = true;
             map = "<M-e>";
-            chars = ["{" "[" "(" "\"" "'" "`"];
+            chars = [
+              "{"
+              "["
+              "("
+              "\""
+              "'"
+              "`"
+            ];
           };
         };
       };
 
       toggleterm = {
         enable = true;
-        settings = {direction = "float";};
+        settings = {
+          direction = "float";
+        };
       };
 
       trouble.enable = true;
@@ -152,11 +163,28 @@
         settings = {
           keymap = {
             preset = "default";
-            "<C-n>" = ["show" "select_next" "fallback"];
-            "<C-p>" = ["show" "select_prev" "fallback"];
-            "<CR>" = ["accept" "fallback"];
-            "<Tab>" = ["select_next" "fallback"];
-            "<S-Tab>" = ["select_prev" "fallback"];
+            "<C-n>" = [
+              "show"
+              "select_next"
+              "fallback"
+            ];
+            "<C-p>" = [
+              "show"
+              "select_prev"
+              "fallback"
+            ];
+            "<CR>" = [
+              "accept"
+              "fallback"
+            ];
+            "<Tab>" = [
+              "select_next"
+              "fallback"
+            ];
+            "<S-Tab>" = [
+              "select_prev"
+              "fallback"
+            ];
           };
           appearance = {
             nerd_font_variant = "mono";
@@ -168,7 +196,12 @@
             };
           };
           sources = {
-            default = ["lsp" "path" "snippets" "buffer"];
+            default = [
+              "lsp"
+              "path"
+              "snippets"
+              "buffer"
+            ];
           };
           snippets = {
             preset = "luasnip";
@@ -189,6 +222,7 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       cmp-npm
+      neomutt-vim
       snacks-nvim
     ];
   };
