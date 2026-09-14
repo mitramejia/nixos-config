@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  inputs,
   pkgs,
   unstablePkgs,
   ...
@@ -243,11 +244,10 @@ in {
       }
     ];
 
-    # The opencode vim plugin requires opencode >= 1.17.10, which stable does
-    # not provide yet, so this one program tracks the pinned unstable set.
+    # Track upstream OpenCode because nixpkgs updates can lag its rapid releases.
     programs.opencode = {
       enable = true;
-      package = unstablePkgs.opencode;
+      package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
       enableMcpIntegration = true;
     };
 
