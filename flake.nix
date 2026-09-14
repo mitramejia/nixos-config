@@ -88,7 +88,8 @@
     };
     opencode = {
       url = "github:anomalyco/opencode";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      # Match upstream's pinned package set: its fixed node_modules hash depends on it.
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/9dd5558b06dbdacbf635a3dd36dce1b1a7ee3a89";
     };
     codex-cli-nix = {
       url = "github:sadjow/codex-cli-nix";
