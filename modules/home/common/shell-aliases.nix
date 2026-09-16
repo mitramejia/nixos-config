@@ -13,7 +13,7 @@
     headroom-update = ''uv tool update --python 3.13 "headroom-ai[all]"'';
     codex = "HERDR_AGENT=codex headroom wrap codex";
     claude = "headroom wrap claude";
-    oc = "opencode --auto";
+    oc = "headroom wrap opencode --auto";
     h = "herdr";
     ha = "herdr agent";
     hp = "herdr pane";

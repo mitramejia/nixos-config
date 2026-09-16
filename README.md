@@ -8,7 +8,7 @@ Darwin configuration imported here.
 | Configuration key | System | Hostname | User | System state | Home Manager state |
 | --- | --- | --- | --- | --- | --- |
 | `nixos` | `x86_64-linux` | `nixos` | `mitra` | `24.11` | `23.11` |
-| `macbook` | `aarch64-darwin` | `MitraMacBook` | `mitramejia` | `4` | `23.11` |
+| `macbook` | `aarch64-darwin` | `MitraMacBook` | `mitramejia` | `Determinate Nix 3.17.1` | `23.11` |
 
 The configuration key is how the flake and `nh` select a host. It is not
 necessarily the machine hostname: use `macbook` for the Darwin configuration,
@@ -32,6 +32,6 @@ nix eval .#darwinConfigurations.macbook.system.drvPath
 ```
 
 Run the Darwin evaluation or build on the Mac. `nix.enable = false` is
-intentional there: Determinate Nix continues to own the Nix installation and
-daemon. Homebrew is declarative only for the pinned taps and retained casks;
-activation cleanup is disabled.
+intentional there: Determinate Nix (3.17.1, bundling Nix 2.33.3) continues to
+own the Nix installation and daemon. Homebrew is declarative only for the
+pinned taps and retained casks; activation cleanup is disabled.

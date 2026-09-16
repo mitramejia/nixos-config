@@ -23,7 +23,6 @@
     {path = "/Applications/Linear.app/";}
     {path = "/Applications/Arc.app/";}
     {path = "/System/Applications/iPhone Mirroring.app/";}
-    {path = "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/";}
     {
       path = "/Applications/";
       section = "others";
