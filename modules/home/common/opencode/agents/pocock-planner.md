@@ -1,8 +1,9 @@
 ---
 description: Plans implementation work and delegates bounded investigations
 mode: primary
-model: openai/gpt-5.6-sol
+model: openai/gpt-6-sol
 reasoningEffort: high
+textVerbosity: medium
 temperature: 0.1
 permission:
   edit: deny

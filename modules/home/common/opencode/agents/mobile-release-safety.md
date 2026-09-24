@@ -1,7 +1,7 @@
 ---
 description: Audits native, EAS, OTA, and release changes before shipping
 mode: subagent
-model: openai/gpt-5.6-terra
+model: openai/gpt-6-sol
 reasoningEffort: high
 textVerbosity: low
 temperature: 0.1

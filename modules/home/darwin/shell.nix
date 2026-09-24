@@ -30,6 +30,7 @@
       export PATH=$HOME/.local/share/bin:$PATH
       export PNPM_HOME=~/.pnpm-packages
       export PATH="$HOME/.local/bin:$HOME/.pyenv/versions/3.12.7/bin/:$PATH"
+      export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
       export HISTIGNORE="pwd:ls:cd"
 
       tmux_sock="/private/tmp/tmux-$(id -u)/default"

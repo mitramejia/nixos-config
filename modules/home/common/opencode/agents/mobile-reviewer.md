@@ -1,7 +1,7 @@
 ---
 description: Reviews React Native changes for correctness, CI, and maintainability
 mode: subagent
-model: anthropic/claude-sonnet-5
+model: openai/gpt-6-sol
 temperature: 0.1
 permission:
   edit: deny

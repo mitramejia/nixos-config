@@ -1,7 +1,7 @@
 ---
 description: Quickly explores a codebase and reports relevant implementation context
 mode: subagent
-model: openai/gpt-5.6-luna
+model: openai/gpt-6-luna
 temperature: 0.1
 permission:
   edit: deny

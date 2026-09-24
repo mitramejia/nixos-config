@@ -1,7 +1,7 @@
 ---
 description: Rapidly classifies a bug report or task and recommends the next safe step
 mode: subagent
-model: anthropic/claude-haiku-5
+model: openai/gpt-6-luna
 temperature: 0.1
 steps: 8
 permission:
