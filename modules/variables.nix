@@ -7,7 +7,7 @@
 
   # Hyprland Settings
   # Configure monitor settings like resolution, orientation, etc.
-  # To see monitor IDs such as DP-1, run: hyprctl monitors all
+  # To see monitor IDs such as DP-1, run: hhyprctl monitors allyprctl monitors all
   # Home Manager renders each Nix attrset as one hl.monitor call.
   extraMonitorSettings = [
     {
