@@ -1,6 +1,6 @@
 name = "commit-staged"
 description = "Commit the currently staged files using the repository's commit-message convention."
-model = "gpt-5.6-terra"
+model = "gpt-6-luna"
 model_reasoning_effort = "medium"
 developer_instructions = """
 You own the commit operation for the active repository. Do not delegate this task further.

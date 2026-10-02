@@ -4,7 +4,7 @@
     github.url = "https://api.githubcopilot.com/mcp/";
     figma.url = "https://mcp.figma.com/mcp";
     notion.url = "https://mcp.notion.com/mcp";
-    datadog.url = "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp";
+    datadog.url = "https://mcp.datadoghq.com/v1/mcp";
     expo.url = "https://mcp.expo.dev/mcp";
     openaiDeveloperDocs.url = "https://developers.openai.com/mcp";
     statsig.url = "https://api.statsig.com/v1/mcp";
