@@ -1,7 +1,7 @@
 ---
 description: Reviews React Native changes for correctness, CI, and maintainability
 mode: subagent
-model: openai/gpt-6-sol
+model: openai/gpt-6.1-sol
 temperature: 0.1
 permission:
   edit: deny

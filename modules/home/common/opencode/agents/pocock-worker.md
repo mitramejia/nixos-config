@@ -1,7 +1,7 @@
 ---
 description: Implements one focused task
 mode: subagent
-model: openai/gpt-6-sol
+model: openai/gpt-6.1-sol
 reasoningEffort: medium
 textVerbosity: low
 temperature: 0.1

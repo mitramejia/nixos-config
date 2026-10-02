@@ -1,7 +1,7 @@
 ---
 description: Runs and repairs reliable Appium mobile end-to-end tests
 mode: subagent
-model: openai/gpt-6-sol
+model: openai/gpt-6.1-sol
 reasoningEffort: medium
 textVerbosity: low
 temperature: 0.1
