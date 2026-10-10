@@ -67,7 +67,6 @@
     agent-skills = {
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
     mattpocock-skills = {
       url = "github:mattpocock/skills";
@@ -177,6 +176,15 @@
           hyprland = hyprlandInputPkgs.hyprland.override {
             hyprland-guiutils = patchedHyprlandGuiutils;
           };
+          # Home Manager still overrides hyprland, which the upstream portal
+          # no longer takes. Keep Hyprland's pinned portal and its dependencies.
+          xdg-desktop-portal-hyprland =
+            hyprlandInputPkgs.xdg-desktop-portal-hyprland
+            // {
+              override = args:
+                hyprlandInputPkgs.xdg-desktop-portal-hyprland.override
+                (builtins.removeAttrs args ["hyprland"]);
+            };
         };
     in
       nixpkgs.lib.nixosSystem {

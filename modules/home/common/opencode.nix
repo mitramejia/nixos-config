@@ -247,7 +247,20 @@ in {
     # Track upstream OpenCode because nixpkgs updates can lag its rapid releases.
     programs.opencode = {
       enable = true;
-      package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+      package = let
+        upstream = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+      in
+        upstream.override {
+          # Bun 1.3.13 intermittently misses existing registry versions at its
+          # default concurrency of 48. Keep the upstream dependency hash intact.
+          node_modules = upstream.node_modules.overrideAttrs (old: {
+            buildPhase =
+              builtins.replaceStrings
+              ["--no-progress"]
+              ["--no-progress --network-concurrency=8"]
+              old.buildPhase;
+          });
+        };
       enableMcpIntegration = true;
     };
 
