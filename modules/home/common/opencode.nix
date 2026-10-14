@@ -7,6 +7,16 @@
   ...
 }: let
   upstreamPackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+  # Reduce intermittent registry misses without changing dependency contents.
+  downloadReliablePackage = upstreamPackage.override {
+    node_modules = upstreamPackage.node_modules.overrideAttrs (old: {
+      buildPhase =
+        builtins.replaceStrings
+        ["--no-progress"]
+        ["--no-progress --network-concurrency=8"]
+        old.buildPhase;
+    });
+  };
   # The locked 2.0.26+d21b079 Darwin bundle completed its frozen-lockfile install
   # and normalization, but its recursive hash differs from nix/hashes.json.
   # Correct only this dependency hash; future revisions use upstream hashes.
@@ -18,8 +28,8 @@
       && upstreamPackage.version == "2.0.26+d21b079"
       && upstreamPackage.node_modules.outputHash == "sha256-h9An+psN04P9QRfFpkvZByJPdoRrOSJUQIzYu+WJGd0="
     then
-      upstreamPackage.override {
-        node_modules = upstreamPackage.node_modules.override {
+      downloadReliablePackage.override {
+        node_modules = downloadReliablePackage.node_modules.override {
           hash = "sha256-VEHXhC0A8Er0rVADKUOeE8LGQCV1HRPspYYO1WUX4Jc=";
         };
       }
@@ -32,12 +42,12 @@
     then
       # This revision also completed install/normalization with a different
       # Darwin hash. Recorded from the current package's fixed-output build.
-      upstreamPackage.override {
-        node_modules = upstreamPackage.node_modules.override {
+      downloadReliablePackage.override {
+        node_modules = downloadReliablePackage.node_modules.override {
           hash = "sha256-IPIH8NI/DWBWPS9mDPE1cDhVz8QwtSJcOd1u6lQ+wOg=";
         };
       }
-    else upstreamPackage;
+    else downloadReliablePackage;
   # Remove this compatibility patch when moving beyond the verified release.
   opencodePackage =
     if
