@@ -3,8 +3,7 @@
   pkgs,
   unstablePkgs,
   ...
-}:
-{
+}: {
   programs = {
     _1password.enable = true;
     _1password-gui.enable = true;
@@ -43,8 +42,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages =
-    with pkgs;
+  environment.systemPackages = with pkgs;
     [
       geekbench_6
       hyprshot
@@ -77,6 +75,7 @@
       ninja # Build system
       brightnessctl # Brightness control
       chromium # Web browser
+      discord # Chat and voice communication
       virt-viewer # Virtual machine viewer
       swappy # Screenshot editor
       appimage-run # AppImage runner

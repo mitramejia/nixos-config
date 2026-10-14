@@ -7,6 +7,7 @@
   "notion-calendar"
   "twingate"
   "slack"
+  "discord"
   "obsidian"
   "iterm2"
   "raycast"
