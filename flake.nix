@@ -67,7 +67,6 @@
     agent-skills = {
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
     mattpocock-skills = {
       url = "github:mattpocock/skills";

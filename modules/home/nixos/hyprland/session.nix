@@ -1,5 +1,6 @@
 {
   hyprlandPkgs,
+  lib,
   pkgs,
   ...
 }: {
@@ -20,7 +21,12 @@
     # maintained by hand.
     configType = "lua";
     package = hyprlandPkgs.hyprland;
-    portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
+    # Home Manager 26.05 still passes a hyprland override, but the pinned
+    # portal no longer depends on it. Drop only that obsolete argument.
+    portalPackage =
+      lib.makeOverridable
+      (args: hyprlandPkgs.xdg-desktop-portal-hyprland.override (builtins.removeAttrs args ["hyprland"]))
+      {};
     xwayland.enable = true;
     systemd = {
       enable = true;

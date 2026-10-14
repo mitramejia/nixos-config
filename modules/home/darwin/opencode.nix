@@ -6,7 +6,8 @@
         permission = "allow";
       };
     };
-    tui.seed.keybinds.leader = "space";
+    # Retain the private.tui alias; the shared reconciler writes V2 cli.json.
+    tui.seed.keybinds.leader = "ctrl+x";
   };
 
   assertions = [
@@ -17,8 +18,8 @@
         (builtins.elemAt intent 0).seed.model
         == "gpt-5.4"
         && (builtins.elemAt intent 0).seed.permission == "allow"
-        && (builtins.elemAt intent 1).seed.keybinds.leader == "space";
-      message = "Darwin OpenCode policy must retain its existing model, permission, and TUI settings.";
+        && (builtins.elemAt intent 1).seed.keybinds.leader == "ctrl+x";
+      message = "Darwin OpenCode policy must retain its existing model, permission, and CLI settings.";
     }
   ];
 }
