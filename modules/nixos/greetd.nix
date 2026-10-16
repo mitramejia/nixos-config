@@ -7,6 +7,10 @@
 in {
   imports = [inputs.noctalia-greeter.nixosModules.default];
 
+  # Unlock the login keyring with the password entered at greetd login.
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
   services.displayManager.noctalia-greeter = {
     enable = true;
     settings = {
