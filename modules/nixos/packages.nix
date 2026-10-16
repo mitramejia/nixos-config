@@ -44,7 +44,6 @@
 
   environment.systemPackages = with pkgs;
     [
-      geekbench_6
       hyprshot
       bash
       vim # Text editor
