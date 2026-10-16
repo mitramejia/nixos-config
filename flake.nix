@@ -96,7 +96,8 @@
     };
 
     firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      # Use upstream Git transport because GitLab's API returns HTTP 403 to Nix.
+      url = "git+https://gitlab.com/rycee/nur-expressions.git?dir=pkgs/firefox-addons&ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
