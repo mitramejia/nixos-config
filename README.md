@@ -23,16 +23,44 @@ nh os switch . -H nixos
 nh darwin switch . -H macbook
 ```
 
-Validate before activation when changing host configuration:
+## Validate before activation
+
+From the repository root, on either `x86_64-linux` or `aarch64-darwin`:
 
 ```sh
-nix flake check
-nix build --no-link .#nixosConfigurations.nixos.config.system.build.toplevel
-nix eval .#darwinConfigurations.macbook.system.drvPath
+nix run --no-update-lock-file .#validate
 ```
 
-Run the Darwin evaluation or build on the Mac. `nix.enable = false` is
-intentional there: Determinate Nix (3.17.1, bundling Nix 2.33.3) continues to
+The locked stable Nixpkgs supplies Alejandra, Bash, coreutils, findutils, and the wrapper's
+Nix CLI (the initial `nix run` still uses your installed Nix). `formatter` exposes
+the same Alejandra on both platforms. Validation checks all repository `.nix`
+files without modifying them, excluding `.git`, `.scratch`, `.codegraph`,
+`generated`, `vendor`, and `node_modules` directories. Directory symlinks (including
+build result symlinks) are not followed. File enumeration failure aborts validation
+before later checks. Pre-existing
+formatting differences fail the check too; this is not an automatic reformat.
+It explicitly evaluates both
+`nixosConfigurations.nixos.config.system.build.toplevel.drvPath` and
+`darwinConfigurations.macbook.system.drvPath`, then runs native `nix flake check`.
+After successful enumeration, every check is attempted and any failure produces
+a nonzero exit. Locks may not
+be implicitly updated; no stage uses `--impure` or activates a configuration.
+
+Evaluation is not a full host closure build or a boot/activation test. It can
+fetch inputs or build import-from-derivation dependencies. Native checks build
+only the current platform's check derivations; run validation on both machines
+for both sets. Full closure builds, when needed, require compatible local or
+remote builders and are separate from validation:
+
+```sh
+# Linux builder
+nix build --no-link --no-update-lock-file .#nixosConfigurations.nixos.config.system.build.toplevel
+# Darwin builder
+nix build --no-link --no-update-lock-file .#darwinConfigurations.macbook.system
+```
+
+`nix.enable = false` is intentional on the Mac: Determinate Nix (3.17.1,
+bundling Nix 2.33.3) continues to
 own the Nix installation and daemon. Homebrew is declarative only for the
 pinned taps and retained casks; activation cleanup is disabled.
 

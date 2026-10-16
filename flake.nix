@@ -225,7 +225,55 @@
       ];
     };
     darwinHome = darwinHost.config.home-manager.users.${hosts.macbook.username};
+
+    forSupportedSystems = nixpkgs.lib.genAttrs [hosts.nixos.system hosts.macbook.system];
+    validationPkgs = forSupportedSystems (system: import nixpkgs {inherit system;});
+    validators = forSupportedSystems (system: let
+      pkgs = validationPkgs.${system};
+    in
+      pkgs.writeShellApplication {
+        name = "validate";
+        runtimeInputs = [pkgs.alejandra pkgs.coreutils pkgs.findutils pkgs.nix];
+        text = ''
+          if [[ ! -f flake.nix || ! -f flake.lock ]]; then
+            printf 'Run validate from the repository root.\n' >&2
+            exit 1
+          fi
+
+          status=0
+          run_check() {
+            local label="$1"
+            shift
+            printf '\n== %s ==\n' "$label"
+            if ! "$@"; then
+              printf 'FAILED: %s\n' "$label" >&2
+              status=1
+            fi
+          }
+
+          file_list=$(mktemp)
+          trap 'rm -f -- "$file_list"' EXIT
+          if ! find . -type d \
+            \( -name .git -o -name .scratch -o -name .codegraph \
+               -o -name generated -o -name vendor -o -name node_modules \
+            \) -prune -o -type f -name '*.nix' -print0 > "$file_list"; then
+            printf 'FAILED: Nix file enumeration\n' >&2
+            exit 1
+          fi
+          mapfile -d "" -t files < "$file_list"
+          run_check 'Nix formatting (non-mutating)' alejandra --check "''${files[@]}"
+          run_check 'NixOS derivation evaluation' nix eval --raw --no-update-lock-file \
+            .#nixosConfigurations.nixos.config.system.build.toplevel.drvPath
+          run_check 'Darwin derivation evaluation' nix eval --raw --no-update-lock-file \
+            .#darwinConfigurations.macbook.system.drvPath
+          run_check 'Native flake checks' nix flake check --no-update-lock-file
+          exit "$status"
+        '';
+      });
   in {
+    formatter = forSupportedSystems (system: validationPkgs.${system}.alejandra);
+    packages = forSupportedSystems (system: {validate = validators.${system};});
+
     nixosConfigurations.nixos = nixosHost;
 
     checks.${hosts.nixos.system} = {
