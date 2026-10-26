@@ -100,10 +100,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
-      # Newer revisions require ffmpeg_8/ffmpeg_9, which NixOS 26.05 does not provide.
-      url = "github:0xc000022070/zen-browser-flake/8c5b06ac3d7157ed46ed770cc1afead935d99c1e";
+      # Keep the browser's newer ffmpeg requirements scoped to this input.
+      url = "github:0xc000022070/zen-browser-flake/main";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-unstable";
         home-manager.follows = "home-manager";
       };
     };
@@ -281,11 +281,13 @@
       hyprland-workspace-startup-lua = hyprlandWorkspaceStartupCheck;
       mcp-catalog-adapters = nixosHome.private.mcpCatalogAdaptersCheck;
       opencode-mutable-config-nixos = nixosHome.private.openCodeMutableConfigCheck;
+      zen-browser-config = nixosHome.private.zenBrowserCheck;
     };
 
     checks.${hosts.macbook.system} = {
       mcp-catalog-adapters = darwinHome.private.mcpCatalogAdaptersCheck;
       opencode-mutable-config-darwin = darwinHome.private.openCodeMutableConfigCheck;
+      zen-browser-config = darwinHome.private.zenBrowserCheck;
     };
 
     darwinConfigurations.macbook = darwinHost;

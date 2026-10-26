@@ -15,6 +15,7 @@
     ./packages.nix
     ./shell-aliases.nix
     ./starship.nix
+    ./zen-browser.nix
   ];
 
   programs.home-manager.enable = true;

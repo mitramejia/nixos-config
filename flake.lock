@@ -1387,21 +1387,21 @@
           "home-manager"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1781896963,
-        "narHash": "sha256-77IYuReU5V9smjSB4hXBQb6in8ljg6XhJ8Ld66S4L0I=",
+        "lastModified": 1792963762,
+        "narHash": "sha256-ThRNX0+T2Gb3ZD0Xf+/R3wJdL93/mW80ubMnLjZelTY=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "8c5b06ac3d7157ed46ed770cc1afead935d99c1e",
+        "rev": "ed68d814d6cf2e221ba43d84f1e32429f5e2786f",
         "type": "github"
       },
       "original": {
         "owner": "0xc000022070",
+        "ref": "main",
         "repo": "zen-browser-flake",
-        "rev": "8c5b06ac3d7157ed46ed770cc1afead935d99c1e",
         "type": "github"
       }
     }
