@@ -86,9 +86,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
+      # Bun affects fixed-output dependency hashes; retain upstream's own nixpkgs lock.
       url = "github:anomalyco/opencode";
-      # Match upstream's pinned package set: its fixed node_modules hash depends on it.
-      inputs.nixpkgs.url = "github:NixOS/nixpkgs/9dd5558b06dbdacbf635a3dd36dce1b1a7ee3a89";
     };
     codex-cli-nix = {
       url = "github:sadjow/codex-cli-nix";

@@ -6,10 +6,17 @@
   unstablePkgs,
   ...
 }: let
+  upstreamNixpkgsRevision = (builtins.fromJSON (builtins.readFile "${inputs.opencode}/flake.lock")).nodes.nixpkgs.locked.rev;
   upstreamPackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+  dependencyHash = import ./opencode/dependency-hash.nix {
+    system = pkgs.stdenv.hostPlatform.system;
+    rev = inputs.opencode.rev;
+    version = upstreamPackage.version;
+    hash = upstreamPackage.node_modules.outputHash;
+  };
   # Reduce intermittent registry misses without changing dependency contents.
   downloadReliablePackage = upstreamPackage.override {
-    node_modules = upstreamPackage.node_modules.overrideAttrs (old: {
+    node_modules = (upstreamPackage.node_modules.override {hash = dependencyHash;}).overrideAttrs (old: {
       buildPhase =
         builtins.replaceStrings
         ["--no-progress"]
@@ -17,91 +24,22 @@
         old.buildPhase;
     });
   };
-  # The locked 2.0.26+d21b079 Darwin bundle completed its frozen-lockfile install
-  # and normalization, but its recursive hash differs from nix/hashes.json.
-  # Correct only this dependency hash; future revisions use upstream hashes.
-  dependencyCorrectedPackage =
-    if
-      pkgs.stdenv.hostPlatform.system
-      == "aarch64-darwin"
-      && inputs.opencode.rev == "d21b0790a6c146815f28fea604e41e922f009590"
-      && upstreamPackage.version == "2.0.26+d21b079"
-      && upstreamPackage.node_modules.outputHash == "sha256-h9An+psN04P9QRfFpkvZByJPdoRrOSJUQIzYu+WJGd0="
-    then
-      downloadReliablePackage.override {
-        node_modules = downloadReliablePackage.node_modules.override {
-          hash = "sha256-VEHXhC0A8Er0rVADKUOeE8LGQCV1HRPspYYO1WUX4Jc=";
-        };
-      }
-    else if
-      pkgs.stdenv.hostPlatform.system
-      == "aarch64-darwin"
-      && inputs.opencode.rev == "23e3493ab2efb6b8c00725cfd652b7f946af5343"
-      && upstreamPackage.version == "2.0.28+23e3493"
-      && upstreamPackage.node_modules.outputHash == "sha256-bD2PVCF1nx/+dKKWCd2qC+ka34pNzrA7HNv7U3L+em0="
-    then
-      # This revision also completed install/normalization with a different
-      # Darwin hash. Recorded from the current package's fixed-output build.
-      downloadReliablePackage.override {
-        node_modules = downloadReliablePackage.node_modules.override {
-          hash = "sha256-IPIH8NI/DWBWPS9mDPE1cDhVz8QwtSJcOd1u6lQ+wOg=";
-        };
-      }
-    else downloadReliablePackage;
-  # Remove this compatibility patch when moving beyond the verified release.
-  opencodePackage =
-    if
-      builtins.elem inputs.opencode.rev [
-        "d21b0790a6c146815f28fea604e41e922f009590"
-        "23e3493ab2efb6b8c00725cfd652b7f946af5343"
-      ]
-    then
-      dependencyCorrectedPackage.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./opencode/bun-resolve.patch];
-        # 23e3493's filtered src omits this newly imported build helper.
-        postPatch =
-          (old.postPatch or "")
-          + lib.optionalString (inputs.opencode.rev == "23e3493ab2efb6b8c00725cfd652b7f946af5343") ''
-            mkdir -p script
-            cp ${inputs.opencode}/script/native-arch.ts script/native-arch.ts
-          '';
-        passthru = (old.passthru or {}) // {inherit loaderCheck localPluginsCheck;};
-      })
-    else dependencyCorrectedPackage;
-  loaderCheck =
-    pkgs.runCommand "opencode-bun-resolver" {
-      nativeBuildInputs = [inputs.opencode.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.bun pkgs.patch];
-    } ''
-      cp -R ${inputs.opencode}/packages ./packages
-      chmod -R u+w packages
-      mkdir -p node_modules/@opencode
-      ln -s ../../packages/util node_modules/@opencode/util
-      cp ${./opencode/loader.test.ts} loader.test.ts
-      if bun test loader.test.ts > red.log 2>&1; then
-        cat red.log
-        echo "Expected the unpatched TUI-only resolver regression to fail"
-        exit 1
-      fi
-      cat red.log
-      patch -p1 < ${./opencode/bun-resolve.patch}
-      bun test loader.test.ts
-      bun test packages/plugin/test/host.test.ts
-      mkdir "$out"
-      cp red.log "$out/"
-    '';
+  opencodePackage = downloadReliablePackage.overrideAttrs (old: {
+    passthru = (old.passthru or {}) // {inherit localPluginsCheck;};
+  });
   localPluginsCheck =
     pkgs.runCommand "opencode-local-plugins" {
       nativeBuildInputs = [inputs.opencode.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.bun unstablePkgs.rtk];
     } ''
-          cp -R ${./opencode/plugins} plugins
-          cp ${./opencode/plugins.test.ts} plugins.test.ts
-        bun test plugins.test.ts
-        mkdir upstream
-        cp -R ${inputs.opencode}/packages upstream/packages
-        chmod -R u+w upstream/packages
-        cp -R ${dependencyCorrectedPackage.node_modules}/. upstream/
-        cp -R ${./opencode/plugins} upstream/packages/plugin/check-plugins
-        cp ${pkgs.writeText "opencode-local-plugin-tsconfig.json" (builtins.toJSON {
+        cp -R ${./opencode/plugins} plugins
+        cp ${./opencode/plugins.test.ts} plugins.test.ts
+      bun test plugins.test.ts
+      mkdir upstream
+      cp -R ${inputs.opencode}/packages upstream/packages
+      chmod -R u+w upstream/packages
+      cp -R ${downloadReliablePackage.node_modules}/. upstream/
+      cp -R ${./opencode/plugins} upstream/packages/plugin/check-plugins
+      cp ${pkgs.writeText "opencode-local-plugin-tsconfig.json" (builtins.toJSON {
         compilerOptions = {
           target = "ESNext";
           module = "ESNext";
@@ -114,8 +52,10 @@
         };
         include = ["check-plugins/**/*.ts"];
       })} upstream/packages/plugin/check-tsconfig.json
-      bun upstream/node_modules/.bun/typescript@5.8.2/node_modules/typescript/bin/tsc -p upstream/packages/plugin/check-tsconfig.json
-          mkdir "$out"
+        set -- upstream/packages/plugin/node_modules/typescript/bin/tsc*
+      test "$#" -eq 1
+      bun "$1" -p upstream/packages/plugin/check-tsconfig.json
+        mkdir "$out"
     '';
   json = pkgs.formats.json {};
   mcpServers = (import ./opencode-mcp-servers.nix {inherit lib;}).opencode;
@@ -450,6 +390,14 @@ in {
 
   config = {
     assertions = [
+      {
+        assertion = lib.all (passed: passed) (builtins.attrValues (import ./opencode/dependency-hash.test.nix));
+        message = "OpenCode's dependency-hash correction must remain limited to the verified Darwin revision and upstream hash.";
+      }
+      {
+        assertion = inputs.opencode.inputs.nixpkgs.rev == upstreamNixpkgsRevision;
+        message = "OpenCode must retain its upstream nixpkgs lock: Bun's version affects fixed-output dependency hashes.";
+      }
       {
         assertion =
           config.programs.opencode.settings

@@ -16,15 +16,65 @@ Other legacy server settings remain intact for upstream's
 V1 compatibility normalizer. User-managed symlinks are never rewritten;
 previous Nix-store links are replaced with mutable files, retaining their data.
 
-The Bun resolution patch is intentionally gated to the two verified OpenCode
-commits `d21b0790a6c146815f28fea604e41e922f009590` and
-`23e3493ab2efb6b8c00725cfd652b7f946af5343`. It normalizes only Bun's exact
-missing-module/package `ResolveMessage` diagnostic into the missing-module
-Error that `Host.resolve` already handles. It does not catch plugin evaluation
-errors or unrelated resolver errors. The existing Darwin dependency hash
-correction remains separate and unchanged. The latter revision has its own
-verified Darwin dependency-hash correction and a build-only restoration of
-the pinned `script/native-arch.ts` omitted from upstream's filtered source.
+The package retains reduced download concurrency for dependency installation.
+Historical dependency hashes and the Bun resolution patch for older OpenCode
+releases have been removed. Dependency hashes normally come from upstream;
+the single current, narrowly gated Darwin correction is documented below.
+
+Keep OpenCode's own locked nixpkgs input rather than forcing it to the system's
+package set or a historical revision. For `13a615b`, upstream pins nixpkgs
+`3181085bfd08663b6b9e60bc7a8395c2aaa741bd` (Bun 1.4.2). The former forced
+`9dd5558` pin used Bun 1.3.13 and produced a different dependency tree despite
+the frozen Bun lockfile. Restoring upstream's toolchain passes its original
+dependency hash, including with the retained concurrency workaround; no hash
+override is needed. A Home Manager assertion guards this relationship on both
+hosts. When updating OpenCode, retain its upstream nixpkgs lock as well.
+
+### Darwin dependency metadata mismatch at 0749024 (2026-10-26)
+
+The locked `0749024f0d6f6bb3014850a820d06677b7c37120` source updates its Bun
+lockfile, root package manifest and recorded dependency hashes. Its dependency
+derivation and normalization scripts are unchanged from the previously passing
+`13a615b` release. The upstream toolchain still matches: nixpkgs `3181085` / Bun 1.4.2.
+
+- Recorded Darwin hash: `sha256-TO9ubp4SLWrzWJY1BgDKOy/S8Tcws+Z2k+I6ba/TkWk=`.
+- Measured Darwin hash: `sha256-3EGfe+K2yM4atFT70JcwY66i/wFvHPO6/ewiIa2SB5Q=`.
+- Two configured builds and a separate **unmodified upstream** build produced
+  the same measured hash. Therefore the download-concurrency tweak is not the
+  cause. The registered measured output has no absolute or broken symlinks.
+- A subsequent `nix build --rebuild` of the corrected dependency passed Nix's
+  full output comparison, providing a fresh reproducibility check, not a cache hit.
+
+`dependency-hash.nix` corrects only that exact revision, package version,
+upstream hash and `aarch64-darwin` platform. Both the installed package and local
+plugin check use the same corrected dependency. Pure regression cases cover all
+gates, including future revisions and Linux passthrough. No lockfile update,
+toolchain change, resolver patch or global verification bypass is involved.
+The reason upstream CI recorded a different hash is not established; do not
+generalize this correction to another revision. Remove it when updating beyond
+this release and validate the next upstream dependency hash independently.
+
+Validated without activation: the original configured dependency installable,
+its forced reproducibility rebuild, the OpenCode package, `localPluginsCheck`
+(five tests / 83 assertions plus TypeScript), both full host derivation evaluations,
+`nix flake check --no-update-lock-file`, and the full Darwin system build all pass.
+An isolated HOME/XDG version smoke test reports `opencode v2.1.4+0749024`.
+Linux's configured hash is unchanged from upstream; Linux was evaluated, not built.
+
+Primary sources at the exact locked revision:
+- https://github.com/anomalyco/opencode/blob/0749024f0d6f6bb3014850a820d06677b7c37120/nix/hashes.json
+- https://github.com/anomalyco/opencode/blob/0749024f0d6f6bb3014850a820d06677b7c37120/nix/node_modules.nix
+
+### Build-only validation recorded 2026-10-24
+
+- The exact configured `package.node_modules` build now passes upstream's hash.
+- The configured package and `package.localPluginsCheck` build successfully:
+  five plugin tests, 83 assertions and the pinned workspace TypeScript check pass.
+- The built binary reports `opencode v2.1.4+13a615b` with isolated HOME/XDG paths.
+- Both host derivation evaluations and the full macOS system build pass without
+  activation. A temporary old-toolchain override is rejected by the new guard.
+- No running agent/service or live configuration was changed. Linux was evaluated,
+  not built locally; runtime plugin acceptance is separate from these build checks.
 
 ## Local V2 plugins
 
@@ -59,21 +109,15 @@ No plugin SDK dependency is installed into the user's config. OpenCode resolves
 
 ```sh
 nix build --no-link --impure --expr '(builtins.getFlake (toString ./.)).darwinConfigurations.macbook.config.home-manager.users.mitramejia.private.openCodeMutableConfigCheck'
-# Available on the patched, pinned package only:
-nix build --no-link --impure --expr '(builtins.getFlake (toString ./.)).darwinConfigurations.macbook.config.home-manager.users.mitramejia.programs.opencode.package.loaderCheck'
 nix build --no-link --impure --expr '(builtins.getFlake (toString ./.)).darwinConfigurations.macbook.config.home-manager.users.mitramejia.programs.opencode.package.localPluginsCheck'
 ```
-
-The loader check requires the TUI-only fixture to fail before patching, then
-passes it, unrelated-error propagation tests, and upstream Host tests through
-the real Bun resolver. No dependency install is needed for this check.
 
 The local-plugin check uses the pinned public API types, real RTK subprocesses
 and a fixture Unix socket, with mocked hook/transform/TUI registration hosts.
 For real RTK/BrowserStack V2 setup and MCP transform acceptance, run:
 
 ```sh
-node modules/home/common/opencode/plugins.acceptance.mjs /path/to/patched/opencode /path/to/temp-parent
+node modules/home/common/opencode/plugins.acceptance.mjs /path/to/opencode /path/to/temp-parent
 ```
 
 This owns isolated `serve --stdio` child processes with fake credentials and
