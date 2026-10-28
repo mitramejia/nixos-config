@@ -28,7 +28,7 @@
   profiles = import ./profiles.nix;
   legacyReviewStyleRouting = "For PR reviews, drafting or posting review comments, and replies to review feedback, load and follow the pr-review-style skill, including its reviewer routing instructions.";
   reviewerRouting = "For PR reviews, drafting or posting review comments, and replies to review feedback, delegate directly to the pr-reviewer agent and wait for its result. Pass the request, review scope, thread context, required output format, and existing publishing authorization. The reviewer loads pr-review-style itself; the parent agent should not load that skill. Reuse the reviewer for follow-ups. Respect an explicitly requested different reviewer; if pr-reviewer is unavailable, report that limitation.";
-  reviewerRoutingFile = pkgs.writeText "codex-pr-review-routing.md" ''
+  reviewerRoutingFile = pkgs.writeText "pr-review-routing" ''
 
     ## PR reviews
 
