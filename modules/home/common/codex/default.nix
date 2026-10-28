@@ -26,6 +26,14 @@
     pkgs.runCommand "mcp-catalog-adapters" {} "mkdir -p $out";
 
   profiles = import ./profiles.nix;
+  legacyReviewStyleRouting = "For PR reviews, drafting or posting review comments, and replies to review feedback, load and follow the pr-review-style skill, including its reviewer routing instructions.";
+  reviewerRouting = "For PR reviews, drafting or posting review comments, and replies to review feedback, delegate directly to the pr-reviewer agent and wait for its result. Pass the request, review scope, thread context, required output format, and existing publishing authorization. The reviewer loads pr-review-style itself; the parent agent should not load that skill. Reuse the reviewer for follow-ups. Respect an explicitly requested different reviewer; if pr-reviewer is unavailable, report that limitation.";
+  reviewerRoutingFile = pkgs.writeText "codex-pr-review-routing.md" ''
+
+    ## PR reviews
+
+    ${reviewerRouting}
+  '';
   codexConfig = toml.generate "codex-config.toml" (
     (import ./settings.nix)
     // {
@@ -59,6 +67,7 @@ in {
 
       file = {
         ".codex/agents/commit-staged.toml".source = ./agents/commit-staged.toml;
+        ".codex/agents/pr-reviewer.toml".source = ./agents/pr-reviewer.toml;
         ".codex/ollama-launch.config.toml".source = toml.generate "codex-ollama-launch-config.toml" profiles.ollamaLaunch;
         ".codex/gpt-oss.config.toml".source = toml.generate "codex-gpt-oss-config.toml" profiles.gptOss;
       };
@@ -91,6 +100,18 @@ in {
         elif [ ! -L "$config_file" ] && [ ! -w "$config_file" ]; then
           verboseEcho "Making Codex config writable at $config_file"
           run chmod u+w "$config_file"
+        fi
+      '';
+
+      activation.ensurePrReviewerRouting = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        instructions_file="${home}/.codex/AGENTS.md"
+        run mkdir -p "${home}/.codex"
+        if ${pkgs.gnugrep}/bin/grep -Fqx -- ${lib.escapeShellArg legacyReviewStyleRouting} "$instructions_file" 2>/dev/null; then
+          run env PR_REVIEW_OLD_RULE=${lib.escapeShellArg legacyReviewStyleRouting} PR_REVIEW_NEW_RULE=${lib.escapeShellArg reviewerRouting} \
+            ${pkgs.perl}/bin/perl -0pi -e 's/^\Q$ENV{PR_REVIEW_OLD_RULE}\E$/$ENV{PR_REVIEW_NEW_RULE}/mg' "$instructions_file"
+        fi
+        if ! ${pkgs.gnugrep}/bin/grep -Fqx -- ${lib.escapeShellArg reviewerRouting} "$instructions_file" 2>/dev/null; then
+          run ${pkgs.coreutils}/bin/tee -a "$instructions_file" < ${reviewerRoutingFile} >/dev/null
         fi
       '';
     };

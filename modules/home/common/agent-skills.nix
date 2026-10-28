@@ -98,6 +98,12 @@ in {
           subdir = "linear-issue-from-diff";
           filter.maxDepth = 1;
         };
+
+        pr-review-style = {
+          path = ../../../skills;
+          subdir = "pr-review-style";
+          filter.maxDepth = 1;
+        };
       };
 
       skills.enable = cursorTeamKitSkills ++ expoSkills ++ ["herdr"];
@@ -110,6 +116,7 @@ in {
         "draft-mobile-platform-update"
         "stage-commit-push"
         "linear-issue-from-diff"
+        "pr-review-style"
       ];
 
       targets = {
