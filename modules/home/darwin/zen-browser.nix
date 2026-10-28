@@ -12,6 +12,11 @@
   app = "${config.home.homeDirectory}/${config.targets.darwin.linkApps.directory}/${cfg.package.applicationName}.app";
   bundleId = "app.zen-browser.zen";
   lsregister = "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister";
+  defaultHandlers = pkgs.runCommand "zen-default-handlers" {nativeBuildInputs = [pkgs.python3];} ''
+    python3 -B -m unittest discover -s ${./zen-browser} -p 'test_*.py' -v
+    mkdir -p "$out"
+    cp ${./zen-browser/default_handlers.py} "$out/default_handlers.py"
+  '';
 in {
   assertions = [
     {
@@ -58,15 +63,9 @@ in {
         exit 1
       fi
       run ${lsregister} -f ${lib.escapeShellArg app}
-      # duti uses two arguments for schemes, three for UTI + role.
-      # Do not claim PDF, plain text, JSON, mailto, or reset the LS database.
-      if ! ${pkgs.duti}/bin/duti -s ${bundleId} http ||
-         ! ${pkgs.duti}/bin/duti -s ${bundleId} https ||
-         ! ${pkgs.duti}/bin/duti -s ${bundleId} public.html all ||
-         ! ${pkgs.duti}/bin/duti -s ${bundleId} public.xhtml all; then
-        echo "Zen: macOS did not accept a default handler. Confirm Zen in System Settings > Desktop & Dock > Default web browser, then verify HTML/XHTML via Finder Get Info > Open with." >&2
-        exit 1
-      fi
+      # LaunchServices may reject rewriting an already-selected HTTPS handler.
+      run ${pkgs.python3}/bin/python3 ${defaultHandlers}/default_handlers.py \
+        ${lib.escapeShellArg bundleId} ${pkgs.duti}/bin/duti
     fi
   '';
 }
