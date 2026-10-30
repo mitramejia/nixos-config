@@ -76,6 +76,28 @@ Primary sources at the exact locked revision:
 - No running agent/service or live configuration was changed. Linux was evaluated,
   not built locally; runtime plugin acceptance is separate from these build checks.
 
+## Agents and routing
+
+Home Manager installs `planner` (primary), `scout`, `worker`, and `triage`
+(subagents). `mobile-plan` selects `planner`; `mobile-implement`, `mobile-test`,
+and `mobile-check` select `worker`. Planner defaults narrow codebase and external
+metrics lookups to the read-only scout, uses triage for unclear requests, and
+routes implementation to a bounded worker. PR and branch-diff reviews, comments,
+and replies default to `pr-reviewer`; its OpenCode profile is rendered from the
+shared Codex prompt in `../codex/agents/pr-reviewer.toml`, adapting only the skill
+reference for OpenCode. Requested or complementary mobile-platform reviews and
+release-risk audits remain with `mobile-reviewer` and `mobile-release-safety`.
+
+Following the updated upstream `implement-spec` practice, each implementation
+ticket and review-fix pass gets a fresh child context. Independent read-only
+lookups can run in parallel; discovery-dependent queries stay sequential.
+
+These are source changes, not a deployment. Home Manager activation installs the
+new agent files and removes the old managed links. Existing sessions keep their
+selected agent until it is reselected or a new session is started. To validate
+before staging new files, use `path:.` flake references so evaluation includes
+untracked sources.
+
 ## Local V2 plugins
 
 Home Manager supplies the three focused ports under `plugins/`:

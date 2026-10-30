@@ -1,6 +1,6 @@
 ---
 description: Run the Comun-style CI check and diagnose failures
-agent: pocock-worker
+agent: worker
 subtask: false
 ---
 

@@ -1,8 +1,11 @@
 {
+  config,
   host,
   pkgs,
   ...
-}: {
+}: let
+  home = config.home-manager.users.${host.username};
+in {
   networking.hostName = host.hostname;
   system.stateVersion = host.systemStateVersion;
 
@@ -21,7 +24,7 @@
     {path = "${host.homeDirectory}/Applications/Android Studio.app/";}
     {path = "/System/Applications/Music.app/";}
     {path = "/Applications/Linear.app/";}
-    {path = "/Applications/Arc.app/";}
+    {path = "${home.home.homeDirectory}/${home.targets.darwin.linkApps.directory}/${home.programs.zen-browser.package.applicationName}.app";}
     {path = "/System/Applications/iPhone Mirroring.app/";}
     {
       path = "/Applications/";

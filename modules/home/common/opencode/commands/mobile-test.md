@@ -1,6 +1,6 @@
 ---
 description: Run and diagnose a focused mobile test command
-agent: pocock-worker
+agent: worker
 subtask: false
 ---
 

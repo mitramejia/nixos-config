@@ -1,6 +1,6 @@
 ---
 description: Implement a focused mobile task
-agent: pocock-worker
+agent: worker
 subtask: false
 ---
 

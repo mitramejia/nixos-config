@@ -6,6 +6,26 @@
   unstablePkgs,
   ...
 }: let
+  prReviewer = builtins.fromTOML (builtins.readFile ./codex/agents/pr-reviewer.toml);
+  prReviewerAgent = pkgs.writeText "opencode-pr-reviewer.md" ''
+    ---
+    description: ${builtins.toJSON prReviewer.description}
+    mode: subagent
+    model: openai/${prReviewer.model}#${prReviewer.model_reasoning_effort}
+    permissions:
+      - action: edit
+        resource: "*"
+        effect: deny
+      - action: shell
+        resource: "*"
+        effect: ask
+    ---
+
+    ${builtins.replaceStrings
+      ["$pr-review-style" "~/.codex/skills/pr-review-style/SKILL.md"]
+      ["pr-review-style" "~/.config/opencode/skills/pr-review-style/SKILL.md"]
+      prReviewer.developer_instructions}
+  '';
   upstreamNixpkgsRevision = (builtins.fromJSON (builtins.readFile "${inputs.opencode}/flake.lock")).nodes.nixpkgs.locked.rev;
   upstreamPackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
   dependencyHash = import ./opencode/dependency-hash.nix {
@@ -428,10 +448,11 @@ in {
     xdg.configFile =
       lib.mapAttrs' (name: source: lib.nameValuePair "opencode/${name}" {inherit source;})
       {
-        "agents/pocock-planner.md" = ./opencode/agents/pocock-planner.md;
-        "agents/pocock-worker.md" = ./opencode/agents/pocock-worker.md;
-        "agents/pocock-scout.md" = ./opencode/agents/pocock-scout.md;
-        "agents/pocock-triage.md" = ./opencode/agents/pocock-triage.md;
+        "agents/planner.md" = ./opencode/agents/planner.md;
+        "agents/worker.md" = ./opencode/agents/worker.md;
+        "agents/scout.md" = ./opencode/agents/scout.md;
+        "agents/triage.md" = ./opencode/agents/triage.md;
+        "agents/pr-reviewer.md" = prReviewerAgent;
         "agents/mobile-reviewer.md" = ./opencode/agents/mobile-reviewer.md;
         "agents/mobile-release-safety.md" = ./opencode/agents/mobile-release-safety.md;
         "agents/appium-test-engineer.md" = ./opencode/agents/appium-test-engineer.md;

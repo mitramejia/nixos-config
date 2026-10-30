@@ -1,6 +1,6 @@
 ---
 description: Plan a mobile change before implementation
-agent: pocock-planner
+agent: planner
 subtask: false
 ---
 
