@@ -97,6 +97,6 @@
       zoxide
     ]
     ++ [
-      unstablePkgs.android-studio-full
+      (import ../android-studio.nix {inherit unstablePkgs;})
     ];
 }

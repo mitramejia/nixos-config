@@ -44,9 +44,14 @@
         old.buildPhase;
     });
   };
-  opencodePackage = downloadReliablePackage.overrideAttrs (old: {
+  sourcePackage = downloadReliablePackage.overrideAttrs (old: {
     passthru = (old.passthru or {}) // {inherit localPluginsCheck;};
   });
+  # These checks target the source pin, not the official release's different SHA.
+  # Keep them opt-in rather than advertising them as binary package tests.
+  opencodePackage = (pkgs.callPackage ./opencode/package.nix {}).overrideAttrs {
+    passthru.sourceChecks = {inherit (sourcePackage) localPluginsCheck;};
+  };
   localPluginsCheck =
     pkgs.runCommand "opencode-local-plugins" {
       nativeBuildInputs = [inputs.opencode.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.bun unstablePkgs.rtk];
