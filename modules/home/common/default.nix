@@ -2,6 +2,7 @@
   imports = [
     ./agent-skills.nix
     ./bat.nix
+    ./claude.nix
     ./codex
     ./direnv.nix
     ./eza.nix

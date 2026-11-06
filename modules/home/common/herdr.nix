@@ -20,6 +20,25 @@
     rev = "820d48f5d9c9a7dece6a4bebfa3982ec30bbfbb7";
     hash = "sha256-qn69GDH3kCSYm9x/it3EyJqZiwQoK3pnwdfATeSwJ38=";
   };
+  autoTitle = pkgs.buildGoModule {
+    pname = "herdr-auto-title";
+    version = "0.18.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "kryptamine";
+      repo = "herdr-auto-title";
+      rev = "v0.18.0";
+      hash = "sha256-HhzsksVi8e5hT45ZI8SfoqeYXZ8PSchV/XE4MTVDUfk=";
+    };
+    vendorHash = "sha256-QxFp1b7pf7bn3Hh0hyaj8ke5Z61N+WwjhHt3pFiapTs=";
+    subPackages = ["cmd/herdr-auto-title"];
+    # `plugin link` only registers the manifest (unlike `plugin install`,
+    # it neither builds nor starts it). Keep its relative commands usable.
+    postInstall = ''
+      mkdir -p "$out/share/herdr-auto-title"
+      cp herdr-plugin.toml "$out/share/herdr-auto-title/"
+      ln -s "$out/bin/herdr-auto-title" "$out/share/herdr-auto-title/herdr-auto-title"
+    '';
+  };
 in {
   # Backport upstream module until Home Manager 26.05 contains it.
   imports = [./herdr-module.nix];
@@ -113,11 +132,29 @@ in {
   home.packages = [
     hdl
     pkgs.jq
+    autoTitle
+    # Herdr's Claude/Codex hook scripts invoke python3 at agent runtime.
+    pkgs.python3
   ];
   home.sessionVariables.HERDR_NAV_PASSTHROUGH_RE = "^(lazygit)$";
 
   home.activation.linkVimHerdrNavigation = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run ${lib.getExe herdrPackage} plugin link ${vimHerdrNavigation}
+  '';
+
+  home.activation.linkHerdrAutoTitle = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    # Do not invoke restart here: first startup renames even existing panes.
+    run ${lib.getExe herdrPackage} plugin link ${autoTitle}/share/herdr-auto-title
+  '';
+
+  # Use upstream's idempotent mergers rather than owning these mutable files:
+  # they retain other Claude hooks and external Codex configuration.
+  home.activation.installHerdrAgentIntegrations = lib.hm.dag.entryAfter ["writeBoundary" "ensureMutableCodexConfig"] ''
+    run mkdir -p "$HOME/.claude"
+    run ${pkgs.coreutils}/bin/env PATH=${lib.makeBinPath [herdrPackage pkgs.coreutils pkgs.python3]}:$PATH \
+      ${lib.getExe herdrPackage} integration install claude
+    run ${pkgs.coreutils}/bin/env PATH=${lib.makeBinPath [herdrPackage pkgs.coreutils pkgs.python3]}:$PATH \
+      ${lib.getExe herdrPackage} integration install codex
   '';
 
   programs.nixvim.extraConfigLuaPost = ''

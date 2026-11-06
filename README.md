@@ -64,6 +64,33 @@ bundling Nix 2.33.3) continues to
 own the Nix installation and daemon. Homebrew is declarative only for the
 pinned taps and retained casks; activation cleanup is disabled.
 
+## Claude Code agents and skills
+
+After the usual host activation, start the coordinating main agent with
+`claude --agent planner`. `/agents` lists the user-scoped definitions installed
+under `~/.claude/agents`: `planner`, `worker`, `scout`, `triage`, `pr-reviewer`,
+`mobile-reviewer`, `mobile-release-safety`, `appium-test-engineer`, and
+`commit-staged`. Prompts are generated from the existing OpenCode Markdown and
+Codex TOML sources, not maintained as separate copies.
+
+All agents inherit your Claude model and ordinary permission approvals. Only
+`worker` and `appium-test-engineer` retain file-editing tools; read-only roles
+can still request shell checks, and the reviewer can publish when authorized.
+Use the planner as the main agent when coordinating delegated work.
+
+Claude receives the same selected skills as Codex and OpenCode. Claude Code
+2.1.310 ignores nested skill directories, so its deployment uses flat skill
+basenames (for example `/check-compiler-errors` and `/expo-upgrade`). The source
+IDs and other targets remain unchanged; basename collisions fail evaluation.
+The reviewer explicitly reads `~/.claude/skills/pr-review-style/SKILL.md`.
+
+Run the focused generation and skill-parity check without activation:
+
+```sh
+nix build --no-link --no-update-lock-file .#darwinConfigurations.macbook.config.home-manager.users.mitramejia.private.claudeAgentsCheck
+# Linux: nixosConfigurations.nixos.config.home-manager.users.mitra.private.claudeAgentsCheck
+```
+
 ## Cleanup and recovery (NixOS)
 
 `ncg` removes user and sudo/root profile generations older than 15 days,

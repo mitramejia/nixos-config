@@ -30,13 +30,14 @@
     "{d7742d87-e61d-4b78-b8a1-b469842139fa}"
     "clipper@obsidian.md"
     "team@readwise.io"
+    "{d634138d-c276-4fc8-924b-40a0ea21d284}"
   ];
   configCheck = assert cfg.enable;
   assert !cfg.setAsDefaultBrowser;
   assert cfg.package.version == inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta-unwrapped.version;
   assert lib.sort builtins.lessThan extensionIds == lib.sort builtins.lessThan expectedIds;
   assert cfg.profiles.default.path == "default";
-  assert cfg.policies.ExtensionSettings."{d634138d-c276-4fc8-924b-40a0ea21d284}".installation_mode == "force_installed";
+  assert !(builtins.hasAttr "{d634138d-c276-4fc8-924b-40a0ea21d284}" (cfg.policies.ExtensionSettings or {}));
   assert if pkgs.stdenv.hostPlatform.isDarwin
   then
     cfg.darwin.packageMode
@@ -131,17 +132,11 @@ in {
           vimium
           web-clipper-obsidian
           readwise-highlighter
+          onepassword-password-manager
         ];
 
         userChrome = catppuccinUserChrome;
         userContent = catppuccinUserContent;
-      };
-
-      policies.ExtensionSettings = {
-        "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
-          installation_mode = "force_installed";
-        };
       };
     };
   };

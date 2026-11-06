@@ -10,6 +10,11 @@ keep the requested review scope, repository rules, and output format.
 
 ## Voice
 
+- Use everyday words instead of jargon, buzzwords, or unexplained acronyms.
+Describe the actual behavior or consequence rather than abstract labels
+(e.g. "other callers affected" instead of "blast radius"). Keep precise code/API
+identifiers in backticks; briefly explain any necessary technical term.
+
 - Be casual, direct, specific, and practical. Use plain language and natural
   contractions, with readable grammar rather than deliberately copied typos.
 - Lead with the actual point. Usually use one to three sentences per comment;

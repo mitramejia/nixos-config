@@ -2,8 +2,14 @@
 
 Both hosts use the community Zen flake's **beta** release, pinned in `flake.lock`.
 The browser input follows `nixpkgs-unstable`; the OS and Home Manager stay on
-their existing stable inputs. Readwise and Obsidian come from the already-pinned
-Firefox-addons input. Readwise uses the host's existing `allowUnfree` policy.
+their existing stable inputs. Readwise, Obsidian and 1Password come from the
+already-pinned Firefox-addons input. Readwise uses the host's existing `allowUnfree` policy.
+
+1Password is installed once through the shared profile's extension packages,
+not a separate force-install policy or runtime `latest.xpi` download. This does
+not configure vault access or prove the desktop connection works. After an
+explicitly approved apply/restart, verify it in Zen; existing profile-discovery
+and macOS default-handler activation failures must be resolved separately.
 
 ## Updates and build-only validation
 
