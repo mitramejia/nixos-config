@@ -5,6 +5,11 @@
   ...
 }: let
   herdrPackage = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  linkHerdrPlugin = pkgs.writeShellApplication {
+    name = "link-herdr-plugin";
+    runtimeInputs = [pkgs.coreutils pkgs.jq];
+    text = builtins.readFile ./scripts/link-herdr-plugin;
+  };
   hdl = pkgs.writeShellApplication {
     name = "hdl";
     runtimeInputs = [
@@ -139,12 +144,12 @@ in {
   home.sessionVariables.HERDR_NAV_PASSTHROUGH_RE = "^(lazygit)$";
 
   home.activation.linkVimHerdrNavigation = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${lib.getExe herdrPackage} plugin link ${vimHerdrNavigation}
+    run ${lib.getExe linkHerdrPlugin} ${lib.getExe herdrPackage} ${vimHerdrNavigation}
   '';
 
   home.activation.linkHerdrAutoTitle = lib.hm.dag.entryAfter ["writeBoundary"] ''
     # Do not invoke restart here: first startup renames even existing panes.
-    run ${lib.getExe herdrPackage} plugin link ${autoTitle}/share/herdr-auto-title
+    run ${lib.getExe linkHerdrPlugin} ${lib.getExe herdrPackage} ${autoTitle}/share/herdr-auto-title
   '';
 
   # Use upstream's idempotent mergers rather than owning these mutable files:

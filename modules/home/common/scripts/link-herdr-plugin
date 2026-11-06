@@ -1,0 +1,32 @@
+# Register a plugin without disrupting an older running Herdr server.
+# Usage: link-herdr-plugin <herdr executable> <plugin path>
+set -euo pipefail
+
+if [ -n "${DRY_RUN:-}" ]; then
+  printf 'Would register Herdr plugin: %s\n' "$2"
+  exit 0
+fi
+
+herdr="$1"
+shift
+scratch="$(mktemp -d "${TMPDIR:-/tmp}/herdr-link.XXXXXX")"
+trap 'rm -rf -- "$scratch"' EXIT
+
+if "$herdr" plugin link "$@" 2>"$scratch/error"; then
+  cat "$scratch/error" >&2
+  exit 0
+else
+  status=$?
+fi
+
+# Herdr emits structured API errors on stderr. Fail closed on other errors,
+# including malformed output, invalid manifests, and permission failures.
+if ! jq -e '.error.code == "protocol_mismatch"' "$scratch/error" >/dev/null 2>&1; then
+  cat "$scratch/error" >&2
+  exit "$status"
+fi
+
+printf 'Herdr protocol mismatch: registering plugin offline; leaving the running server unchanged.\n' >&2
+# A private, nonexistent socket selects Herdr's native offline registration.
+# Keep HOME/XDG_CONFIG_HOME intact so it writes the real plugin registry.
+HERDR_SOCKET_PATH="$scratch/socket" "$herdr" plugin link "$@"

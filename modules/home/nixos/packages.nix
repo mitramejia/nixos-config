@@ -18,7 +18,6 @@
     jetbrains-toolbox
     chromedriver
     amdgpu_top
-    twingate
 
     wireplumber
     libgtop

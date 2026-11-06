@@ -5,7 +5,6 @@
   "figma"
   "linear-linear"
   "notion-calendar"
-  "twingate"
   "slack"
   "discord"
   "obsidian"
