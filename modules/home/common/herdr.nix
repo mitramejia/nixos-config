@@ -2,6 +2,7 @@
   lib,
   pkgs,
   inputs,
+  unstablePkgs,
   ...
 }: let
   herdrPackage = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -135,6 +136,8 @@ in {
   };
 
   home.packages = [
+    # The desktop app is not available in the stable package set yet.
+    unstablePkgs.herdr-desktop
     hdl
     pkgs.jq
     autoTitle
