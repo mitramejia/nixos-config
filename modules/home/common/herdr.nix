@@ -47,7 +47,7 @@
   };
 in {
   # Backport upstream module until Home Manager 26.05 contains it.
-  imports = [./herdr-module.nix];
+  imports = [./herdr-module.nix ./herdr-app];
 
   programs.herdr = {
     enable = true;

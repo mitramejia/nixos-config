@@ -276,6 +276,7 @@
     nixosConfigurations.nixos = nixosHost;
 
     checks.${hosts.nixos.system} = {
+      herdr-app-mutable-config = nixosHome.private.herdrAppConfigCheck;
       hyprland-workspace-intent-generated-settings = hyprlandWorkspaceIntentCheck;
       hyprland-keybinding-intent = hyprlandKeybindingIntentCheck;
       hyprland-workspace-startup-lua = hyprlandWorkspaceStartupCheck;
@@ -285,6 +286,7 @@
     };
 
     checks.${hosts.macbook.system} = {
+      herdr-app-mutable-config = darwinHome.private.herdrAppConfigCheck;
       mcp-catalog-adapters = darwinHome.private.mcpCatalogAdaptersCheck;
       opencode-mutable-config-darwin = darwinHome.private.openCodeMutableConfigCheck;
       zen-browser-config = darwinHome.private.zenBrowserCheck;
