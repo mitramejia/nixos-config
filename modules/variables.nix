@@ -15,6 +15,8 @@
       mode = "3840x2160@120";
       position = "0x0";
       scale = 1.33;
+      bitdepth = 10;
+      cm = "srgb";
     }
     {
       output = "DP-2";
@@ -23,6 +25,8 @@
       position = "2880x-630";
       scale = 1.33;
       transform = 3;
+      bitdepth = 8;
+      cm = "srgb";
     }
   ];
 
