@@ -36,6 +36,7 @@
     gvfs
     obs-studio
     gpu-screen-recorder
+    satty
     hyprpicker
     hyprsunset
     yubikey-manager

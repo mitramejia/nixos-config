@@ -197,7 +197,7 @@
       (mk "Super+Shift+R" "Restart Noctalia" {exec = "restart.noctalia";})
       (mk "Super+W" "Open browser" {exec = browser;})
       (mk "Super+M" "Open Cider" {exec = "cider-appimage";})
-      (mk "Super+S" "Take region screenshot" {exec = "sh -lc 'mkdir -p \"$HOME/Pictures/Screenshots\" && hyprshot -m region -o \"$HOME/Pictures/Screenshots\"'";})
+      (mk "Super+S" "Take region screenshot with Satty" {exec = "sh -lc 'region=\"$(slurp -o -r)\" || exit 0; [ -n \"$region\" ] || exit 0; mkdir -p \"$HOME/Pictures/Screenshots\" && grim -g \"$region\" -t ppm - | satty --filename - --output-filename \"$HOME/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png\"'";})
       (mk "Super+D" "Start push-to-talk recording" {exec = "voxtype record start";})
       (mk "Super+O" "Open OBS" {exec = "obs";})
       (mk "Super+E" "Pick color" {exec = "hyprpicker -a";})
