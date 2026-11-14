@@ -12,14 +12,15 @@
   extraMonitorSettings = [
     {
       output = "DP-1";
-      mode = "preferred";
-      position = "auto";
+      mode = "3840x2160@120";
+      position = "0x0";
       scale = 1.33;
     }
     {
       output = "DP-2";
       mode = "preferred";
-      position = "auto";
+      # At effective 4/3 scale, center 1620x2880 portrait beside 2880x1620: (1620 - 2880) / 2 = -630.
+      position = "2880x-630";
       scale = 1.33;
       transform = 3;
     }
