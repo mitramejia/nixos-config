@@ -104,6 +104,12 @@ in {
           subdir = "pr-review-style";
           filter.maxDepth = 1;
         };
+
+        rewrite-text = {
+          path = ../../../skills;
+          subdir = "rewrite-text";
+          filter.maxDepth = 1;
+        };
       };
 
       skills.enable = cursorTeamKitSkills ++ expoSkills ++ ["herdr"];
@@ -117,6 +123,7 @@ in {
         "stage-commit-push"
         "linear-issue-from-diff"
         "pr-review-style"
+        "rewrite-text"
       ];
 
       targets = {
