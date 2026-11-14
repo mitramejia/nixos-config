@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstablePkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     zapzap
     slack
@@ -10,6 +14,9 @@
 
     obsidian
     gimp
+    pinta
+    # Disktree is not available in the pinned stable package set.
+    unstablePkgs.disktree
     libreoffice
     vlc
     trash-cli
