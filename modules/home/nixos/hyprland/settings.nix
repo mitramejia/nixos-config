@@ -11,7 +11,6 @@ in {
 
       misc = {
         focus_on_activate = true;
-        layers_hog_keyboard_focus = true;
         force_default_wallpaper = 0;
         initial_workspace_tracking = 0;
         key_press_enables_dpms = false;
@@ -19,6 +18,9 @@ in {
         disable_splash_rendering = true;
         enable_swallow = false;
       };
+
+      # Hyprland 0.57 moved layers_hog_keyboard_focus from misc -> layers.
+      layers.layers_hog_keyboard_focus = true;
 
       # Hyprland 0.55 moved vfr from misc -> debug.
       debug.vfr = false;
